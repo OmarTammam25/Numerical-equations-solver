@@ -2,6 +2,9 @@
 import numpy as np
 
 from Gauss import Gauss
+from GaussJordan import GaussJordan
+from Jacobi_Itertaions import Jacobi_Iterations
+from Gauss_Seidel import Gauss_Seidel
 
 if __name__ == '__main__':
     a = np.array([[2, 3, 1], [4, 1, 4], [3, 4, 6]], dtype = np.double)
