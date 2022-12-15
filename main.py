@@ -4,8 +4,8 @@ import numpy as np
 from Gauss import Gauss
 
 if __name__ == '__main__':
-    a = np.array([[2, 3, 1], [4, 1, 4], [3, 4, 6]], dtype=np.double)
-    b = np.array([-4, 9, 0], dtype=np.double)
+    a = np.array([[1, 1, -1], [6, 2, 2], [-3, 4, 1]], dtype=np.double)
+    b = np.array([-3, 2, 1], dtype=np.double)
     len(b)
     obj = Gauss(a, b)
     sol = obj.gaussElimination()

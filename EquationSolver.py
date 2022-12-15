@@ -1,10 +1,22 @@
+import numpy as np
+
+
 class EquationSolver:
     def __init__(self, a, b):
         self.a = a
         self.b = b
         self.numOfEquations = len(b)
         self.numOfVariables = len(a[0])
+        self.s = self.getMaxInEachRow()
 
+    def getMaxInEachRow(self):
+        s = np.array([0] * self.numOfEquations)
+        for i in range(0, self.numOfEquations):
+            mx = 0
+            for j in self.a[i]:
+                mx = max(abs(j), mx)
+            s[i] = mx
+        return s
     def forwardElimination(self):
         a = self.a
         b = self.b
@@ -21,7 +33,6 @@ class EquationSolver:
     def partialPivot(self, a, b, k):
         currIndex = k
         max = abs(a[k][k])
-
         for i in range(k, self.numOfEquations):
             if (max < abs(a[i][k])):
                 max = abs(a[i][k])
