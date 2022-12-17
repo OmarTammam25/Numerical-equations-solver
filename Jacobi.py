@@ -1,10 +1,11 @@
 import math
 
-class GaussSeidel:
+
+class Jacobi:
     def __init__(self, a, b, x0, sig):
         self.a = a.copy()
         self.b = b.copy()
-        self.sig = sig
+        self.seg = sig
         self.x0 = x0.copy()
 
     def solve(self):
@@ -12,7 +13,7 @@ class GaussSeidel:
         x1 = self.x0.copy()
         e = [100.0] * n
 
-        Etol = .000000005
+        Etol = 0.000000005
         max_iterations = 500
 
         condition = True
@@ -24,7 +25,7 @@ class GaussSeidel:
                 temp = 0
                 for j in range(n):
                     if i != j:
-                        temp += x1[j] * self.a[i][j]
+                        temp += self.x0[j] * self.a[i][j]
                 x1[i] = (self.b[i] - temp) / self.a[i][i]
                 x1[i] = self.round_sig(x1[i], self.sig)
                 e[i] = (abs(self.x0[i] - x1[i]) / float(abs(x1[i])))
