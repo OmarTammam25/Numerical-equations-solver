@@ -1,5 +1,5 @@
 import numpy as np
-
+import math
 
 class LU_Crout:
 
@@ -85,3 +85,10 @@ class LU_Crout:
     def Substitute(self, A, o, n, b, X):
         y = self.ForwardSubstitution(A, o, n, b)
         self.BackwardSubtitution(A, X, o, n, y)
+
+    def round_sig(self, x, sig=2):
+        if x==0:
+            return 0
+        if sig==-1:
+            return x
+        return round(x,sig-int(math.floor(math.log10(abs(x))))-1)

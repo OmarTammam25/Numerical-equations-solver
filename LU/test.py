@@ -12,7 +12,7 @@ if __name__ == '__main__':
     b = [76, 295, 1259]
     x = [0, 0, 0]
     er=1
-    doo.execute(a,b,3,x,0.000001,er)
+    doo.execute(a,b,3,x,0.000001, 9, er)
     print("doo" , x)
     a = [[6, 15, 55],
          [15, 55, 225],
@@ -26,7 +26,7 @@ if __name__ == '__main__':
          [55, 225, 979]]
     b = [76, 295, 1259]
     x = [0, 0, 0]
-    cho.execute(a,b,3,x,0.00001)
+    cho.execute(a,b,3,x,0.00001,9,er)
     print("cho" , x)
 
 
