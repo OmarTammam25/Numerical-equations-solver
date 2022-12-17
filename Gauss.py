@@ -1,16 +1,19 @@
+import time
+
 import numpy as np
 
 from EquationSolver import EquationSolver
 
 
 class Gauss(EquationSolver):
-    def __init__(self, a, b):
-        super().__init__(a, b)
+    def __init__(self, a, b, maxError, siginficantDigits):
+        super().__init__(a, b, maxError, siginficantDigits)
     # a is the coefficient matrix
     # b is the values
     #
 
     def gaussElimination(self):
+
         a, b = self.forwardElimination()
 
         x = self.backwardSubstitution(a, b)
@@ -24,7 +27,8 @@ class Gauss(EquationSolver):
             sum = 0
             for j in range(i+1, self.numOfVariables):
                 sum += a[i][j] * solution[j]
-            solution[i] = (b[i] - sum) / a[i][i]
+                sum = self.round_sig(sum, self.sig)
+            solution[i] = self.round_sig((b[i] - sum) / a[i][i], self.sig)
         return solution
 
 

@@ -1,14 +1,17 @@
+import math
+
 import numpy as np
 
 
 class EquationSolver:
-    def __init__(self, a, b, maxError):
+    def __init__(self, a, b, maxError, significantDigits):
         self.a = a
         self.b = b
         self.numOfEquations = len(b)
         self.numOfVariables = len(a[0])
-        self.s = self.getMaxInEachRow()
+        # self.s = self.getMaxInEachRow()
         self.er = maxError
+        self.sig = significantDigits
 
     def getMaxInEachRow(self):
         s = np.array([0] * self.numOfEquations)
@@ -22,17 +25,19 @@ class EquationSolver:
         a = self.a
         b = self.b
         for k in range(0, self.numOfVariables):  # loop over pivots
-            self.partialPivot(a, b, k)
+            # self.partialPivot(a, b, k)
             pivot = a[k][k]
-            if pivot < abs(self.er):
-                raise Exception('Singular matrix detected. has no unique solution')
-            factor = a[i][k] / pivot
+            # if abs(pivot) < abs(self.er):
+            #     raise Exception('Singular matrix detected. has no unique solution')
             for i in range(k + 1, self.numOfEquations):  # loop over rows
+                factor = self.round_sig(a[i][k] / pivot, self.sig)
+
+                print('factor after round is: ' , factor)
                 for j in range(k, self.numOfVariables):  # loop over each coefficient in row
-                    a[i][j] = a[i][j] - a[k][j] * factor
-                b[i] = b[i] - b[k] * factor
-        if a[self.numOfEquations-1][self.numOfEquations] < abs(self.er):
-            raise Exception('Singular matrix detected. has no unique solution')
+                    a[i][j] = self.round_sig(a[i][j] - a[k][j] * factor, self.sig)
+                b[i] = self.round_sig(b[i] - b[k] * factor, self.sig)
+        # if abs(a[self.numOfEquations-1][self.numOfEquations-1]) < abs(self.er):
+        #     raise Exception('Singular matrix detected. has no unique solution')
         return a, b
 
     def partialPivot(self, a, b, k):
@@ -54,14 +59,14 @@ class EquationSolver:
         for k in range(0, self.numOfVariables):  # loop over pivots
             self.partialPivotWithScaling(a, b, k)
             pivot = a[k][k]
-            if pivot < abs(self.er / self.s[k]):
+            if abs(pivot) < abs(self.er / self.s[k]):
                 raise Exception('Singular matrix detected. has no unique solution')
             for i in range(k + 1, self.numOfEquations):  # loop over rows
-                factor = a[i][k] / pivot
+                factor = self.round_sig(a[i][k] / pivot, self.sig)
                 for j in range(k, self.numOfVariables):  # loop over each coefficient in row
-                    a[i][j] = a[i][j] - a[k][j] * factor
-                b[i] = b[i] - b[k] * factor
-        if a[self.numOfEquations-1][self.numOfEquations] < abs(self.er):
+                    a[i][j] = self.round_sig(a[i][j] - a[k][j] * factor, self.sig)
+                b[i] = self.round_sig(b[i] - b[k] * factor, self.sig)
+        if abs(a[self.numOfEquations-1][self.numOfEquations-1]) < abs(self.er):
             raise Exception('Singular matrix detected. has no unique solution')
         return a, b
     def partialPivotWithScaling(self, a, b, k):
@@ -77,3 +82,10 @@ class EquationSolver:
             b[[k, currIndex]] = b[[currIndex, k]]
             self.s[[k, currIndex]] = self.s[[currIndex, k]]
             print('pivoting row ', k, 'with row ', currIndex)
+
+    def round_sig(self, x, sig=-1):
+        if x == 0:
+            return 0
+        if(sig == -1):
+            return x
+        return round(x, sig - int(math.floor(math.log10(abs(x)))) - 1)
