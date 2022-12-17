@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1986</width>
+    <height>1223</height>
+   </rect>
+  </property>
+  <property name="mouseTracking">
+   <bool>true</bool>
+  </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::NoContextMenu</enum>
+  </property>
+  <property name="windowTitle">
+   <string>Equations Solver</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <property name="documentMode">
+   <bool>false</bool>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QFrame" name="frame">
+      <property name="font">
+       <font>
+        <family>Century Gothic</family>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <widget class="QScrollArea" name="scrollArea">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>1901</width>
+         <height>991</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color:rgb(255, 253, 184)</string>
+       </property>
+       <property name="widgetResizable">
+        <bool>true</bool>
+       </property>
+       <widget class="QWidget" name="scrollAreaWidgetContents">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>10000</width>
+          <height>3000</height>
+         </rect>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>10000</width>
+          <height>3000</height>
+         </size>
+        </property>
+        <widget class="QWidget" name="gridLayoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>250</x>
+           <y>210</y>
+           <width>251</width>
+           <height>131</height>
+          </rect>
+         </property>
+         <layout class="QGridLayout" name="gridLayout">
+          <property name="leftMargin">
+           <number>10</number>
+          </property>
+          <property name="rightMargin">
+           <number>10</number>
+          </property>
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="e11">
+            <property name="styleSheet">
+             <string notr="true">background-color:rgb(255, 255, 255)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="e01">
+            <property name="styleSheet">
+             <string notr="true">background-color:rgb(255, 255, 255)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLineEdit" name="e00">
+            <property name="styleSheet">
+             <string notr="true">background-color:rgb(255, 255, 255)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLineEdit" name="e10">
+            <property name="styleSheet">
+             <string notr="true">background-color:rgb(255, 255, 255)</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QColumnView" name="columnView">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>140</y>
+           <width>191</width>
+           <height>601</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color:rgb(255, 253, 184);
+border-color: rgb(0, 0, 100);</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="nEquationDisplayed">
+         <property name="geometry">
+          <rect>
+           <x>220</x>
+           <y>120</y>
+           <width>581</width>
+           <height>61</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(121, 104, 62);
+font: 25pt &quot;Century Gothic&quot;;
+font-weight: bold</string>
+         </property>
+         <property name="text">
+          <string>Solving 2 x 2 System of Equations</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="methodLable">
+         <property name="geometry">
+          <rect>
+           <x>40</x>
+           <y>150</y>
+           <width>151</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(121, 104, 62);
+font: 11pt &quot;Century Gothic&quot;;
+font-weight: bold</string>
+         </property>
+         <property name="text">
+          <string>Choose Method</string>
+         </property>
+        </widget>
+        <widget class="QComboBox" name="method">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>320</y>
+           <width>151</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="contextMenuPolicy">
+          <enum>Qt::ActionsContextMenu</enum>
+         </property>
+         <property name="acceptDrops">
+          <bool>true</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color:rgb(255, 255, 255)</string>
+         </property>
+         <property name="currentText">
+          <string>Downlittle Form</string>
+         </property>
+         <property name="duplicatesEnabled">
+          <bool>false</bool>
+         </property>
+         <item>
+          <property name="text">
+           <string>Downlittle Form</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Crout Form</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Cholesky Form</string>
+          </property>
+         </item>
+        </widget>
+        <widget class="QLabel" name="nEquationsLable">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>220</y>
+           <width>151</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(121, 104, 62);
+font: 11pt &quot;Century Gothic&quot;;
+font-weight: bold</string>
+         </property>
+         <property name="text">
+          <string>Number of Equations</string>
+         </property>
+        </widget>
+        <widget class="QSpinBox" name="nEquations">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>250</y>
+           <width>151</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color:rgb(255, 255, 255)</string>
+         </property>
+         <property name="buttonSymbols">
+          <enum>QAbstractSpinBox::UpDownArrows</enum>
+         </property>
+         <property name="minimum">
+          <number>2</number>
+         </property>
+         <property name="maximum">
+          <number>100</number>
+         </property>
+        </widget>
+        <widget class="QLabel" name="LULable">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>290</y>
+           <width>111</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(121, 104, 62);
+font: 11pt &quot;Century Gothic&quot;;
+font-weight: bold</string>
+         </property>
+         <property name="text">
+          <string>LU Format</string>
+         </property>
+        </widget>
+        <widget class="QComboBox" name="LU">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>180</y>
+           <width>151</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color:rgb(255, 255, 255)</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>Gauss Elimination</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Gauss-Jordan</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>LU Decomposition</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Gauss-Seidel</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Jacobi-Iteration</string>
+          </property>
+         </item>
+        </widget>
+        <widget class="QSpinBox" name="precision">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>450</y>
+           <width>151</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color:rgb(255, 255, 255)</string>
+         </property>
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>30</number>
+         </property>
+         <property name="value">
+          <number>5</number>
+         </property>
+        </widget>
+        <widget class="QLabel" name="ARELable">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>360</y>
+           <width>171</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(121, 104, 62);
+font: 11pt &quot;Century Gothic&quot;;
+font-weight: bold</string>
+         </property>
+         <property name="text">
+          <string>Absolute Relative  Error</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="precisionLable">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>430</y>
+           <width>121</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(121, 104, 62);
+font: 11pt &quot;Century Gothic&quot;;
+font-weight: bold</string>
+         </property>
+         <property name="text">
+          <string>Precision</string>
+         </property>
+        </widget>
+        <widget class="QDoubleSpinBox" name="doubleSpinBox">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>390</y>
+           <width>151</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color:rgb(255, 255, 255)</string>
+         </property>
+         <property name="decimals">
+          <number>6</number>
+         </property>
+         <property name="singleStep">
+          <double>0.000001000000000</double>
+         </property>
+         <property name="value">
+          <double>0.000001000000000</double>
+         </property>
+        </widget>
+        <widget class="QLabel" name="stopConditionLable">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>490</y>
+           <width>161</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(121, 104, 62);
+font: 11pt &quot;Century Gothic&quot;;
+font-weight: bold</string>
+         </property>
+         <property name="text">
+          <string>Stopping condition</string>
+         </property>
+        </widget>
+        <widget class="QComboBox" name="stopContition">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>530</y>
+           <width>151</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color:rgb(255, 255, 255)</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>Number of Iterations</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Absolute Relative Error</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>both</string>
+          </property>
+         </item>
+        </widget>
+        <widget class="QLabel" name="nIterationLable">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>580</y>
+           <width>151</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(121, 104, 62);
+font: 11pt &quot;Century Gothic&quot;;
+font-weight: bold</string>
+         </property>
+         <property name="text">
+          <string>Number of iterations</string>
+         </property>
+        </widget>
+        <widget class="QSpinBox" name="nIteration">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>620</y>
+           <width>151</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color:rgb(255, 255, 255)</string>
+         </property>
+         <property name="minimum">
+          <number>2</number>
+         </property>
+         <property name="maximum">
+          <number>150</number>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="calcutateButton">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>670</y>
+           <width>151</width>
+           <height>61</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Century Gothic</family>
+           <pointsize>10</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="acceptDrops">
+          <bool>true</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color:rgb(200, 176, 127);
+color:12px rgb(106, 98, 71);
+font-weight: bold;</string>
+         </property>
+         <property name="text">
+          <string>Calculate</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="nEquationDisplayed_2">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>40</y>
+           <width>581</width>
+           <height>61</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(121, 104, 62);
+font: 25pt &quot;Century Gothic&quot;;
+font-weight: bold</string>
+         </property>
+         <property name="text">
+          <string>Equations Solver</string>
+         </property>
+        </widget>
+        <widget class="QWidget" name="horizontalLayoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>260</x>
+           <y>190</y>
+           <width>231</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QLabel" name="label_2">
+            <property name="styleSheet">
+             <string notr="true">background-color: none;
+color: rgb(121, 104, 62);
+font: 11pt &quot;Century Gothic&quot;;
+font-weight: bold</string>
+            </property>
+            <property name="text">
+             <string>X1</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label">
+            <property name="styleSheet">
+             <string notr="true">background-color: none;
+color: rgb(121, 104, 62);
+font: 11pt &quot;Century Gothic&quot;;
+font-weight: bold
+</string>
+            </property>
+            <property name="text">
+             <string>X2</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QLabel" name="programTitle">
+         <property name="geometry">
+          <rect>
+           <x>-140</x>
+           <y>1140</y>
+           <width>50000</width>
+           <height>6000</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>10000</width>
+           <height>6000</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(121, 104, 62);
+font: 25pt &quot;Century Gothic&quot;;
+font-weight: bold</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+        <zorder>programTitle</zorder>
+        <zorder>gridLayoutWidget</zorder>
+        <zorder>columnView</zorder>
+        <zorder>nEquationDisplayed</zorder>
+        <zorder>methodLable</zorder>
+        <zorder>method</zorder>
+        <zorder>nEquationsLable</zorder>
+        <zorder>nEquations</zorder>
+        <zorder>LULable</zorder>
+        <zorder>LU</zorder>
+        <zorder>precision</zorder>
+        <zorder>ARELable</zorder>
+        <zorder>precisionLable</zorder>
+        <zorder>doubleSpinBox</zorder>
+        <zorder>stopConditionLable</zorder>
+        <zorder>stopContition</zorder>
+        <zorder>nIterationLable</zorder>
+        <zorder>nIteration</zorder>
+        <zorder>calcutateButton</zorder>
+        <zorder>nEquationDisplayed_2</zorder>
+        <zorder>horizontalLayoutWidget</zorder>
+       </widget>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,17 @@
+[console_scripts]
+addzopeuser = Zope2.utilities.adduser:main
+mkwsgiinstance = Zope2.utilities.mkwsgiinstance:main
+runwsgi = Zope2.Startup.serve:main
+zconsole = Zope2.utilities.zconsole:main
+
+[paste.app_factory]
+main = Zope2.Startup.run:make_wsgi_app
+
+[paste.filter_app_factory]
+httpexceptions = ZPublisher.httpexceptions:main
+
+[zodbupdate]
+renames = OFS:zodbupdate_rename_dict
+
+[zodbupdate.decode]
+decodes = OFS:zodbupdate_decode_dict

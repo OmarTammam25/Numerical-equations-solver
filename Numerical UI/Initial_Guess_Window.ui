@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>InitialGuess</class>
+ <widget class="QMainWindow" name="InitialGuess">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1156</width>
+    <height>814</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Initial_Guess</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QScrollArea" name="scrollArea">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1901</width>
+      <height>991</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:rgb(255, 253, 184)</string>
+    </property>
+    <property name="widgetResizable">
+     <bool>true</bool>
+    </property>
+    <widget class="QWidget" name="scrollAreaWidgetContents">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>10000</width>
+       <height>3000</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>10000</width>
+       <height>3000</height>
+      </size>
+     </property>
+     <widget class="QLabel" name="programTitle">
+      <property name="geometry">
+       <rect>
+        <x>-140</x>
+        <y>1140</y>
+        <width>50000</width>
+        <height>6000</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>10000</width>
+        <height>6000</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(121, 104, 62);
+font: 25pt &quot;Century Gothic&quot;;
+font-weight: bold</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="initialGeussLable">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>30</y>
+        <width>141</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(121, 104, 62);
+font: 14pt &quot;Century Gothic&quot;;
+font-weight: bold</string>
+      </property>
+      <property name="text">
+       <string>Iintial Guess</string>
+      </property>
+     </widget>
+     <widget class="QWidget" name="horizontalLayoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>60</y>
+        <width>160</width>
+        <height>121</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout"/>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
