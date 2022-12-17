@@ -6,11 +6,7 @@ from Controller.Commands import Commands
 class Ui_MainWindow(object):
     coef = [[0 for x in range(101)] for y in range(101)]  # Coefficient matrix
     b = []  # results
-    LUEnabled = False
-    nIterationsEnabled = False
-    stopConditionEnabled = True
     command = Commands()
-
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -50,12 +46,13 @@ class Ui_MainWindow(object):
 
         # Coefficient matrix formation
         self.validator = QDoubleValidator()
-        for i in range(0, 101):
-            for j in range(0, 101):
+        for i in range(0, 100):
+            for j in range(0, 100):
                 self.e = QtWidgets.QLineEdit(self.gridLayoutWidget)
                 self.e.setStyleSheet("background-color:rgb(255, 255, 255)")
                 self.e.setValidator(self.validator)
                 self.gridLayout.addWidget(self.e, i + 4, j)
+                self.e.setObjectName("e" + str(i) + str(j))
                 if i < 2 and j < 2:
                     self.e.show()
                 else:
@@ -73,10 +70,9 @@ class Ui_MainWindow(object):
 
         self.nEquationDisplayed = QtWidgets.QLabel(self.scrollAreaWidgetContents)
         self.nEquationDisplayed.setGeometry(QtCore.QRect(220, 120, 581, 61))
-        self.nEquationDisplayed.setStyleSheet(
-            "color: rgb(121, 104, 62);\n"
-            "font: 25pt \"Century Gothic\";\n"
-            "font-weight: bold")
+        self.nEquationDisplayed.setStyleSheet("color: rgb(121, 104, 62);\n"
+                                              "font: 25pt \"Century Gothic\";\n"
+                                              "font-weight: bold")
         self.nEquationDisplayed.setObjectName("nEquationDisplayed")
         self.methodLable = QtWidgets.QLabel(self.scrollAreaWidgetContents)
         self.methodLable.setGeometry(QtCore.QRect(40, 150, 151, 20))
@@ -89,11 +85,10 @@ class Ui_MainWindow(object):
 
         # LU Drop-Down List
         self.method = QtWidgets.QComboBox(self.scrollAreaWidgetContents)
-        self.method.setEnabled(self.LUEnabled)
+        self.method.setEnabled(False)
         self.method.setGeometry(QtCore.QRect(30, 320, 151, 21))
         self.method.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.method.setContextMenuPolicy(QtCore.Qt.ActionsContextMenu)
-        self.method.setAcceptDrops(True)
         self.method.setStyleSheet("background-color:rgb(255, 255, 255)")
         self.method.setObjectName("method")
         self.method.addItem("")
@@ -110,10 +105,11 @@ class Ui_MainWindow(object):
         self.nEquations.setMinimum(2)
         self.nEquations.setMaximum(100)
         self.nEquations.setObjectName("nEquations")
+        self.nEquations.textChanged.connect(self.showTitleAndChangeCells)
 
         ################################################################################################################
 
-        # Choose method
+        # Method to solve the equation
         self.LU = QtWidgets.QComboBox(self.scrollAreaWidgetContents)
         self.LU.setGeometry(QtCore.QRect(30, 180, 151, 22))
         self.LU.setStyleSheet("background-color:rgb(255, 255, 255)")
@@ -140,6 +136,7 @@ class Ui_MainWindow(object):
 
         # Absolute Relative Error
         self.ARE = QtWidgets.QDoubleSpinBox(self.scrollAreaWidgetContents)
+        self.ARE.setEnabled(False)
         self.ARE.setGeometry(QtCore.QRect(30, 390, 151, 22))
         self.ARE.setStyleSheet("background-color:rgb(255, 255, 255)")
         self.ARE.setDecimals(6)
@@ -151,19 +148,20 @@ class Ui_MainWindow(object):
 
         # Stop Condition
         self.stopContition = QtWidgets.QComboBox(self.scrollAreaWidgetContents)
-        self.stopContition.setEnabled(self.stopConditionEnabled)
+        self.stopContition.setEnabled(False)
         self.stopContition.setGeometry(QtCore.QRect(30, 530, 151, 22))
         self.stopContition.setStyleSheet("background-color:rgb(255, 255, 255)")
         self.stopContition.setObjectName("stopContition")
         self.stopContition.addItem("")
         self.stopContition.addItem("")
         self.stopContition.addItem("")
+        self.stopContition.currentTextChanged.connect(self.checkStop)
 
         ################################################################################################################
 
         # number of iterations
         self.nIteration = QtWidgets.QSpinBox(self.scrollAreaWidgetContents)
-        self.nIteration.setEnabled(self.nIterationsEnabled)
+        self.nIteration.setEnabled(False)
         self.nIteration.setGeometry(QtCore.QRect(30, 620, 151, 22))
         self.nIteration.setStyleSheet("background-color:rgb(255, 255, 255)")
         self.nIteration.setMinimum(2)
@@ -193,10 +191,9 @@ class Ui_MainWindow(object):
         self.ARELable.setObjectName("ARELable")
         self.precisionLable = QtWidgets.QLabel(self.scrollAreaWidgetContents)
         self.precisionLable.setGeometry(QtCore.QRect(30, 430, 121, 16))
-        self.precisionLable.setStyleSheet(
-            "color: rgb(121, 104, 62);\n"
-            "font: 11pt \"Century Gothic\";\n"
-            "font-weight: bold")
+        self.precisionLable.setStyleSheet("color: rgb(121, 104, 62);\n"
+                                          "font: 11pt \"Century Gothic\";\n"
+                                          "font-weight: bold")
         self.precisionLable.setObjectName("precisionLable")
         self.stopConditionLable = QtWidgets.QLabel(self.scrollAreaWidgetContents)
         self.stopConditionLable.setGeometry(QtCore.QRect(30, 490, 161, 20))
@@ -215,7 +212,6 @@ class Ui_MainWindow(object):
         ################################################################################################################
 
         self.calcutateButton = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
-        self.calcutateButton.clicked.connect(self.calculate)
         self.calcutateButton.setGeometry(QtCore.QRect(30, 670, 151, 61))
         font = QtGui.QFont()
         font.setFamily("Century Gothic")
@@ -231,7 +227,7 @@ class Ui_MainWindow(object):
         self.calcutateButton.setObjectName("calcutateButton")
         self.calcutateButton.clicked.connect(self.start)
 
-        # self.calcutateButton.clicked.connect(Commands().calculate(self))
+        ################################################################################################################
 
         self.nEquationDisplayed_2 = QtWidgets.QLabel(self.scrollAreaWidgetContents)
         self.nEquationDisplayed_2.setGeometry(QtCore.QRect(30, 40, 581, 61))
@@ -246,13 +242,13 @@ class Ui_MainWindow(object):
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout.setObjectName("horizontalLayout")
 
-        for i in range(0, 101):
+        for i in range(0, 100):
             self.res = QtWidgets.QLineEdit(self.horizontalLayoutWidget)
+            self.res.setStyleSheet("background-color: rgb(255, 255, 255);")
             self.horizontalLayout.addWidget(self.res)
             if i < 2:
                 self.res.show()
             else:
-                self.res.setStyleSheet("background-color:rgb(255, 255, 255)")
                 self.res.setDisabled(True)
                 self.b.append(self.res)
             print(i)
@@ -304,23 +300,46 @@ class Ui_MainWindow(object):
         self.horizontalLayoutWidget.raise_()
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.verticalLayout.addWidget(self.frame)
-        self.nEquationDisplayed.setText(f"Solving {self.nEquations.text()} x {self.nEquations.text()} System of Equations")
+        self.nEquationDisplayed.setText(self.command.getTitle())
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def methodCheck(self):
-        method = self.method.currentText()
+        method = self.LU.currentText()
+        print(self.LU.currentText())
         if method == "LU Decomposition":
-            self.LUEnabled = True
-            self.stopConditionEnabled = False
+            self.method.setEnabled(True)
+            self.stopContition.setEnabled(False)
         elif method == "Gauss-Seidel" or method == "Jacobi-Iteration":
-            self.stopConditionEnabled = True
-            self.LUEnabled = False
+            self.method.setEnabled(False)
+            self.stopContition.setEnabled(True)
         else:
-            self.stopConditionEnabled = False
-            self.LUEnabled = False
+            self.method.setEnabled(False)
+            self.stopContition.setEnabled(False)
+
+    def checkStop(self):
+        stop = self.stopContition.currentText()
+        if stop == "Number of Iterations":
+            self.nIteration.setEnabled(True)
+            self.ARE.setEnabled(False)
+        elif stop == "Absolute Relative Error":
+            self.nIteration.setEnabled(False)
+            self.ARE.setEnabled(True)
+        else:
+            self.nIteration.setEnabled(True)
+            self.ARE.setEnabled(True)
+
+    def showTitleAndChangeCells(self):
+        self.command.setNEquations(self.nEquations.text())
+        self.nEquationDisplayed.setText(self.command.getTitle())
+        # for i in range(0, self.nEquations.text()):
+        #     for j in range(0, self.nEquations.text()):
+        #         self.a[i][j].setStyleSheet("background-color:rgb(255, 253, 184)")
+        #         self.a[i][j].setDisabled(True)
+        #         self.gridLayout.addWidget(self.a[i][j], i + 4, j)
+
 
     def start(self):
         if self.command.areFilled(self.coef, self.b):
@@ -331,18 +350,16 @@ class Ui_MainWindow(object):
             self.command.setStopCondition(self.stopContition.currentText())
             self.command.setNEquations(self.nEquations.text())
             self.command.setMethod(self.method.currentText())
-            self.command.setA(self.coef)
-            self.command.setB(self.b)
+            self.command.calcualte()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Equations Solver"))
-        self.frame.setToolTip(_translate("MainWindow", "<html><head/><body><p><br/></p></body></html>"))
         self.nEquationDisplayed.setText(_translate("MainWindow", "Solving 2 x 2 System of Equations"))
         self.methodLable.setText(_translate("MainWindow", "Choose Method"))
         self.method.setCurrentText(_translate("MainWindow", "Downlittle Form"))
         self.method.setItemText(0, _translate("MainWindow", "Downlittle Form"))
-        self.method.setItemText(1, _translate("MainWindow", "Crout Form\n" ""))
+        self.method.setItemText(1, _translate("MainWindow", "Crout Form" ""))
         self.method.setItemText(2, _translate("MainWindow", "Cholesky Form"))
         self.nEquationsLable.setText(_translate("MainWindow", "Number of Equations"))
         self.LULable.setText(_translate("MainWindow", "LU Format"))
@@ -362,10 +379,6 @@ class Ui_MainWindow(object):
         self.nEquationDisplayed_2.setText(_translate("MainWindow", "Equations Solver"))
         # self.label_2.setText(_translate("MainWindow", "X1"))
         # self.label.setText(_translate("MainWindow", "X2"))
-
-    def calculate(self):
-        print(self.coef[0][0].text())
-
 
 if __name__ == "__main__":
     import sys

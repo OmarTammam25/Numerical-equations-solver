@@ -1,6 +1,7 @@
 
 class Commands:
-
+    a = [[0 for x in range(100)] for y in range(100)]
+    b = []
     def __init__(self):
         self.nEquations = 2
         self.method = ""
@@ -9,7 +10,6 @@ class Commands:
         self.precision = 5
         self.stopCondition = "Number of Iterations"
         self.nIterations = 2
-#       self.a 2d array
         self.b = []
         self.title = f"Solving {self.nEquations} x {self.nEquations} System of Equations"
 
@@ -34,17 +34,31 @@ class Commands:
     def setNIterations(self, n):
         self.nIterations = n
 
-    def setA(self, a):
-        self.a = a
-
-    def setB(self, b):
-        self.b = b
-
     def getTitle(self):
         self.title = f"Solving {self.nEquations} x {self.nEquations} System of Equations"
         return self.title
 
-#    def calculate(self, coef):
+    # Check validity and form arrays
+    def areFilled(self, a, b):
+        self.b.clear()
+        self.a.clear()
+        for i in range(0, self.nEquations):
+            if b[i].text() == "":
+                return False
+            self.b.append(b[i].text())
+            for j in range(0, self.nEquations):
+                if self.a[i][j].text() == "":
+                    return False
+                self.a[i][j] = a[i][j].text()
+        return True
+
+    #Calls the methods
+    def calculate(self):
+        if self.method == "Gauss Elimination":
+            print("Gauss")
+
+
+
 
 
 
