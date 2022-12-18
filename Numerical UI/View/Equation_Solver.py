@@ -4,7 +4,7 @@ from Controller.Commands import Commands
 
 
 class Ui_MainWindow(object):
-    coef = [[0 for x in range(101)] for y in range(101)]  # Coefficient matrix
+    coef = [[0 for x in range(100)] for y in range(100)]  # Coefficient matrix
     b = []  # results
     command = Commands()
 
@@ -35,8 +35,23 @@ class Ui_MainWindow(object):
         self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 9000, 2900))
         self.scrollAreaWidgetContents.setMinimumSize(QtCore.QSize(9000, 2900))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
+
+        self.bVector = QtWidgets.QWidget(self.scrollAreaWidgetContents)
+        self.bVector.setGeometry(QtCore.QRect(250, 240, 100, 2600))
+        self.bVector.setObjectName("bVector")
+        self.bVectorLayout = QtWidgets.QVBoxLayout(self.bVector)
+        self.bVectorLayout.setContentsMargins(10, 0, 10, 0)
+        self.bVectorLayout.setObjectName("bVectorLayout")
+
+        self.variables = QtWidgets.QWidget(self.scrollAreaWidgetContents)
+        self.variables.setGeometry(QtCore.QRect(250, 190, 8500, 50))
+        self.variables.setObjectName("variables")
+        self.variablesLayout = QtWidgets.QVBoxLayout(self.variables)
+        self.variablesLayout.setContentsMargins(10, 0, 10, 0)
+        self.variablesLayout.setObjectName("bVectorLayout")
+
         self.gridLayoutWidget = QtWidgets.QWidget(self.scrollAreaWidgetContents)
-        self.gridLayoutWidget.setGeometry(QtCore.QRect(250, 240, 8500, 2600))
+        self.gridLayoutWidget.setGeometry(QtCore.QRect(350, 240, 8500, 2600))
         self.gridLayoutWidget.setObjectName("gridLayoutWidget")
         self.gridLayout = QtWidgets.QGridLayout(self.gridLayoutWidget)
         self.gridLayout.setContentsMargins(10, 0, 10, 0)
@@ -52,11 +67,11 @@ class Ui_MainWindow(object):
                 self.e.setStyleSheet("background-color:rgb(255, 255, 255)")
                 self.e.setValidator(self.validator)
                 self.gridLayout.addWidget(self.e, i + 4, j)
-                self.e.setObjectName("e" + str(i) + str(j))
                 if i < 2 and j < 2:
                     self.e.show()
                 else:
-                    self.e.setStyleSheet("background-color:rgb(255, 253, 184)")
+                    self.e.setStyleSheet("background-color:rgb(255, 253, 184)\n"
+                                         "border-color: rgb(255, 253, 184)")
                     self.e.setDisabled(True)
                 self.coef[i][j] = self.e
 
@@ -69,9 +84,9 @@ class Ui_MainWindow(object):
         self.columnView.setObjectName("columnView")
 
         self.nEquationDisplayed = QtWidgets.QLabel(self.scrollAreaWidgetContents)
-        self.nEquationDisplayed.setGeometry(QtCore.QRect(220, 120, 581, 61))
+        self.nEquationDisplayed.setGeometry(QtCore.QRect(220, 120, 700, 61))
         self.nEquationDisplayed.setStyleSheet("color: rgb(121, 104, 62);\n"
-                                              "font: 25pt \"Century Gothic\";\n"
+                                              "font: 25pt \"Segoe script\";\n"
                                               "font-weight: bold")
         self.nEquationDisplayed.setObjectName("nEquationDisplayed")
         self.methodLable = QtWidgets.QLabel(self.scrollAreaWidgetContents)
@@ -232,42 +247,45 @@ class Ui_MainWindow(object):
         self.nEquationDisplayed_2 = QtWidgets.QLabel(self.scrollAreaWidgetContents)
         self.nEquationDisplayed_2.setGeometry(QtCore.QRect(30, 40, 581, 61))
         self.nEquationDisplayed_2.setStyleSheet("color: rgb(121, 104, 62);\n"
-                                                "font: 25pt \"Century Gothic\";\n"
+                                                "font: 25pt \"Segoe script\";\n"
                                                 "font-weight: bold")
         self.nEquationDisplayed_2.setObjectName("nEquationDisplayed_2")
-        self.horizontalLayoutWidget = QtWidgets.QWidget(self.scrollAreaWidgetContents)
-        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(260, 180, 231, 41))
-        self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
-        self.horizontalLayout = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget)
-        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout.setObjectName("horizontalLayout")
 
-        for i in range(0, 100):
-            self.res = QtWidgets.QLineEdit(self.horizontalLayoutWidget)
-            self.res.setStyleSheet("background-color: rgb(255, 255, 255);")
-            self.horizontalLayout.addWidget(self.res)
+        ################################################################################################################
+
+        # b cells
+        for i in range(0, 200):
+            self.e = QtWidgets.QLineEdit(self.bVector)
+            self.e.setStyleSheet("background-color:rgb(255, 255, 255)")
+            self.e.setValidator(self.validator)
+            self.bVectorLayout.addWidget(self.e)
             if i < 2:
-                self.res.show()
+                self.e.show()
             else:
-                self.res.setDisabled(True)
-                self.b.append(self.res)
-            print(i)
+                self.e.setStyleSheet("background-color:rgb(255, 253, 184)\n"
+                                     "border-color: rgb(255, 253, 184)")
+                self.e.setDisabled(True)
+            self.b.append(self.e)
 
-        # self.label_2 = QtWidgets.QLabel(self.horizontalLayoutWidget)
-        # self.label_2.setStyleSheet("background-color: none;\n"
-        #                            "color: rgb(121, 104, 62);\n"
-        #                            "font: 11pt \"Century Gothic\";\n"
-        #                            "font-weight: bold")
-        # self.label_2.setObjectName("label_2")
-        # self.horizontalLayout.addWidget(self.label_2)
-        # self.label = QtWidgets.QLabel(self.horizontalLayoutWidget)
-        # self.label.setStyleSheet("background-color: none;\n"
-        #                          "color: rgb(121, 104, 62);\n"
-        #                          "font: 11pt \"Century Gothic\";\n"
-        #                          "font-weight: bold\n"
-        #                          "")
-        # self.label.setObjectName("label")
-        # self.horizontalLayout.addWidget(self.label)
+        ################################################################################################################
+
+        # Lables
+        for i in range(0, 10):
+            self.e = QtWidgets.QLabel(self.variables)
+            self.e.setStyleSheet("background-color:rgb(0, 0, 0)\n"
+                                 "color: rgb(255, 255, 255)")
+            self.e.setText("aaa")
+            self.variablesLayout.addWidget(self.e)
+            print(self.e)
+            self.e.setVisible(True)
+            if i < 2:
+                self.e.show()
+            else:
+                self.e.setDisabled(True)
+                self.e.setStyleSheet("background-color:rgb(0, 0, 0)")
+            self.b.append(self.e)
+
+        ################################################################################################################
 
         self.programTitle = QtWidgets.QLabel(self.scrollAreaWidgetContents)
         self.programTitle.setGeometry(QtCore.QRect(-140, 1140, 50000, 6000))
@@ -297,7 +315,8 @@ class Ui_MainWindow(object):
         self.nIteration.raise_()
         self.calcutateButton.raise_()
         self.nEquationDisplayed_2.raise_()
-        self.horizontalLayoutWidget.raise_()
+        self.variables.raise_()
+        self.variables.raise_()
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.verticalLayout.addWidget(self.frame)
         self.nEquationDisplayed.setText(self.command.getTitle())
@@ -315,9 +334,12 @@ class Ui_MainWindow(object):
         elif method == "Gauss-Seidel" or method == "Jacobi-Iteration":
             self.method.setEnabled(False)
             self.stopContition.setEnabled(True)
+            # self.ui = Ui_InitialGuess()
+            # self.ui.setupUi(MainWindow)
         else:
             self.method.setEnabled(False)
             self.stopContition.setEnabled(False)
+            self.nIteration.setEnabled(False)
 
     def checkStop(self):
         stop = self.stopContition.currentText()
@@ -334,12 +356,24 @@ class Ui_MainWindow(object):
     def showTitleAndChangeCells(self):
         self.command.setNEquations(self.nEquations.text())
         self.nEquationDisplayed.setText(self.command.getTitle())
-        # for i in range(0, self.nEquations.text()):
-        #     for j in range(0, self.nEquations.text()):
-        #         self.a[i][j].setStyleSheet("background-color:rgb(255, 253, 184)")
-        #         self.a[i][j].setDisabled(True)
-        #         self.gridLayout.addWidget(self.a[i][j], i + 4, j)
+        n = int(self.nEquations.text())
 
+        # increase number of equations
+        if not (self.gridLayout.itemAt(n - 1).widget().isEnabled()):
+            for i in range(0, n):
+                self.gridLayout.itemAt(100 * (n - 1) + i).widget().setEnabled(True)
+                self.gridLayout.itemAt(100 * (n - 1) + i).widget().setStyleSheet("background-color:rgb(255, 255, 255)")
+            for j in range(0, n):
+                self.gridLayout.itemAt(100 * j + (n - 1)).widget().setEnabled(True)
+                self.gridLayout.itemAt(100 * j + (n - 1)).widget().setStyleSheet("background-color:rgb(255, 255, 255)")
+        else:
+            # decrease number of equations
+            for i in range(0, n):
+                self.gridLayout.itemAt(100 * n + i).widget().setEnabled(False)
+                self.gridLayout.itemAt(100 * n + i).widget().setStyleSheet("background-color:rgb(255, 253, 184)")
+            for j in range(0, n + 1):
+                self.gridLayout.itemAt(100 * j + n).widget().setEnabled(False)
+                self.gridLayout.itemAt(100 * j + n).widget().setStyleSheet("background-color:rgb((255, 253, 184)")
 
     def start(self):
         if self.command.areFilled(self.coef, self.b):

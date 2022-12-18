@@ -5,8 +5,8 @@ from PyQt5.QtGui import QDoubleValidator
 
 
 class Ui_InitialGuess(object):
-    initialGuess = []
 
+    initialGuess = []
     def setupUi(self, InitialGuess):
         InitialGuess.setObjectName("InitialGuess")
         InitialGuess.resize(1156, 814)
