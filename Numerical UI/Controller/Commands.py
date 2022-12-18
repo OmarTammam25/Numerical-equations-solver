@@ -4,8 +4,9 @@ from unicodedata import decimal
 class Commands:
     a = [[0 for x in range(100)] for y in range(100)]
     b = []
+    initialGuess = []
     def __init__(self):
-        self.nEquations = ""
+        self.nEquations = "2"
         self.method = ""
         self.LUForm = ""
         self.ARE = "0.000001"
@@ -35,6 +36,29 @@ class Commands:
     def setNIterations(self, n):
         self.nIterations = n
 
+    ####################################################################################################################
+
+    def getNEquations(self):
+        return self.nEquations
+
+    def getMethod(self):
+        return self.method
+
+    def getARE(self):
+        return self.ARE
+
+    def getLUForm(self):
+        return self.LUForm
+
+    def getPrecision(self):
+        return self.precision
+
+    def getStopCondition(self):
+        return self.stopCondition
+
+    def getNIterations(self):
+        return self.nIterations
+
     def getTitle(self):
         self.title = f"Solving {self.nEquations} x {self.nEquations} System of Equations"
         return self.title
@@ -49,8 +73,13 @@ class Commands:
                 if self.a[i][j].text() == "":
                     return False
                 self.a[i][j] = decimal(a[i][j].text())
-                print(self.a[i][j].text())
             print(self.nEquations)
+        return True
+
+    def isInitialGuessValid(self, initialGuess):
+        for i in range(0, int(self.nEquations)):
+            if initialGuess[i].text() == "":
+                return False
         return True
 
     #Calls the methods

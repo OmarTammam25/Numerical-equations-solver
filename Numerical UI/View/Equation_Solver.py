@@ -1,14 +1,16 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QDoubleValidator
 from Controller.Commands import Commands
+from View.Initial_Guess import Ui_InitialGuess
 from View.Solution_Window import Ui_resultsWindow
 
 
 class Ui_MainWindow(object):
     coef = [[0 for x in range(100)] for y in range(100)]  # Coefficient matrix
     b = []  # results
-    prev = 2
     command = Commands()
+    solutionWindow = Ui_resultsWindow()
+    initialGuessWindow = Ui_InitialGuess()
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -70,12 +72,6 @@ class Ui_MainWindow(object):
                 self.gridLayout.addWidget(self.e, i + 4, j)
                 if i < 2 and j < 2:
                     self.e.show()
-                # elif i == 100 or j == 100:
-                #     self.e.setStyleSheet("background-color:rgb(255, 253, 184)\n"
-                #                          "border-color: rgb(255, 253, 184)")
-                #     self.e.setDisabled(True)
-                #     self.e.show()
-                #     continue
                     print(i)
                 else:
                     self.e.setStyleSheet("background-color:rgb(255, 253, 184)\n"
@@ -174,6 +170,7 @@ class Ui_MainWindow(object):
         self.nEquations.setGeometry(QtCore.QRect(30, 250, 151, 21))
         self.nEquations.setStyleSheet("background-color:rgb(255, 255, 255)")
         self.nEquations.setButtonSymbols(QtWidgets.QAbstractSpinBox.UpDownArrows)
+        self.nEquations.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.nEquations.setMinimum(2)
         self.nEquations.setMaximum(100)
         self.nEquations.setObjectName("nEquations")
@@ -184,6 +181,7 @@ class Ui_MainWindow(object):
         # Method to solve the equation
         self.LU = QtWidgets.QComboBox(self.scrollAreaWidgetContents)
         self.LU.setGeometry(QtCore.QRect(30, 180, 151, 22))
+        self.LU.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.LU.setStyleSheet("background-color:rgb(255, 255, 255)")
         self.LU.setObjectName("LU")
         self.LU.addItem("")
@@ -198,6 +196,7 @@ class Ui_MainWindow(object):
         # Precision
         self.precision = QtWidgets.QSpinBox(self.scrollAreaWidgetContents)
         self.precision.setGeometry(QtCore.QRect(30, 450, 151, 22))
+        self.precision.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.precision.setStyleSheet("background-color:rgb(255, 255, 255)")
         self.precision.setMinimum(2)
         self.precision.setMaximum(20)
@@ -210,6 +209,7 @@ class Ui_MainWindow(object):
         self.ARE = QtWidgets.QDoubleSpinBox(self.scrollAreaWidgetContents)
         self.ARE.setEnabled(False)
         self.ARE.setGeometry(QtCore.QRect(30, 390, 151, 22))
+        self.ARE.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.ARE.setStyleSheet("background-color:rgb(255, 255, 255)")
         self.ARE.setDecimals(6)
         self.ARE.setSingleStep(1e-06)
@@ -223,6 +223,7 @@ class Ui_MainWindow(object):
         self.stopContition.setEnabled(False)
         self.stopContition.setGeometry(QtCore.QRect(30, 530, 151, 22))
         self.stopContition.setStyleSheet("background-color:rgb(255, 255, 255)")
+        self.stopContition.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.stopContition.setObjectName("stopContition")
         self.stopContition.addItem("")
         self.stopContition.addItem("")
@@ -235,6 +236,7 @@ class Ui_MainWindow(object):
         self.nIteration = QtWidgets.QSpinBox(self.scrollAreaWidgetContents)
         self.nIteration.setEnabled(False)
         self.nIteration.setGeometry(QtCore.QRect(30, 620, 151, 22))
+        self.nIteration.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.nIteration.setStyleSheet("background-color:rgb(255, 255, 255)")
         self.nIteration.setMinimum(2)
         self.nIteration.setMaximum(150)
@@ -343,6 +345,8 @@ class Ui_MainWindow(object):
         elif method == "Gauss-Seidel" or method == "Jacobi-Iteration":
             self.method.setEnabled(False)
             self.stopContition.setEnabled(True)
+            self.initialGuessWindow.nEquations = int(self.nEquations.text())
+            self.open_initial_guess_window()
         else:
             self.method.setEnabled(False)
             self.stopContition.setEnabled(False)
@@ -363,8 +367,6 @@ class Ui_MainWindow(object):
 
     def showTitleAndChangeCells(self):
         n = int(self.nEquations.text())
-        # if self.prev != n + 1 or self.prev != n - 1:
-        #     self.nEquations.setDisabled()
         self.command.setNEquations(self.nEquations.text())
         self.nEquationDisplayed.setText(self.command.getTitle())
 
@@ -399,15 +401,8 @@ class Ui_MainWindow(object):
             self.command.setStopCondition(self.stopContition.currentText())
             self.command.setNEquations(self.nEquations.text())
             self.command.setMethod(self.method.currentText())
-            self.command.calcualte()
+        self.command.calculate()
         self.open_solution_window()
-
-    # def areFilled(self, a, b):
-    #     print(self.nEquations.text())
-    #     for i in range(0, int(self.nEquations.text())):
-    #         print(b[i])
-    #         for j in range(0, int(self.nEquations.text())):
-    #             print(a[i][j])
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -435,10 +430,14 @@ class Ui_MainWindow(object):
         self.calcutateButton.setText(_translate("MainWindow", "Calculate"))
         self.nEquationDisplayed_2.setText(_translate("MainWindow", "Equations Solver"))
 
+    def open_initial_guess_window(self):
+        self.window = QtWidgets.QMainWindow()
+        self.initialGuessWindow.setupUi(self.window)
+        self.window.show()
+
     def open_solution_window(self):
         self.window = QtWidgets.QMainWindow()
-        self.ui = Ui_resultsWindow()
-        self.ui.setupUi(self.window)
+        self.solutionWindow.setupUi(self.window)
         self.window.show()
 
 if __name__ == "__main__":
