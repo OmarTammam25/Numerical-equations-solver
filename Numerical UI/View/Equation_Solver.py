@@ -199,9 +199,9 @@ class Ui_MainWindow(object):
         self.precision = QtWidgets.QSpinBox(self.scrollAreaWidgetContents)
         self.precision.setGeometry(QtCore.QRect(30, 450, 151, 22))
         self.precision.setStyleSheet("background-color:rgb(255, 255, 255)")
-        self.precision.setMinimum(1)
-        self.precision.setMaximum(30)
-        self.precision.setProperty("value", 5)
+        self.precision.setMinimum(2)
+        self.precision.setMaximum(20)
+        self.precision.setProperty("value", 2)
         self.precision.setObjectName("precision")
 
         ################################################################################################################
@@ -275,9 +275,6 @@ class Ui_MainWindow(object):
                                  "font-weight: bold")
             self.e.setText(f"X{i}")
             self.variablesLayout.addWidget(self.e)
-            if i >= 2:
-                self.e.setDisabled(True)
-                self.b.append(self.e)
 
         ################################################################################################################
 
@@ -340,7 +337,6 @@ class Ui_MainWindow(object):
 
     def methodCheck(self):
         method = self.LU.currentText()
-        print(self.LU.currentText())
         if method == "LU Decomposition":
             self.method.setEnabled(True)
             self.stopContition.setEnabled(False)
@@ -398,13 +394,20 @@ class Ui_MainWindow(object):
         if self.command.areFilled(self.coef, self.b):
             self.command.setNIterations(self.nIteration.text())
             self.command.setARE(self.ARE.text())
-            self.command.setPrecision(self.precision)
+            self.command.setPrecision(self.precision.text())
             self.command.setLUForm(self.LU.currentText())
             self.command.setStopCondition(self.stopContition.currentText())
             self.command.setNEquations(self.nEquations.text())
             self.command.setMethod(self.method.currentText())
             self.command.calcualte()
         self.open_solution_window()
+
+    # def areFilled(self, a, b):
+    #     print(self.nEquations.text())
+    #     for i in range(0, int(self.nEquations.text())):
+    #         print(b[i])
+    #         for j in range(0, int(self.nEquations.text())):
+    #             print(a[i][j])
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -437,6 +440,7 @@ class Ui_MainWindow(object):
         self.ui = Ui_resultsWindow()
         self.ui.setupUi(self.window)
         self.window.show()
+
 if __name__ == "__main__":
     import sys
 
