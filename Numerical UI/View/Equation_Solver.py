@@ -1,6 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QDoubleValidator
 from Controller.Commands import Commands
+from View.Solution_Window import Ui_resultsWindow
 
 
 class Ui_MainWindow(object):
@@ -297,7 +298,6 @@ class Ui_MainWindow(object):
         self.calcutateButton.setObjectName("calcutateButton")
         self.calcutateButton.clicked.connect(self.start)
 
-
         ################################################################################################################
 
         self.programTitle = QtWidgets.QLabel(self.scrollAreaWidgetContents)
@@ -404,6 +404,7 @@ class Ui_MainWindow(object):
             self.command.setNEquations(self.nEquations.text())
             self.command.setMethod(self.method.currentText())
             self.command.calcualte()
+        self.open_solution_window()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -431,6 +432,11 @@ class Ui_MainWindow(object):
         self.calcutateButton.setText(_translate("MainWindow", "Calculate"))
         self.nEquationDisplayed_2.setText(_translate("MainWindow", "Equations Solver"))
 
+    def open_solution_window(self):
+        self.window = QtWidgets.QMainWindow()
+        self.ui = Ui_resultsWindow()
+        self.ui.setupUi(self.window)
+        self.window.show()
 if __name__ == "__main__":
     import sys
 
