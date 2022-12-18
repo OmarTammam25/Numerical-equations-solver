@@ -1,7 +1,7 @@
+import numpy as np
+
 
 class Commands:
-    a = [[0 for x in range(100)] for y in range(100)]
-    b = []
     def __init__(self):
         self.nEquations = 2
         self.method = ""
@@ -11,6 +11,7 @@ class Commands:
         self.stopCondition = "Number of Iterations"
         self.nIterations = 2
         self.b = []
+        self.a = [[]]
         self.title = f"Solving {self.nEquations} x {self.nEquations} System of Equations"
 
     def setNEquations(self, n):
@@ -40,12 +41,14 @@ class Commands:
 
     # Check validity and form arrays
     def areFilled(self, a, b):
+        self.a = np.empty((self.nEquations, self.nEquations), np.double)
+        self.b = np.empty(self.nEquations, np.double)
         for i in range(0, self.nEquations):
             if b[i].text() == "":
                 return False
-            self.b.append(b[i].text())
+            self.b[i] = b[i].text()
             for j in range(0, self.nEquations):
-                if self.a[i][j].text() == "":
+                if a[i][j].text() == "":
                     return False
                 self.a[i][j] = a[i][j].text()
             print(self.nEquations)
@@ -53,7 +56,8 @@ class Commands:
 
     #Calls the methods
     def calculate(self):
-        if self.method == "Gauss Elimination":
+        print(self)
+        if self.LUForm == "Gauss Elimination":
             print("Gauss")
 
 
