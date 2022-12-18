@@ -1,12 +1,17 @@
+import timeit
 import math
 class LU_Doolittle():
     def execute(self, a, b, n, x, tol, seg, er=0):
+        startTime = timeit.default_timer()
         s = [0] * n
         o = [0] * n
         er = 0
         self.Decompose(a, n, tol, o, s, seg, er)
         if er != -1:
             self.Substitute(a, o, n, b, x,seg)
+        endTime = timeit.default_timer()
+        time = endTime - startTime
+        print(round(time * 10 ** 3, 5), "ms")
 
     def Decompose(self, a, n, tol, o, s, seg, er):
         for i in range(0, n):

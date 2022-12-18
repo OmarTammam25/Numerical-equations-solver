@@ -19,7 +19,7 @@ if __name__ == '__main__':
          [55, 225, 979]]
     b = [76, 295, 1259]
     x = [0, 0, 0]
-    crout.Crout(a,b,x,0.00001,er)
+    crout.Crout(a,b,x,0.00001,9,er)
     print("crout",x)
     a = [[6, 15, 55],
          [15, 55, 225],

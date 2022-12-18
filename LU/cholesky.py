@@ -1,13 +1,20 @@
 import math
+import timeit
+
+from numpy.linalg import linalg
 
 
 class LU_cholesky():
     def execute(self, a, b, n, x, tol,seg,er=0):
         self.check_syemetric(a, n, er)
+        self.check_eigenValues(a, er)
+        startTime = timeit.default_timer()
         self.Decompose(a, n, tol, seg,er)
         if er != -1:
             self.Substitute(a, n, b, x,seg)
-
+        endTime = timeit.default_timer()
+        time = endTime - startTime
+        print(round(time * 10 ** 3, 5), "ms")
     def Decompose(self, a, n, tol,seg, er):
         # TODO check if it is symmetric and update the er
         l = [[0 for x in range(n)]
@@ -57,3 +64,9 @@ class LU_cholesky():
         if sig==-1:
             return x
         return round(x,sig-int(math.floor(math.log10(abs(x))))-1)
+
+    def check_eigenValues(self,a,er):
+        eigenValues = linalg.eigvals(a)
+        for i in eigenValues:
+            if i<0:
+                re = -1
