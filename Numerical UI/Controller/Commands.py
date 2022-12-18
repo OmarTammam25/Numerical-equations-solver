@@ -3,11 +3,11 @@ import numpy as np
 
 class Commands:
     def __init__(self):
-        self.nEquations = 2
+        self.nEquations = ""
         self.method = ""
         self.LUForm = ""
-        self.ARE = 0.000001
-        self.precision = 5
+        self.ARE = "0.000001"
+        self.precision = "5"
         self.stopCondition = "Number of Iterations"
         self.nIterations = 2
         self.b = []
@@ -50,7 +50,8 @@ class Commands:
             for j in range(0, self.nEquations):
                 if a[i][j].text() == "":
                     return False
-                self.a[i][j] = a[i][j].text()
+                self.a[i][j] = decimal(a[i][j].text())
+                print(self.a[i][j].text())
             print(self.nEquations)
         return True
 
