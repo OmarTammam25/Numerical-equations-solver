@@ -1,6 +1,3 @@
-from unicodedata import decimal
-
-
 class Commands:
     a = [[0 for x in range(100)] for y in range(100)]
     b = []
@@ -12,7 +9,9 @@ class Commands:
         self.ARE = "0.000001"
         self.precision = "5"
         self.stopCondition = "Number of Iterations"
-        self.nIterations = "2"
+        self.nIterations = 2
+        self.b = []
+        self.a = [[]]
         self.title = f"Solving {self.nEquations} x {self.nEquations} System of Equations"
 
     def setNEquations(self, n):
@@ -65,12 +64,14 @@ class Commands:
 
     # Check validity and form arrays
     def areFilled(self, a, b):
-        for i in range(0, int(self.nEquations)):
+        self.a = np.empty((self.nEquations, self.nEquations), np.double)
+        self.b = np.empty(self.nEquations, np.double)
+        for i in range(0, self.nEquations):
             if b[i].text() == "":
                 return False
-            self.b.append(decimal(b[i].text()))
-            for j in range(0, int(self.nEquations)):
-                if self.a[i][j].text() == "":
+            self.b[i] = b[i].text()
+            for j in range(0, self.nEquations):
+                if a[i][j].text() == "":
                     return False
                 self.a[i][j] = decimal(a[i][j].text())
             print(self.nEquations)
@@ -84,7 +85,8 @@ class Commands:
 
     #Calls the methods
     def calculate(self):
-        if self.method == "Gauss Elimination":
+        print(self)
+        if self.LUForm == "Gauss Elimination":
             print("Gauss")
 
 

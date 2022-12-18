@@ -69,7 +69,7 @@ class Ui_MainWindow(object):
                 self.e = QtWidgets.QLineEdit(self.gridLayoutWidget)
                 self.e.setStyleSheet("background-color:rgb(255, 255, 255)\n")
                 self.e.setValidator(self.validator)
-                self.gridLayout.addWidget(self.e, i + 4, j)
+                self.gridLayout.addWidget(self.e, i +10, j)
                 if i < 2 and j < 2:
                     self.e.show()
                     print(i)
@@ -393,6 +393,7 @@ class Ui_MainWindow(object):
                 self.gridLayout.itemAt(100 * j + n).widget().setStyleSheet("background-color:rgb((255, 253, 184)")
 
     def start(self):
+
         if self.command.areFilled(self.coef, self.b):
             self.command.setNIterations(self.nIteration.text())
             self.command.setARE(self.ARE.text())
