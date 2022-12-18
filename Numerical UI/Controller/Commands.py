@@ -40,8 +40,6 @@ class Commands:
 
     # Check validity and form arrays
     def areFilled(self, a, b):
-        self.b.clear()
-        self.a.clear()
         for i in range(0, self.nEquations):
             if b[i].text() == "":
                 return False
@@ -50,6 +48,7 @@ class Commands:
                 if self.a[i][j].text() == "":
                     return False
                 self.a[i][j] = a[i][j].text()
+            print(self.nEquations)
         return True
 
     #Calls the methods

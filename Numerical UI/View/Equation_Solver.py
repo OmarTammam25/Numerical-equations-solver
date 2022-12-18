@@ -6,6 +6,7 @@ from Controller.Commands import Commands
 class Ui_MainWindow(object):
     coef = [[0 for x in range(100)] for y in range(100)]  # Coefficient matrix
     b = []  # results
+    prev = 2
     command = Commands()
 
     def setupUi(self, MainWindow):
@@ -37,18 +38,17 @@ class Ui_MainWindow(object):
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
 
         self.bVector = QtWidgets.QWidget(self.scrollAreaWidgetContents)
-        self.bVector.setGeometry(QtCore.QRect(250, 240, 100, 2600))
+        self.bVector.setGeometry(QtCore.QRect(250, 240, 100, 5000))
         self.bVector.setObjectName("bVector")
         self.bVectorLayout = QtWidgets.QVBoxLayout(self.bVector)
         self.bVectorLayout.setContentsMargins(10, 0, 10, 0)
         self.bVectorLayout.setObjectName("bVectorLayout")
 
         self.variables = QtWidgets.QWidget(self.scrollAreaWidgetContents)
-        self.variables.setGeometry(QtCore.QRect(250, 190, 8500, 50))
+        self.variables.setGeometry(QtCore.QRect(275, 190, 8630, 50))
         self.variables.setObjectName("variables")
-        self.variablesLayout = QtWidgets.QVBoxLayout(self.variables)
+        self.variablesLayout = QtWidgets.QHBoxLayout(self.variables)
         self.variablesLayout.setContentsMargins(10, 0, 10, 0)
-        self.variablesLayout.setObjectName("bVectorLayout")
 
         self.gridLayoutWidget = QtWidgets.QWidget(self.scrollAreaWidgetContents)
         self.gridLayoutWidget.setGeometry(QtCore.QRect(350, 240, 8500, 2600))
@@ -64,11 +64,18 @@ class Ui_MainWindow(object):
         for i in range(0, 100):
             for j in range(0, 100):
                 self.e = QtWidgets.QLineEdit(self.gridLayoutWidget)
-                self.e.setStyleSheet("background-color:rgb(255, 255, 255)")
+                self.e.setStyleSheet("background-color:rgb(255, 255, 255)\n")
                 self.e.setValidator(self.validator)
                 self.gridLayout.addWidget(self.e, i + 4, j)
                 if i < 2 and j < 2:
                     self.e.show()
+                # elif i == 100 or j == 100:
+                #     self.e.setStyleSheet("background-color:rgb(255, 253, 184)\n"
+                #                          "border-color: rgb(255, 253, 184)")
+                #     self.e.setDisabled(True)
+                #     self.e.show()
+                #     continue
+                    print(i)
                 else:
                     self.e.setStyleSheet("background-color:rgb(255, 253, 184)\n"
                                          "border-color: rgb(255, 253, 184)")
@@ -95,6 +102,55 @@ class Ui_MainWindow(object):
                                        "font: 11pt \"Century Gothic\";\n"
                                        "font-weight: bold")
         self.methodLable.setObjectName("methodLabel")
+
+        ################################################################################################################
+
+        # Labels
+        self.nEquationsLable = QtWidgets.QLabel(self.scrollAreaWidgetContents)
+        self.nEquationsLable.setGeometry(QtCore.QRect(30, 220, 151, 20))
+        self.nEquationsLable.setStyleSheet("color: rgb(121, 104, 62);\n"
+                                           "font: 11pt \"Century Gothic\";\n"
+                                           "font-weight: bold")
+        self.nEquationsLable.setObjectName("nEquationsLable")
+        self.LULable = QtWidgets.QLabel(self.scrollAreaWidgetContents)
+        self.LULable.setGeometry(QtCore.QRect(30, 290, 111, 16))
+        self.LULable.setStyleSheet("color: rgb(121, 104, 62);\n"
+                                   "font: 11pt \"Century Gothic\";\n"
+                                   "font-weight: bold")
+        self.LULable.setObjectName("LULable")
+
+        self.ARELable = QtWidgets.QLabel(self.scrollAreaWidgetContents)
+        self.ARELable.setGeometry(QtCore.QRect(30, 360, 171, 16))
+        self.ARELable.setStyleSheet("color: rgb(121, 104, 62);\n"
+                                    "font: 11pt \"Century Gothic\";\n"
+                                    "font-weight: bold")
+        self.ARELable.setObjectName("ARELable")
+        self.precisionLable = QtWidgets.QLabel(self.scrollAreaWidgetContents)
+        self.precisionLable.setGeometry(QtCore.QRect(30, 430, 121, 16))
+        self.precisionLable.setStyleSheet("color: rgb(121, 104, 62);\n"
+                                          "font: 11pt \"Century Gothic\";\n"
+                                          "font-weight: bold")
+        self.precisionLable.setObjectName("precisionLable")
+        self.stopConditionLable = QtWidgets.QLabel(self.scrollAreaWidgetContents)
+        self.stopConditionLable.setGeometry(QtCore.QRect(30, 490, 161, 20))
+        self.stopConditionLable.setStyleSheet("color: rgb(121, 104, 62);\n"
+                                              "font: 11pt \"Century Gothic\";\n"
+                                              "font-weight: bold")
+        self.stopConditionLable.setObjectName("stopConditionLable")
+
+        self.nIterationLable = QtWidgets.QLabel(self.scrollAreaWidgetContents)
+        self.nIterationLable.setGeometry(QtCore.QRect(30, 580, 151, 21))
+        self.nIterationLable.setStyleSheet("color: rgb(121, 104, 62);\n"
+                                           "font: 11pt \"Century Gothic\";\n"
+                                           "font-weight: bold")
+        self.nIterationLable.setObjectName("nIterationLable")
+
+        self.nEquationDisplayed_2 = QtWidgets.QLabel(self.scrollAreaWidgetContents)
+        self.nEquationDisplayed_2.setGeometry(QtCore.QRect(30, 40, 581, 61))
+        self.nEquationDisplayed_2.setStyleSheet("color: rgb(121, 104, 62);\n"
+                                                "font: 25pt \"Segoe script\";\n"
+                                                "font-weight: bold")
+        self.nEquationDisplayed_2.setObjectName("nEquationDisplayed_2")
 
         ################################################################################################################
 
@@ -185,74 +241,6 @@ class Ui_MainWindow(object):
 
         ################################################################################################################
 
-        self.nEquationsLable = QtWidgets.QLabel(self.scrollAreaWidgetContents)
-        self.nEquationsLable.setGeometry(QtCore.QRect(30, 220, 151, 20))
-        self.nEquationsLable.setStyleSheet("color: rgb(121, 104, 62);\n"
-                                           "font: 11pt \"Century Gothic\";\n"
-                                           "font-weight: bold")
-        self.nEquationsLable.setObjectName("nEquationsLable")
-        self.LULable = QtWidgets.QLabel(self.scrollAreaWidgetContents)
-        self.LULable.setGeometry(QtCore.QRect(30, 290, 111, 16))
-        self.LULable.setStyleSheet("color: rgb(121, 104, 62);\n"
-                                   "font: 11pt \"Century Gothic\";\n"
-                                   "font-weight: bold")
-        self.LULable.setObjectName("LULable")
-
-        self.ARELable = QtWidgets.QLabel(self.scrollAreaWidgetContents)
-        self.ARELable.setGeometry(QtCore.QRect(30, 360, 171, 16))
-        self.ARELable.setStyleSheet("color: rgb(121, 104, 62);\n"
-                                    "font: 11pt \"Century Gothic\";\n"
-                                    "font-weight: bold")
-        self.ARELable.setObjectName("ARELable")
-        self.precisionLable = QtWidgets.QLabel(self.scrollAreaWidgetContents)
-        self.precisionLable.setGeometry(QtCore.QRect(30, 430, 121, 16))
-        self.precisionLable.setStyleSheet("color: rgb(121, 104, 62);\n"
-                                          "font: 11pt \"Century Gothic\";\n"
-                                          "font-weight: bold")
-        self.precisionLable.setObjectName("precisionLable")
-        self.stopConditionLable = QtWidgets.QLabel(self.scrollAreaWidgetContents)
-        self.stopConditionLable.setGeometry(QtCore.QRect(30, 490, 161, 20))
-        self.stopConditionLable.setStyleSheet("color: rgb(121, 104, 62);\n"
-                                              "font: 11pt \"Century Gothic\";\n"
-                                              "font-weight: bold")
-        self.stopConditionLable.setObjectName("stopConditionLable")
-
-        self.nIterationLable = QtWidgets.QLabel(self.scrollAreaWidgetContents)
-        self.nIterationLable.setGeometry(QtCore.QRect(30, 580, 151, 21))
-        self.nIterationLable.setStyleSheet("color: rgb(121, 104, 62);\n"
-                                           "font: 11pt \"Century Gothic\";\n"
-                                           "font-weight: bold")
-        self.nIterationLable.setObjectName("nIterationLable")
-
-        ################################################################################################################
-
-        self.calcutateButton = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
-        self.calcutateButton.setGeometry(QtCore.QRect(30, 670, 151, 61))
-        font = QtGui.QFont()
-        font.setFamily("Century Gothic")
-        font.setPointSize(10)
-        font.setBold(True)
-        font.setWeight(75)
-        self.calcutateButton.setFont(font)
-        self.calcutateButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.calcutateButton.setAcceptDrops(True)
-        self.calcutateButton.setStyleSheet("background-color:rgb(200, 176, 127);\n"
-                                           "color:12px rgb(106, 98, 71);\n"
-                                           "font-weight: bold;")
-        self.calcutateButton.setObjectName("calcutateButton")
-        self.calcutateButton.clicked.connect(self.start)
-
-        ################################################################################################################
-
-        self.nEquationDisplayed_2 = QtWidgets.QLabel(self.scrollAreaWidgetContents)
-        self.nEquationDisplayed_2.setGeometry(QtCore.QRect(30, 40, 581, 61))
-        self.nEquationDisplayed_2.setStyleSheet("color: rgb(121, 104, 62);\n"
-                                                "font: 25pt \"Segoe script\";\n"
-                                                "font-weight: bold")
-        self.nEquationDisplayed_2.setObjectName("nEquationDisplayed_2")
-
-        ################################################################################################################
-
         # b cells
         for i in range(0, 200):
             self.e = QtWidgets.QLineEdit(self.bVector)
@@ -269,21 +257,46 @@ class Ui_MainWindow(object):
 
         ################################################################################################################
 
-        # Lables
-        for i in range(0, 10):
+        # Labels
+        for i in range(0, 101):
             self.e = QtWidgets.QLabel(self.variables)
-            self.e.setStyleSheet("background-color:rgb(0, 0, 0)\n"
-                                 "color: rgb(255, 255, 255)")
-            self.e.setText("aaa")
+
+            if i == 0:
+                self.e.setStyleSheet("color:rgb(121, 104, 62)\n"
+                                     "font: 20pt italic \"Segue script\";\n"
+                                     "font-weight: bold")
+                self.e.setText("B Vector")
+                self.variablesLayout.addWidget(self.e)
+                continue
+
+            self.e.setStyleSheet("color:rgb(121, 104, 62)\n"
+                                 "font: 20pt bold italic \"Segue script\";\n"
+                                 "font-weight: bold")
+            self.e.setText(f"X{i}")
             self.variablesLayout.addWidget(self.e)
-            print(self.e)
-            self.e.setVisible(True)
-            if i < 2:
-                self.e.show()
-            else:
+            if i >= 2:
                 self.e.setDisabled(True)
-                self.e.setStyleSheet("background-color:rgb(0, 0, 0)")
-            self.b.append(self.e)
+                self.b.append(self.e)
+
+        ################################################################################################################
+
+        # Calculate button
+        self.calcutateButton = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
+        self.calcutateButton.setGeometry(QtCore.QRect(30, 670, 151, 61))
+        font = QtGui.QFont()
+        font.setFamily("Century Gothic")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.calcutateButton.setFont(font)
+        self.calcutateButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.calcutateButton.setAcceptDrops(True)
+        self.calcutateButton.setStyleSheet("background-color:rgb(200, 176, 127);\n"
+                                           "color:12px rgb(106, 98, 71);\n"
+                                           "font-weight: bold;")
+        self.calcutateButton.setObjectName("calcutateButton")
+        self.calcutateButton.clicked.connect(self.start)
+
 
         ################################################################################################################
 
@@ -334,12 +347,11 @@ class Ui_MainWindow(object):
         elif method == "Gauss-Seidel" or method == "Jacobi-Iteration":
             self.method.setEnabled(False)
             self.stopContition.setEnabled(True)
-            # self.ui = Ui_InitialGuess()
-            # self.ui.setupUi(MainWindow)
         else:
             self.method.setEnabled(False)
             self.stopContition.setEnabled(False)
             self.nIteration.setEnabled(False)
+            self.ARE.setEnabled(False)
 
     def checkStop(self):
         stop = self.stopContition.currentText()
@@ -354,24 +366,31 @@ class Ui_MainWindow(object):
             self.ARE.setEnabled(True)
 
     def showTitleAndChangeCells(self):
+        n = int(self.nEquations.text())
+        # if self.prev != n + 1 or self.prev != n - 1:
+        #     self.nEquations.setDisabled()
         self.command.setNEquations(self.nEquations.text())
         self.nEquationDisplayed.setText(self.command.getTitle())
-        n = int(self.nEquations.text())
 
+        # only one-step increment is allowed!!
         # increase number of equations
         if not (self.gridLayout.itemAt(n - 1).widget().isEnabled()):
-            for i in range(0, n):
+            self.bVectorLayout.itemAt(n - 1).widget().setEnabled(True)
+            self.bVectorLayout.itemAt(n - 1).widget().setStyleSheet("background-color:rgb(255, 255, 255)")
+            for i in range(0, n):  # Horizontal increment
                 self.gridLayout.itemAt(100 * (n - 1) + i).widget().setEnabled(True)
                 self.gridLayout.itemAt(100 * (n - 1) + i).widget().setStyleSheet("background-color:rgb(255, 255, 255)")
-            for j in range(0, n):
+            for j in range(0, n):  # Vertical increment
                 self.gridLayout.itemAt(100 * j + (n - 1)).widget().setEnabled(True)
                 self.gridLayout.itemAt(100 * j + (n - 1)).widget().setStyleSheet("background-color:rgb(255, 255, 255)")
         else:
             # decrease number of equations
-            for i in range(0, n):
+            self.bVectorLayout.itemAt(n).widget().setEnabled(False)
+            self.bVectorLayout.itemAt(n).widget().setStyleSheet("background-color:rgb((255, 253, 184)")
+            for i in range(0, n):  # Horizontal decrement
                 self.gridLayout.itemAt(100 * n + i).widget().setEnabled(False)
                 self.gridLayout.itemAt(100 * n + i).widget().setStyleSheet("background-color:rgb(255, 253, 184)")
-            for j in range(0, n + 1):
+            for j in range(0, n + 1):  # Vertical decrement
                 self.gridLayout.itemAt(100 * j + n).widget().setEnabled(False)
                 self.gridLayout.itemAt(100 * j + n).widget().setStyleSheet("background-color:rgb((255, 253, 184)")
 
@@ -411,8 +430,6 @@ class Ui_MainWindow(object):
         self.nIterationLable.setText(_translate("MainWindow", "Number of iterations"))
         self.calcutateButton.setText(_translate("MainWindow", "Calculate"))
         self.nEquationDisplayed_2.setText(_translate("MainWindow", "Equations Solver"))
-        # self.label_2.setText(_translate("MainWindow", "X1"))
-        # self.label.setText(_translate("MainWindow", "X2"))
 
 if __name__ == "__main__":
     import sys
