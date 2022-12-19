@@ -36,7 +36,7 @@ class Ui_resultsWindow(object):
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setColumnWidth(0, 100000000)
         self.tableWidget.setColumnCount(2)
-        self.tableWidget.setRowCount(sol.size)
+        self.tableWidget.setRowCount(len(sol))
         header = self.tableWidget.horizontalHeader()
         header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
         row = 0

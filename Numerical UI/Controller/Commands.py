@@ -1,6 +1,9 @@
 from unicodedata import decimal
 import numpy as np
 
+from Controller.Gauss import Gauss
+
+
 class Commands:
     initialGuess = []
     def __init__(self):
@@ -93,8 +96,8 @@ class Commands:
     #Calls the methods
     def calculate(self):
         sol = 0.0
-        return np.array([1.1,2.2,3.3,414])
-        # if self.LUForm == "Gauss Elimination":
+        if self.LUForm == "Gauss Elimination":
+            return Gauss(self.a, self.b, 0.00000005, 20).solve()
         #     if(isLetterCoefficients):
         #         sol = GaussWithCoefficients(a,b, self.ARE, self.precision)
         #     else:
