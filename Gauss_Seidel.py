@@ -25,7 +25,7 @@ class GaussSeidel(EquationSolver):
                 x1[i] = (self.b[i] - temp) / self.a[i][i]
                 x1[i] = self.round_sig(x1[i], self.sig)
                 e[i] = (abs(self.x0[i] - x1[i]) / float(abs(x1[i])))
-                condition |= (e[i] > self.er)
+                condition |= (e[i] > self.tol)
 
             self.x0 = x1.copy()
             count = count + 1

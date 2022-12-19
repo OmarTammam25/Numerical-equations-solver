@@ -1,12 +1,13 @@
-from EquationSolver import EquationSolver
+from Gauss import Gauss
 
-class GaussWithCoefficients(EquationSolver):
-    def __init__(self, a, b, maxError, significantDigits):
-        super().__init__(a, b, maxError, significantDigits)
 
-    def gaussElimination(self):
-        a, b = self.forwardElimination()
-        x = self.backwardSubstitution(a, b)
+class GaussWithCoefficients(Gauss):
+    def __init__(self, a, b, maxError, significantDigits, scaling=False):
+        super().__init__(a, b, maxError, significantDigits, scaling)
+
+    def solve(self):
+        self.a, self.b = self.forwardElimination()
+        x = self.backwardSubstitution(self.a, self.b)
         return x
 
     def forwardElimination(self):

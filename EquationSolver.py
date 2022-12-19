@@ -10,7 +10,7 @@ class EquationSolver:
         self.numOfEquations = len(b)
         self.numOfVariables = len(a[0])
         # self.s = self.getMaxInEachRow()
-        self.er = maxError
+        self.tol = maxError
         self.sig = significantDigits
 
     def solve(self):
@@ -90,4 +90,4 @@ class EquationSolver:
             return 0
         if(sig == -1):
             return x
-        return round(x, sig - int(math.floor(math.log10(abs(x)))) - 1)
+        return float('%.*g' % (sig, x))
