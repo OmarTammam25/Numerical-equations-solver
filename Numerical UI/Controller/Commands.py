@@ -65,17 +65,19 @@ class Commands:
 
     # Check validity and form arrays
     def areFilled(self, a, b):
-        self.a = np.empty((int(self.nEquations), int(self.nEquations)), np.double)
-        self.b = np.empty(int(self.nEquations), np.double)
+        self.a = np.empty((int(self.nEquations), int(self.nEquations)))
+        self.b = np.empty(int(self.nEquations))
         for i in range(0, int(self.nEquations)):
             if b[i].text() == "":
                 return False
-            self.b[i] = decimal(b[i].text())
+            self.b[i] = b[i].text()
             for j in range(0, int(self.nEquations)):
                 if a[i][j].text() == "":
                     return False
-                self.a[i][j] = decimal(a[i][j].text())
+                self.a[i][j] = a[i][j].text()
             print(self.nEquations)
+        self.a = self.a.astype(np.double)
+        self.b = self.b.astype(np.double)
         return True
 
     def isInitialGuessValid(self, initialGuess):
@@ -86,11 +88,24 @@ class Commands:
 
     #Calls the methods
     def calculate(self):
-        print(self)
-        if self.LUForm == "Gauss Elimination":
-            print("Gauss")
+        sol = 0.0
+        return np.array([1.1,2.2,3.3,414])
+        # if self.LUForm == "Gauss Elimination":
+        #     if(isLetterCoefficients):
+        #         sol = GaussWithCoefficients(a,b, self.ARE, self.precision)
+        #     else:
+        #         sol = Gauss.solve(a, b, self.ARE, self.precision)
+        # elif self.LUForm == "Gauss-Jordan":
+        #     if (isLetterCoefficients):
+        #         sol = GaussJordanWithCofficients(a, b, self.ARE, self.precision)
+        #     else:
+        #         sol = GaussJordan(a, b, self.ARE, self.precision)
+        # elif self.LUForm == "Gauss-Seidel":
+        #     sol = GaussSeidel(a, b, self.ARE, self.precision)
+        # elif self.LUForm == "Jacobi-Iteration":
+        #     sol = Jacobi(a, b, self.ARE, self.precision)
 
-
+        #solution is stored in sol
 
 
 

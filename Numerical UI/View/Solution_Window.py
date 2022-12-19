@@ -1,8 +1,12 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+import numpy as np
 
 class Ui_resultsWindow(object):
-    def setupUi(self, resultsWindow):
+
+    # def __init__(self):
+    #     # self.sol = solutionVector
+    #     self.sol = np.array([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16])
+    def setupUi(self, resultsWindow, sol):
         resultsWindow.setObjectName("resultsWindow")
         resultsWindow.resize(1450, 927)
         self.centralwidget = QtWidgets.QWidget(resultsWindow)
@@ -30,8 +34,22 @@ class Ui_resultsWindow(object):
         self.tableWidget.setMinimumSize(QtCore.QSize(2, 0))
         self.tableWidget.setStyleSheet("border-radius: 10px")
         self.tableWidget.setObjectName("tableWidget")
-        self.tableWidget.setColumnCount(0)
-        self.tableWidget.setRowCount(0)
+        self.tableWidget.setColumnWidth(0, 100000000)
+        self.tableWidget.setColumnCount(2)
+        self.tableWidget.setRowCount(sol.size)
+        header = self.tableWidget.horizontalHeader()
+        header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
+        row = 0
+        for i in sol:
+            self.tableWidget.setItem(row, 0, QtWidgets.QTableWidgetItem('x' + str(row)))
+            self.tableWidget.setItem(row, 1, QtWidgets.QTableWidgetItem(str(i)))
+            self.tableWidget.item(row, 0).setBackground(QtGui.QColor(255,255,255))
+            self.tableWidget.item(row, 1).setBackground(QtGui.QColor(255, 255, 255))
+            self.tableWidget.item(row, 0).setTextAlignment(QtCore.Qt.AlignCenter)
+            self.tableWidget.item(row, 1).setTextAlignment(QtCore.Qt.AlignCenter)
+            self.tableWidget.item(row, 0).setFlags(QtCore.Qt.ItemIsEnabled)
+            self.tableWidget.item(row, 1).setFlags(QtCore.Qt.ItemIsEnabled)
+            row += 1
 
         self.solutionLable = QtWidgets.QLabel(self.scrollAreaWidgetContents_2)
         self.solutionLable.setGeometry(QtCore.QRect(80, 10, 201, 51))

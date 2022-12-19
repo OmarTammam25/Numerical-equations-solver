@@ -245,7 +245,7 @@ class Ui_MainWindow(object):
         self.format.setObjectName("equationsFormate")
         self.format.addItem("")
         self.format.addItem("")
-        # self.format.currentTextChanged.connect(self.changeFormat)
+        #self.format.currentTextChanged.connect(self.changeFormat)
 
         ################################################################################################################
 
@@ -482,8 +482,8 @@ class Ui_MainWindow(object):
             self.command.setStopCondition(self.stopContition.currentText())
             self.command.setNEquations(self.nEquations.text())
             self.command.setMethod(self.method.currentText())
-        self.command.calculate()
-        self.open_solution_window()
+        sol = self.command.calculate()
+        self.open_solution_window(sol)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -520,9 +520,9 @@ class Ui_MainWindow(object):
         self.initialGuessWindow.setupUi(self.window)
         self.window.show()
 
-    def open_solution_window(self):
+    def open_solution_window(self, sol):
         self.window = QtWidgets.QMainWindow()
-        self.solutionWindow.setupUi(self.window)
+        self.solutionWindow.setupUi(self.window, sol)
         self.window.show()
 
 
