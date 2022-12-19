@@ -13,6 +13,7 @@ class Commands:
         self.nIterations = 2
         self.b = []
         self.a = [[]]
+        self.isLetters = False
         self.title = f"Solving {self.nEquations} x {self.nEquations} System of Equations"
 
     def setNEquations(self, n):
@@ -35,6 +36,9 @@ class Commands:
 
     def setNIterations(self, n):
         self.nIterations = n
+
+    def setLetters(self, formate):
+        self.isLetters = formate
 
     ####################################################################################################################
 

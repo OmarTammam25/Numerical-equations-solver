@@ -40,19 +40,9 @@ class Ui_MainWindow(object):
         self.scrollAreaWidgetContents.setMinimumSize(QtCore.QSize(9000, 2900))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
 
-        # self.bVector = QtWidgets.QWidget(self.scrollAreaWidgetContents)
-        # self.bVector.setGeometry(QtCore.QRect(250, 240, 100, 5000))
-        # self.bVector.setObjectName("bVector")
-        # self.bVectorLayout = QtWidgets.QVBoxLayout(self.bVector)
-        # self.bVectorLayout.setContentsMargins(10, 0, 10, 0)
-        # self.bVectorLayout.setObjectName("bVectorLayout")
+        ################################################################################################################
 
-        # self.variables = QtWidgets.QWidget(self.scrollAreaWidgetContents)
-        # self.variables.setGeometry(QtCore.QRect(275, 190, 8630, 50))
-        # self.variables.setObjectName("variables")
-        # self.variablesLayout = QtWidgets.QHBoxLayout(self.variables)
-        # self.variablesLayout.setContentsMargins(10, 0, 10, 0)
-
+        # Grid Layout
         self.gridLayoutWidget = QtWidgets.QWidget(self.scrollAreaWidgetContents)
         self.gridLayoutWidget.setGeometry(QtCore.QRect(250, 190, 8500, 2600))
         self.gridLayoutWidget.setObjectName("gridLayoutWidget")
@@ -60,7 +50,7 @@ class Ui_MainWindow(object):
         self.gridLayout.setContentsMargins(10, 0, 10, 0)
         self.gridLayout.setObjectName("gridLayout")
 
-        #########################################################################################################
+        ################################################################################################################
 
         # Grid Formation
         self.validator = QDoubleValidator()
@@ -100,7 +90,7 @@ class Ui_MainWindow(object):
 
         ################################################################################################################
 
-        # Tools
+        # Tools Layout
         self.columnView = QtWidgets.QColumnView(self.scrollAreaWidgetContents)
         self.columnView.setGeometry(QtCore.QRect(20, 140, 191, 680))
         self.columnView.setStyleSheet("background-color:rgb(255, 253, 184);\n"
@@ -110,7 +100,7 @@ class Ui_MainWindow(object):
 
         ################################################################################################################
 
-        # Labels
+        # All Labels
         self.nEquationDisplayed = QtWidgets.QLabel(self.scrollAreaWidgetContents)
         self.nEquationDisplayed.setGeometry(QtCore.QRect(220, 120, 620, 40))
         self.nEquationDisplayed.setStyleSheet("color: rgb(121, 104, 62);\n"
@@ -300,42 +290,6 @@ class Ui_MainWindow(object):
 
         ################################################################################################################
 
-        # # b cells
-        # for i in range(0, 200):
-        #     self.e = QtWidgets.QLineEdit(self.bVector)
-        #     self.e.setStyleSheet("background-color:rgb(255, 255, 255)")
-        #     self.e.setValidator(self.validator)
-        #     self.bVectorLayout.addWidget(self.e)
-        #     if i < 2:
-        #         self.e.show()
-        #     else:
-        #         self.e.setStyleSheet("background-color:rgb(255, 253, 184)\n"
-        #                              "border-color: rgb(255, 253, 184)")
-        #         self.e.setDisabled(True)
-        #     self.b.append(self.e)
-
-        ################################################################################################################
-
-        # Labels
-        # for i in range(0, 101):
-        #     self.e = QtWidgets.QLabel(self.variables)
-        #
-        #     if i == 0:
-        #         self.e.setStyleSheet("color:rgb(121, 104, 62)\n"
-        #                              "font: 20pt italic \"Segue script\";\n"
-        #                              "font-weight: bold")
-        #         self.e.setText("B Vector")
-        #         self.variablesLayout.addWidget(self.e)
-        #         continue
-        #
-        #     self.e.setStyleSheet("color:rgb(121, 104, 62)\n"
-        #                          "font: 20pt bold italic \"Segue script\";\n"
-        #                          "font-weight: bold")
-        #     self.e.setText(f"X{i}")
-        #     self.variablesLayout.addWidget(self.e)
-
-        ################################################################################################################
-
         # Initial Guess Button
         self.initialGuessButton = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
         self.initialGuessButton.setGeometry(QtCore.QRect(30, 870, 151, 61))
@@ -419,8 +373,8 @@ class Ui_MainWindow(object):
             self.method.setEnabled(False)
             self.stopContition.setEnabled(True)
             self.initialGuessWindow.nEquations = int(self.nEquations.text())
+            self.initialGuessWindow.command = self.command
             self.initialGuessButton.setVisible(True)
-            self.open_initial_guess_window()
         else:
             self.method.setEnabled(False)
             self.stopContition.setEnabled(False)
@@ -443,18 +397,21 @@ class Ui_MainWindow(object):
     def changeFormat(self):
         validator = QRegExpValidator()
         if self.format.currentText() == "Letters":
+            self.command.setLetters(True)
             for i in range(1, 101):
                 for j in range(1, 101):
-                    self.gridLayout.itemAt(101 * i + j + 1).widget().setValidator(validator)
+                    self.gridLayout.itemAt(101 * i + j).widget().setValidator(validator)
         else:
+            self.command.setLetters(False)
             for i in range(1, 101):
                 for j in range(1, 101):
-                    self.gridLayout.itemAt(101 * i + j + 1).widget().setValidator(self.validator)
+                    self.gridLayout.itemAt(101 * i + j).widget().setValidator(self.validator)
 
     def showTitleAndChangeCells(self):
         n = int(self.nEquations.text())
         self.command.setNEquations(self.nEquations.text())
         self.nEquationDisplayed.setText(self.command.getTitle())
+
         # only one-step increment is allowed!!
         # increase number of equations
         if not (self.gridLayout.itemAt(101 + n).widget().isEnabled()):
