@@ -6,7 +6,7 @@ from View.Solution_Window import Ui_resultsWindow
 
 
 class Ui_MainWindow(object):
-    coef = [[0 for x in range(101)] for y in range(101)]  # Coefficient matrix
+    coef = [[0 for x in range(100)] for y in range(100)]  # Coefficient matrix
     b = []  # results
     command = Commands()
     solutionWindow = Ui_resultsWindow()
@@ -85,7 +85,7 @@ class Ui_MainWindow(object):
                 self.e.setStyleSheet("background-color:rgb(255, 255, 255)\n")
                 self.e.setValidator(self.validator)
                 self.gridLayout.addWidget(self.e, i + 4, j)
-                if i < 3 and j < 2:
+                if i < 3 and j < 3:
                     self.e.show()
                     if j == 0:
                         self.b.append(self.e)
@@ -96,7 +96,7 @@ class Ui_MainWindow(object):
                     self.e.setDisabled(True)
                     if j == 0:
                         continue
-                self.coef[i][j] = self.e
+                self.coef[i - 1][j - 1] = self.e
 
         ################################################################################################################
 
@@ -458,21 +458,21 @@ class Ui_MainWindow(object):
 
         # only one-step increment is allowed!!
         # increase number of equations
-        if not (self.gridLayout.itemAt(101 + (n - 1)).widget().isEnabled()):
+        if not (self.gridLayout.itemAt(101 + n).widget().isEnabled()):
             for i in range(0, n):  # Horizontal increment
-                self.gridLayout.itemAt(101 * (n - 1) + i + 101).widget().setEnabled(True)
-                self.gridLayout.itemAt(101 * (n - 1) + i + 101).widget().setStyleSheet("background-color:rgb(255, 255, 255)")
-            for j in range(0, n):  # Vertical increment
-                self.gridLayout.itemAt(101 * j + (n - 1) + 101).widget().setEnabled(True)
-                self.gridLayout.itemAt(101 * j + (n - 1) + 101).widget().setStyleSheet("background-color:rgb(255, 255, 255)")
+                self.gridLayout.itemAt(101 * n + i).widget().setEnabled(True)
+                self.gridLayout.itemAt(101 * n + i).widget().setStyleSheet("background-color:rgb(255, 255, 255)")
+            for j in range(1, n + 1):  # Vertical increment
+                self.gridLayout.itemAt(101 * j + n).widget().setEnabled(True)
+                self.gridLayout.itemAt(101 * j + n).widget().setStyleSheet("background-color:rgb(255, 255, 255)")
         else:
             # decrease number of equations
-            for i in range(0, n):  # Horizontal decrement
-                self.gridLayout.itemAt(101 * n + i + 101).widget().setEnabled(False)
-                self.gridLayout.itemAt(101 * n + i + 101).widget().setStyleSheet("background-color:rgb(255, 253, 184)")
-            for j in range(0, n + 1):  # Vertical decrement
-                self.gridLayout.itemAt(101 * j + n + 101).widget().setEnabled(False)
-                self.gridLayout.itemAt(101 * j + n + 101).widget().setStyleSheet("background-color:rgb((255, 253, 184)")
+            for i in range(0, n + 2):  # Horizontal decrement
+                self.gridLayout.itemAt(101 * (n + 1) + i).widget().setEnabled(False)
+                self.gridLayout.itemAt(101 * (n + 1) + i).widget().setStyleSheet("background-color:rgb(255, 253, 184)")
+            for j in range(1, n + 1):  # Vertical decrement
+                self.gridLayout.itemAt(101 * j + (n + 1)).widget().setEnabled(False)
+                self.gridLayout.itemAt(101 * j + (n + 1)).widget().setStyleSheet("background-color:rgb((255, 253, 184)")
 
     def start(self):
         if self.command.areFilled(self.coef, self.b):
