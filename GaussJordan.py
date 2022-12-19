@@ -4,24 +4,24 @@ from Gauss import Gauss
 
 class GaussJordan(Gauss):
 
-    def __init__(self, a, b, maxError, siginficantDigits):
-        super().__init__(a, b, maxError, siginficantDigits)
+    def __init__(self, a, b, maxError, siginficantDigits, scaling):
+        super().__init__(a, b, maxError, siginficantDigits, scaling)
 
     def solve(self):
-        a, b = self.forwardElimination()
+        self.a, self.b = self.forwardEliminationWithScaling() if self.scaling else self.forwardElimination()
 
         # divide each row by its pivot
         for i in range(0, self.numOfVariables):
-            coeff = a[i][i]
+            coeff = self.a[i][i]
             for j in range(i, self.numOfEquations):
-                a[i][j] /= coeff
-                a[i][j] = self.round_sig(a[i][j], self.sig)
-            b[i] /= coeff
-            b[i] = self.round_sig(b[i], self.sig)
+                self.a[i][j] /= coeff
+                self.a[i][j] = self.round_sig(self.a[i][j], self.sig)
+            self.b[i] /= coeff
+            self.b[i] = self.round_sig(self.b[i], self.sig)
 
-        self.backwardElimination(a, b)
-        print(b)
-        return b
+        self.backwardElimination(self.a, self.b)
+        print(self.b)
+        return self.b
 
     def backwardElimination(self, a, b):
         for k in range(self.numOfVariables - 1, -1, -1):

@@ -96,8 +96,14 @@ class Commands:
     #Calls the methods
     def calculate(self):
         sol = 0.0
-        if self.LUForm == "Gauss Elimination":
-            return Gauss(self.a, self.b, 0.00000005, 20).solve()
+        try:
+            if self.LUForm == "Gauss Elimination":
+                mySol =  Gauss(self.a, self.b, 0.00000005, 20, False).solve()
+            return mySol
+        except:
+            print('error')
+            return [-1] * int(self.nEquations)
+
         #     if(isLetterCoefficients):
         #         sol = GaussWithCoefficients(a,b, self.ARE, self.precision)
         #     else:

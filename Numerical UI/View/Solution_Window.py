@@ -34,22 +34,29 @@ class Ui_resultsWindow(object):
         self.tableWidget.setMinimumSize(QtCore.QSize(2, 0))
         self.tableWidget.setStyleSheet("border-radius: 10px")
         self.tableWidget.setObjectName("tableWidget")
-        self.tableWidget.setColumnWidth(0, 100000000)
-        self.tableWidget.setColumnCount(2)
-        self.tableWidget.setRowCount(len(sol))
-        header = self.tableWidget.horizontalHeader()
-        header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
-        row = 0
-        for i in sol:
-            self.tableWidget.setItem(row, 0, QtWidgets.QTableWidgetItem('x' + str(row)))
-            self.tableWidget.setItem(row, 1, QtWidgets.QTableWidgetItem(str(i)))
-            self.tableWidget.item(row, 0).setBackground(QtGui.QColor(255,255,255))
-            self.tableWidget.item(row, 1).setBackground(QtGui.QColor(255, 255, 255))
-            self.tableWidget.item(row, 0).setTextAlignment(QtCore.Qt.AlignCenter)
-            self.tableWidget.item(row, 1).setTextAlignment(QtCore.Qt.AlignCenter)
-            self.tableWidget.item(row, 0).setFlags(QtCore.Qt.ItemIsEnabled)
-            self.tableWidget.item(row, 1).setFlags(QtCore.Qt.ItemIsEnabled)
-            row += 1
+        if(sol[0] == -1):
+            self.tableWidget.setColumnCount(1)
+            self.tableWidget.setRowCount(1)
+            self.tableWidget.setItem(0, 0, QtWidgets.QTableWidgetItem('No solution found. singular matrix detected'))
+            self.tableWidget.item(0, 0).setBackground(QtGui.QColor(255, 255, 255))
+            self.tableWidget.item(0, 0).setTextAlignment(QtCore.Qt.AlignCenter)
+            self.tableWidget.item(0, 0).setFlags(QtCore.Qt.ItemIsEnabled)
+        else:
+            self.tableWidget.setColumnCount(2)
+            self.tableWidget.setRowCount(len(sol))
+            header = self.tableWidget.horizontalHeader()
+            header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
+            row = 0
+            for i in sol:
+                self.tableWidget.setItem(row, 0, QtWidgets.QTableWidgetItem('x' + str(row)))
+                self.tableWidget.setItem(row, 1, QtWidgets.QTableWidgetItem(str(i)))
+                self.tableWidget.item(row, 0).setBackground(QtGui.QColor(255,255,255))
+                self.tableWidget.item(row, 1).setBackground(QtGui.QColor(255, 255, 255))
+                self.tableWidget.item(row, 0).setTextAlignment(QtCore.Qt.AlignCenter)
+                self.tableWidget.item(row, 1).setTextAlignment(QtCore.Qt.AlignCenter)
+                self.tableWidget.item(row, 0).setFlags(QtCore.Qt.ItemIsEnabled)
+                self.tableWidget.item(row, 1).setFlags(QtCore.Qt.ItemIsEnabled)
+                row += 1
 
         self.solutionLable = QtWidgets.QLabel(self.scrollAreaWidgetContents_2)
         self.solutionLable.setGeometry(QtCore.QRect(80, 10, 201, 51))

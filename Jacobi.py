@@ -25,7 +25,7 @@ class Jacobi(EquationSolver):
                 x1[i] = (self.b[i] - temp) / self.a[i][i]
                 x1[i] = self.round_sig(x1[i], self.sig)
                 e[i] = float(abs(self.x0[i] - x1[i]) / float(abs(x1[i])))
-                condition |= (e[i] > self.er)
+                condition |= (e[i] > self.tol)
 
             self.x0 = x1.copy()
             count = count + 1
@@ -33,4 +33,4 @@ class Jacobi(EquationSolver):
             self.print(count, e)
 
     def print(self, count, e):
-        print(count, ':\t', self.x0, '\t', e, '\n')
+        print(count, ':\t', self.x0, '\t', e)
