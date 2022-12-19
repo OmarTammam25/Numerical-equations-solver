@@ -455,7 +455,6 @@ class Ui_MainWindow(object):
         n = int(self.nEquations.text())
         self.command.setNEquations(self.nEquations.text())
         self.nEquationDisplayed.setText(self.command.getTitle())
-
         # only one-step increment is allowed!!
         # increase number of equations
         if not (self.gridLayout.itemAt(101 + n).widget().isEnabled()):
