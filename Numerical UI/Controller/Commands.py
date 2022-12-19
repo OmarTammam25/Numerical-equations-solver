@@ -2,8 +2,6 @@ from unicodedata import decimal
 import numpy as np
 
 class Commands:
-    a = [[0 for x in range(100)] for y in range(100)]
-    b = []
     initialGuess = []
     def __init__(self):
         self.nEquations = "2"
@@ -67,13 +65,13 @@ class Commands:
 
     # Check validity and form arrays
     def areFilled(self, a, b):
-        self.a = np.empty((self.nEquations, self.nEquations), np.double)
-        self.b = np.empty(self.nEquations, np.double)
-        for i in range(0, self.nEquations):
+        self.a = np.empty((int(self.nEquations), int(self.nEquations)), np.double)
+        self.b = np.empty(int(self.nEquations), np.double)
+        for i in range(0, int(self.nEquations)):
             if b[i].text() == "":
                 return False
-            self.b[i] = b[i].text()
-            for j in range(0, self.nEquations):
+            self.b[i] = decimal(b[i].text())
+            for j in range(0, int(self.nEquations)):
                 if a[i][j].text() == "":
                     return False
                 self.a[i][j] = decimal(a[i][j].text())
