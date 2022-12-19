@@ -1,9 +1,13 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtGui import QDoubleValidator
+from PyQt5.QtGui import QDoubleValidator, QRegExpValidator
+
+from Controller.Commands import Commands
+
 
 class Ui_InitialGuess(object):
     initialGuessVector = []
     nEquations = 2
+    command = Commands()
 
     def setupUi(self, InitialGuess):
         InitialGuess.setObjectName("InitialGuess")
@@ -34,8 +38,11 @@ class Ui_InitialGuess(object):
                                              "font-weight: bold")
         self.initialGeussLable.setObjectName("initialGuessLabel")
 
+        ################################################################################################################
+
+        # Grid
         self.intialGuess = QtWidgets.QWidget(self.scrollAreaWidgetContents)
-        self.intialGuess.setGeometry(QtCore.QRect(70, 60, 120, self.nEquations * 25))
+        self.intialGuess.setGeometry(QtCore.QRect(70, 60, 120, int(self.command.nEquations) * 25))
         self.intialGuess.setObjectName("intialGuessLabels")
         self.intialGuessLayout = QtWidgets.QGridLayout(self.intialGuess)
         self.intialGuessLayout.setContentsMargins(10, 0, 10, 0)
@@ -56,11 +63,16 @@ class Ui_InitialGuess(object):
         self.btn.setText("Submit!")
         self.btn.setEnabled(True)
         self.btn.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.btn.clicked.connect(self.setInitialGuess)
 
         ################################################################################################################
 
-        self.validator = QDoubleValidator()
-        for i in range(0, int(self.nEquations)):
+        if self.command.isLetters:
+            self.validator = QRegExpValidator()
+        else:
+            self.validator = QDoubleValidator()
+
+        for i in range(0, int(self.command.nEquations)):
             self.e = QtWidgets.QLineEdit(self.intialGuess)
             self.e.setStyleSheet("background-color:rgb(255, 255, 255)")
             self.e.setValidator(self.validator)
@@ -87,10 +99,15 @@ class Ui_InitialGuess(object):
         InitialGuess.setWindowTitle(_translate("InitialGuess", "Initial_Guess"))
         self.initialGeussLable.setText(_translate("InitialGuess", "Iintial Guess"))
 
-    # Closes the window :) (:
-    # def checkValidity(self):
-    #     self.command.initialGuess = self.initialGuessVector
+    def checkValid(self):
+        for i in range(0, self.nEquations):
+            if self.initialGuessVector[i].text() == "":
+                return False
+        return True
 
+    def setInitialGuess(self):
+        if self.checkValid():
+            self.command.initialGuess = self.initialGuessVector
 
 if __name__ == "__main__":
     import sys
