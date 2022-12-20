@@ -14,49 +14,52 @@ class Gauss(EquationSolver):
         self.scaling = scaling
 
     def solve(self):
-        f = open("solution.txt", "w")
+        # f = open("solution.txt", "w")
+        # f.close()
         a, b = self.forwardEliminationWithScaling() if self.scaling else self.forwardElimination()
         x = self.backwardSubstitution(a, b)
         print(x)
-        f.close()
         return x
 
-    def getMaxInEachRow(self):
-        s = np.array([0] * self.numOfEquations)
-        for i in range(0, self.numOfEquations):
-            mx = 0
-            for j in self.a[i]:
-                mx = max(abs(j), mx)
-            s[i] = mx
-        return s
+    # def getMaxInEachRow(self):
+    #     s = np.array([0] * self.numOfEquations)
+    #     for i in range(0, self.numOfEquations):
+    #         mx = 0
+    #         for j in self.a[i]:
+    #             mx = max(abs(j), mx)
+    #         s[i] = mx
+    #     return s
 
     def forwardElimination(self):
         f = open("solution.txt", "a")
-        a = self.a.copy()
-        b = self.b.copy()
-        f.write(str(a))
-        f.write(str(b))
+        a = np.array(self.a.copy())
+        b = np.array(self.b.copy())
+        f.write(str(a)+'\n')
+        f.write(str(b)+'\n')
         for k in range(0, self.numOfVariables):  # loop over pivots
             self.partialPivot(a, b, k)
             pivot = a[k][k]
-            f.write("new pivot is: " + str(pivot))
+            f.write(str(a) + '\n')
+            f.write(str(b) + '\n')
+            f.write("new pivot is: " + str(pivot) + '\n')
             if abs(pivot) < abs(self.tol):
-                f.write("Singular Matrix detected")
+                f.write("Singular Matrix detected\n")
                 raise Exception('Singular matrix detected. has no unique solution')
             for i in range(k + 1, self.numOfEquations):  # loop over rows
                 factor = self.round_sig(a[i][k] / pivot, self.sig)
-                f.write("multiplier" + str(i) + str(k))
+                f.write("multiplier" + str(i) + str(k) + '\n')
                 print('factor after round is: ', factor)
 
                 for j in range(k, self.numOfVariables):  # loop over each coefficient in row
                     a[i][j] = self.round_sig(a[i][j] - a[k][j] * factor, self.sig)
-                f.write(str(a))
+                f.write(str(a) + '\n')
                 b[i] = self.round_sig(b[i] - b[k] * factor, self.sig)
-                f.write(b)
+                f.write(str(b) + '\n')
         if abs(a[self.numOfEquations-1][self.numOfEquations-1]) < abs(self.tol):
-            f.write("Singular Matrix detected.")
+            f.write("Singular Matrix detected.\n")
             raise Exception('Singular matrix detected. has no unique solution')
-
+        f.write(str(a) + '\n')
+        f.write(str(b) + '\n')
         f.close()
         return a, b
 
@@ -70,8 +73,8 @@ class Gauss(EquationSolver):
                 currIndex = i
 
         if k != currIndex:
-            f.write("Pivoting")
-            f.write("interchanging row " + str(k) + " with row " + str(currIndex))
+            f.write("Pivoting\n")
+            f.write("interchanging row " + str(k) + " with row " + str(currIndex) + '\n')
             a[[k, currIndex]] = a[[currIndex, k]]
             b[[k, currIndex]] = b[[currIndex, k]]
             print('pivoting row ', k, 'with row ', currIndex)

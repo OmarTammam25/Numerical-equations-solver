@@ -9,20 +9,20 @@ class EquationSolver:
         self.b = b.copy()
         self.numOfEquations = len(b)
         self.numOfVariables = len(a[0])
-        # self.s = self.getMaxInEachRow()
+        self.s = self.getMaxInEachRow()
         self.tol = maxError
         self.sig = significantDigits
 
     def solve(self):
         pass
-    # def getMaxInEachRow(self):
-    #     s = np.array([0] * self.numOfEquations)
-    #     for i in range(0, self.numOfEquations):
-    #         mx = 0
-    #         for j in self.a[i]:
-    #             mx = max(abs(j), mx)
-    #         s[i] = mx
-    #     return s
+    def getMaxInEachRow(self):
+        s = np.array([0] * self.numOfEquations)
+        for i in range(0, self.numOfEquations):
+            mx = 0
+            for j in self.a[i]:
+                mx = max(abs(j), mx)
+            s[i] = mx
+        return s
     # def forwardElimination(self):
     #     a = self.a
     #     b = self.b

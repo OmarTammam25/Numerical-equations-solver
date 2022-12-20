@@ -40,7 +40,7 @@ class Ui_resultsWindow(object):
         if(self.sol.size == 0):
             self.tableWidget.setColumnCount(1)
             self.tableWidget.setRowCount(1)
-            self.tableWidget.setItem(0, 0, QtWidgets.QTableWidgetItem('No solution found. singular matrix detected'))
+            self.tableWidget.setItem(0, 0, QtWidgets.QTableWidgetItem('No unique solution found.'))
             self.tableWidget.item(0, 0).setBackground(QtGui.QColor(255, 255, 255))
             self.tableWidget.item(0, 0).setTextAlignment(QtCore.Qt.AlignCenter)
             self.tableWidget.item(0, 0).setFlags(QtCore.Qt.ItemIsEnabled)

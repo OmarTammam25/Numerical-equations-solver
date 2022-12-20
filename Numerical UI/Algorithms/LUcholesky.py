@@ -69,9 +69,10 @@ class LUcholesky(EquationSolver):
             for j in range(i + 1):
                 if self.a[i][j] != self.a[j][i]:
                     self.er = -1
-
+                    raise Exception('not symmetric matrix detected. cholesky can\'t solve')
     def check_eigenValues(self):
         eigenValues = linalg.eigvals(self.a)
         for i in eigenValues:
             if i < 0:
                 self.er = -1
+                raise Exception('not symmetric matrix detected. cholesky can\'t solve')

@@ -34,7 +34,7 @@ class LUCrout(EquationSolver):
             self.s[i] = abs(self.a[i][0])
 
             for j in range(1, n):
-                if abs(self.a[i][j] > self.s[i]):
+                if abs(self.a[i][j]) > self.s[i]:
                     self.s[i] = abs(self.a[i][j])
 
         for i in range(0, n):
