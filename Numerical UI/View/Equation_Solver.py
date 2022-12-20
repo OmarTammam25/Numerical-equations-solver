@@ -451,6 +451,7 @@ class Ui_MainWindow(object):
                 self.gridLayout.itemAt(101 * j + (n + 1)).widget().setStyleSheet("background-color:rgb((255, 253, 184)")
 
     def start(self):
+        global runTime
         self.command.fill(self.coef, self.b)
         self.command.setNIterations(self.nIteration.text())
         self.command.setARE(self.ARE.text())
@@ -460,16 +461,25 @@ class Ui_MainWindow(object):
         self.command.setNEquations(self.nEquations.text())
         self.command.setMethod(self.method.currentText())
         self.command.setScalling(self.scaling.isChecked())
-        try:
-            self.command.setInitialGuess(self.initialGuessWindow.getInitialGuess())
-            sol, runTime = self.command.calculate()
+        runTime = 0
+        if self.LU.currentText == "Jacobi-Iteration" or self.LU.currentText() == "Gauss-Seidel":
+            try:
+                self.command.setInitialGuess(self.initialGuessWindow.getInitialGuess())
+                sol, runTime = self.command.calculate()
+                self.solutionWindow.sol = sol
+                self.open_solution_window(runTime)
+            except:
+                msg = QtWidgets.QMessageBox()
+                msg.setWindowTitle("Error occured")
+                msg.setText("No initial guess set")
+                msg.exec_()
+        else:
+            try:
+                sol, runTime = self.command.calculate()
+            except:
+                sol = []
             self.solutionWindow.sol = sol
             self.open_solution_window(runTime)
-        except:
-            msg = QtWidgets.QMessageBox()
-            msg.setWindowTitle("Error occured")
-            msg.setText("No initial guess set")
-            msg.exec_()
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Equations Solver"))
