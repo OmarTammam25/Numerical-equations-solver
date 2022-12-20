@@ -1,15 +1,15 @@
 import math
 import timeit
 
-from EquationSolver import EquationSolver
+from Algorithms.EquationSolver import EquationSolver
 
 
 class LUCrout(EquationSolver):
-    def __init__(self, a, b, maxError, siginficantDigits, x):
+    def __init__(self, a, b, maxError, siginficantDigits, x=[]):
         super().__init__(a, b, maxError, siginficantDigits)
         self.o = [0] * self.numOfVariables
         self.s = [0] * self.numOfVariables
-        self.x = x.copy()
+        self.x = [0] * self.numOfEquations
         self.er = 0
 
     def solve(self):
@@ -22,7 +22,7 @@ class LUCrout(EquationSolver):
         self.Substitute()
         endTime = timeit.default_timer()
         time = endTime - startTime
-        print(self.x)
+        return self.x
         print(round(time * 10 ** 3, 5), "ms")
 
     def Decompose(self):

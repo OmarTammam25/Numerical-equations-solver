@@ -1,7 +1,16 @@
-from unicodedata import decimal
+import time
+from decimal import Decimal
 import numpy as np
 
-from Controller.Gauss import Gauss
+from Algorithms.Gauss import Gauss
+from Algorithms.GaussJordan import GaussJordan
+from Algorithms.GaussJordanWithCoefficients import GaussJordanWithcoefficients
+from Algorithms.GaussWithCoefficients import GaussWithCoefficients
+from Algorithms.Gauss_Seidel import GaussSeidel
+from Algorithms.Jacobi import Jacobi
+from Algorithms.LUCrout import LUCrout
+from Algorithms.LUDoolittle import LUDoolittle
+from Algorithms.LUcholesky import LUcholesky
 
 
 class Commands:
@@ -14,11 +23,12 @@ class Commands:
         self.precision = "5"
         self.stopCondition = "Number of Iterations"
         self.nIterations = 2
-        self.scalling = False
+        self.scaling = False
         self.b = []
         self.a = [[]]
         self.initialGuess = []
         self.isLetters = False
+        self.initialGuess = np.array([])
         self.title = f"Solving {self.nEquations} x {self.nEquations} System of Equations"
 
     def setNEquations(self, n):
@@ -46,13 +56,20 @@ class Commands:
         self.isLetters = formate
 
     def setScalling(self, scale):
-        self.scalling = scale
+        self.scaling = scale
+    def setInitialGuess(self, initialGuess):
+        self.initialGuess = np.empty(len(initialGuess))
+        for i in range(len(initialGuess)):
+            self.initialGuess[i] = initialGuess[i].text()
+        self.initialGuess = self.initialGuess.astype(np.double)
+
 
     def getScalling(self):
-        return self.scalling
+        return self.scaling
 
     def getNEquations(self):
         return self.nEquations
+
 
     def getMethod(self):
         return self.method
@@ -104,32 +121,37 @@ class Commands:
             print(self.initialGuess[i])
 
 
-    #Calls the methods
+    # Calls the methods
     def calculate(self):
-        sol = 0.0
-        try:
-            if self.LUForm == "Gauss Elimination":
-                mySol =  Gauss(self.a, self.b, 0.00000005, 20, False).solve()
-            return mySol
-        except:
-            print('error')
-            return [-1] * int(self.nEquations)
+        sol = []
+        start = time.time()
+        if self.LUForm == "Gauss Elimination":
+            if(self.isLetters):
+                sol =  GaussWithCoefficients(self.a ,self.b, Decimal(self.ARE), int(self.precision)).solve()
+            else:
+                sol = Gauss(self.a, self.b, Decimal(self.ARE), int(self.precision), self.scaling).solve()
+        elif self.LUForm == "Gauss-Jordan":
+            if (self.isLetters):
+                sol = GaussJordanWithcoefficients(self.a, self.b, Decimal(self.ARE), int(self.precision)).solve()
+            else:
+                sol = GaussJordan(self.a, self.b, Decimal(self.ARE), int(self.precision), self.scaling).solve()
+        elif self.LUForm == "Gauss-Seidel":
+            sol = GaussSeidel(self.a, self.b, Decimal(self.ARE), int(self.precision), self.initialGuess).solve()
+        elif self.LUForm == "Jacobi-Iteration":
+            sol =  Jacobi(self.a, self.b, Decimal(self.ARE), int(self.precision), self.initialGuess).solve()
+        elif self.LUForm == "LU Decomposition":
+            if self.method == "Downlittle Form":
+                sol =  LUDoolittle(self.a, self.b, Decimal(self.ARE), int(self.precision)).solve()
+            elif self.method == "Crout Form": # TODO CHECK IF IT WORKS
+                sol =  LUCrout(self.a, self.b, Decimal(self.ARE), int(self.precision)).solve()
+            elif self.method == "Cholesky Form":
+                sol = LUcholesky(self.a, self.b, Decimal(self.ARE), int(self.precision)).solve()
 
-        #     if(isLetterCoefficients):
-        #         sol = GaussWithCoefficients(a,b, self.ARE, self.precision)
-        #     else:
-        #         sol = Gauss.solve(a, b, self.ARE, self.precision)
-        # elif self.LUForm == "Gauss-Jordan":
-        #     if (isLetterCoefficients):
-        #         sol = GaussJordanWithCofficients(a, b, self.ARE, self.precision)
-        #     else:
-        #         sol = GaussJordan(a, b, self.ARE, self.precision)
-        # elif self.LUForm == "Gauss-Seidel":
-        #     sol = GaussSeidel(a, b, self.ARE, self.precision)
-        # elif self.LUForm == "Jacobi-Iteration":
-        #     sol = Jacobi(a, b, self.ARE, self.precision)
+        end = time.time()
+        runTime = end - start
+        print (runTime)
+        return sol, runTime
 
-        #solution is stored in sol
 
 
 

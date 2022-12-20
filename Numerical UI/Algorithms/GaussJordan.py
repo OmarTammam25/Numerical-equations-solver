@@ -1,5 +1,4 @@
-from EquationSolver import EquationSolver
-from Gauss import Gauss
+from Algorithms.Gauss import Gauss
 
 
 class GaussJordan(Gauss):

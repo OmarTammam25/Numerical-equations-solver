@@ -2,7 +2,7 @@ import time
 
 import numpy as np
 
-from Controller.EquationSolver import EquationSolver
+from Algorithms.EquationSolver import EquationSolver
 
 
 class Gauss(EquationSolver):
@@ -14,9 +14,11 @@ class Gauss(EquationSolver):
         self.scaling = scaling
 
     def solve(self):
+        f = open("solution.txt", "w")
         a, b = self.forwardEliminationWithScaling() if self.scaling else self.forwardElimination()
         x = self.backwardSubstitution(a, b)
         print(x)
+        f.close()
         return x
 
     def getMaxInEachRow(self):
@@ -29,26 +31,37 @@ class Gauss(EquationSolver):
         return s
 
     def forwardElimination(self):
+        f = open("solution.txt", "a")
         a = self.a.copy()
         b = self.b.copy()
+        f.write(str(a))
+        f.write(str(b))
         for k in range(0, self.numOfVariables):  # loop over pivots
-            # self.partialPivot(a, b, k)
+            self.partialPivot(a, b, k)
             pivot = a[k][k]
+            f.write("new pivot is: " + str(pivot))
             if abs(pivot) < abs(self.tol):
+                f.write("Singular Matrix detected")
                 raise Exception('Singular matrix detected. has no unique solution')
             for i in range(k + 1, self.numOfEquations):  # loop over rows
                 factor = self.round_sig(a[i][k] / pivot, self.sig)
+                f.write("multiplier" + str(i) + str(k))
                 print('factor after round is: ', factor)
 
                 for j in range(k, self.numOfVariables):  # loop over each coefficient in row
                     a[i][j] = self.round_sig(a[i][j] - a[k][j] * factor, self.sig)
+                f.write(str(a))
                 b[i] = self.round_sig(b[i] - b[k] * factor, self.sig)
+                f.write(b)
         if abs(a[self.numOfEquations-1][self.numOfEquations-1]) < abs(self.tol):
+            f.write("Singular Matrix detected.")
             raise Exception('Singular matrix detected. has no unique solution')
 
+        f.close()
         return a, b
 
     def partialPivot(self, a, b, k):
+        f = open("solution.txt", "a")
         currIndex = k
         max = abs(a[k][k])
         for i in range(k, self.numOfEquations):
@@ -57,9 +70,12 @@ class Gauss(EquationSolver):
                 currIndex = i
 
         if k != currIndex:
+            f.write("Pivoting")
+            f.write("interchanging row " + str(k) + " with row " + str(currIndex))
             a[[k, currIndex]] = a[[currIndex, k]]
             b[[k, currIndex]] = b[[currIndex, k]]
             print('pivoting row ', k, 'with row ', currIndex)
+        f.close()
 
     def forwardEliminationWithScaling(self):
         a = self.a.copy()

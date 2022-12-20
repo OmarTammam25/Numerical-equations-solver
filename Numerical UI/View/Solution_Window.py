@@ -7,8 +7,7 @@ class Ui_resultsWindow(object):
     #     # self.sol = solutionVector
     #     self.sol = np.array([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16])
     sol = []
-
-    def setupUi(self, resultsWindow):
+    def setupUi(self, resultsWindow, runTime):
         resultsWindow.setObjectName("resultsWindow")
         resultsWindow.resize(1450, 927)
         self.centralwidget = QtWidgets.QWidget(resultsWindow)
@@ -37,7 +36,8 @@ class Ui_resultsWindow(object):
         self.tableWidget.setStyleSheet("border-radius: 10px")
         self.tableWidget.setObjectName("tableWidget")
 
-        if (self.sol[0] == -1):
+        self.sol = np.array(self.sol)
+        if(self.sol.size == 0):
             self.tableWidget.setColumnCount(1)
             self.tableWidget.setRowCount(1)
             self.tableWidget.setItem(0, 0, QtWidgets.QTableWidgetItem('No solution found. singular matrix detected'))
@@ -46,7 +46,7 @@ class Ui_resultsWindow(object):
             self.tableWidget.item(0, 0).setFlags(QtCore.Qt.ItemIsEnabled)
         else:
             self.tableWidget.setColumnCount(2)
-            self.tableWidget.setRowCount(len(self.sol))
+            self.tableWidget.setRowCount(self.sol.size)
             header = self.tableWidget.horizontalHeader()
             header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
             row = 0
@@ -83,10 +83,12 @@ class Ui_resultsWindow(object):
 
         self.time = QtWidgets.QLabel(self.scrollAreaWidgetContents_2)
         self.time.setGeometry(760, 15, 150, 50)
-        self.time.setStyleSheet("border-color: rgb(227, 199, 240);\n"
-                                "font: 11pt \"Century Gothic\";\n"
-                                "font-weight: bold")
-        self.time.setText("Time")
+        self.time.setStyleSheet("color: rgb(121, 104, 62);\n"
+                                   "font: 11pt \"Century Gothic\";\n"
+                                   "font-weight: bold")
+        runTime = runTime * 10**3
+        runTime = round(runTime, 6)
+        self.time.setText(str(runTime) + 'ms')
 
         self.scrollArea.setWidget(self.scrollAreaWidgetContents_2)
         resultsWindow.setCentralWidget(self.centralwidget)
