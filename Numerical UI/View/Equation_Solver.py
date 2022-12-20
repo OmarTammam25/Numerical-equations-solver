@@ -488,20 +488,15 @@ class Ui_MainWindow(object):
 
 
     def start(self):
-        # f = open("test.txt", "r")
-        # x = f.read()
-        # self.nEquationsLable.setText(x)
-        # self.nEquationsLable.setStyleSheet("color: rgb(255, 255, 255)")
-        # f.close()
-        self.command.fill(self.coef, self.b)
+        self.command.setMethod(self.method.currentText())
         self.command.setNIterations(self.nIteration.text())
         self.command.setARE(self.ARE.text())
         self.command.setPrecision(self.precision.text())
         self.command.setLUForm(self.LU.currentText())
         self.command.setStopCondition(self.stopContition.currentText())
         self.command.setNEquations(self.nEquations.text())
-        self.command.setMethod(self.method.currentText())
         self.command.setScalling(self.scaling.isChecked())
+        self.command.fill(self.coef, self.b, self.initialGuessVector)
         sol = self.command.calculate()
         self.solutionWindow.sol = sol
         self.open_solution_window()
@@ -538,11 +533,6 @@ class Ui_MainWindow(object):
         self.initialGeussLable.setText(_translate("MainWindow", "Initial Guess"))
         self.line.setText(_translate("MainWindow", "___________________________________________________________"))
         self.stopContition.setCurrentText("both")
-
-    # def open_initial_guess_window(self):
-    #     self.window = QtWidgets.QMainWindow()
-    #     self.initialGuessWindow.setupUi(self.window)
-    #     self.window.show()
 
     def open_solution_window(self):
         self.window = QtWidgets.QMainWindow()

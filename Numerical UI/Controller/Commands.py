@@ -5,7 +5,7 @@ from Controller.Gauss import Gauss
 
 
 class Commands:
-    initialGuess = []
+
     def __init__(self):
         self.nEquations = "2"
         self.method = ""
@@ -17,6 +17,7 @@ class Commands:
         self.scalling = False
         self.b = []
         self.a = [[]]
+        self.initialGuess = []
         self.isLetters = False
         self.title = f"Solving {self.nEquations} x {self.nEquations} System of Equations"
 
@@ -85,11 +86,11 @@ class Commands:
                 self.b[i] = "0"
             else:
                 self.b[i] = b[i].text()
-            if self.method == "Gauss-Siedel" or self.method == "Jacobi-Iterations":
-                if initialGuessVector[i] == "":
+            if self.LUForm == "Gauss-Seidel" or self.LUForm == "Jacobi-Iteration":
+                if initialGuessVector[i].text() == "":
                     self.initialGuess[i] = "0"
                 else:
-                    self.initialGuess = initialGuessVector[i]
+                    self.initialGuess[i] = initialGuessVector[i].text()
             for j in range(0, int(self.nEquations)):
                 if a[i][j].text() == "":
                     self.a[i][j] = "0"
@@ -98,6 +99,10 @@ class Commands:
         self.a = self.a.astype(np.double)
         self.b = self.b.astype(np.double)
         self.initialGuess = self.initialGuess.astype(np.double)
+        print(self.nEquations)
+        for i in range(0, int(self.nEquations)):
+            print(self.initialGuess[i])
+
 
     #Calls the methods
     def calculate(self):
