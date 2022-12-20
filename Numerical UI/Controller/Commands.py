@@ -76,14 +76,20 @@ class Commands:
         return self.title
 
     # Check validity and form arrays
-    def fill(self, a, b):
+    def fill(self, a, b, initialGuessVector):
         self.a = np.empty((int(self.nEquations), int(self.nEquations)))
         self.b = np.empty(int(self.nEquations))
+        self.initialGuess = np.empty(int(self.nEquations))
         for i in range(0, int(self.nEquations)):
             if b[i].text() == "":
                 self.b[i] = "0"
             else:
                 self.b[i] = b[i].text()
+            if self.method == "Gauss-Siedel" or self.method == "Jacobi-Iterations":
+                if initialGuessVector[i] == "":
+                    self.initialGuess[i] = "0"
+                else:
+                    self.initialGuess = initialGuessVector[i]
             for j in range(0, int(self.nEquations)):
                 if a[i][j].text() == "":
                     self.a[i][j] = "0"
@@ -91,6 +97,7 @@ class Commands:
                     self.a[i][j] = a[i][j].text()
         self.a = self.a.astype(np.double)
         self.b = self.b.astype(np.double)
+        self.initialGuess = self.initialGuess.astype(np.double)
 
     #Calls the methods
     def calculate(self):

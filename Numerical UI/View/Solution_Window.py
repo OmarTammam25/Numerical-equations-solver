@@ -1,29 +1,29 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import numpy as np
 
-class Ui_resultsWindow(object):
 
+class Ui_resultsWindow(object):
     # def __init__(self):
     #     # self.sol = solutionVector
     #     self.sol = np.array([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16])
     sol = []
+
     def setupUi(self, resultsWindow):
         resultsWindow.setObjectName("resultsWindow")
         resultsWindow.resize(1450, 927)
         self.centralwidget = QtWidgets.QWidget(resultsWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.listView_4 = QtWidgets.QListView(self.centralwidget)
-        self.listView_4.setGeometry(QtCore.QRect(-10, -10, 2500, 2600))
+        self.listView_4.setGeometry(QtCore.QRect(-10, -10, 2500, 1100))
         self.listView_4.setMinimumSize(QtCore.QSize(800, 800))
-        self.listView_4.setStyleSheet("background-color:rgb(255, 253, 184)")
+        self.listView_4.setStyleSheet("background-color:rgb(227, 199, 240)")
         self.listView_4.setObjectName("listView_4")
         self.scrollArea = QtWidgets.QScrollArea(self.centralwidget)
-        self.scrollArea.setGeometry(QtCore.QRect(290, 0, 1000, 850))
+        self.scrollArea.setGeometry(QtCore.QRect(290, 0, 1000, 995))
         self.scrollArea.setMinimumSize(QtCore.QSize(200, 200))
-        self.scrollArea.setStyleSheet("background-color:rgb(255, 253, 184);\n"
+        self.scrollArea.setStyleSheet("background-color:rgb(227, 199, 240);\n"
                                       " border-style: outset;\n"
-                                      " border-width: 2px;\n"
-                                      "border-color: rgb(97, 48, 0);")
+                                      " border-width: 2px;")
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents_2 = QtWidgets.QWidget()
@@ -37,7 +37,7 @@ class Ui_resultsWindow(object):
         self.tableWidget.setStyleSheet("border-radius: 10px")
         self.tableWidget.setObjectName("tableWidget")
 
-        if(self.sol[0] == -1):
+        if (self.sol[0] == -1):
             self.tableWidget.setColumnCount(1)
             self.tableWidget.setRowCount(1)
             self.tableWidget.setItem(0, 0, QtWidgets.QTableWidgetItem('No solution found. singular matrix detected'))
@@ -53,7 +53,7 @@ class Ui_resultsWindow(object):
             for i in self.sol:
                 self.tableWidget.setItem(row, 0, QtWidgets.QTableWidgetItem('x' + str(row)))
                 self.tableWidget.setItem(row, 1, QtWidgets.QTableWidgetItem(str(i)))
-                self.tableWidget.item(row, 0).setBackground(QtGui.QColor(255,255,255))
+                self.tableWidget.item(row, 0).setBackground(QtGui.QColor(255, 255, 255))
                 self.tableWidget.item(row, 1).setBackground(QtGui.QColor(255, 255, 255))
                 self.tableWidget.item(row, 0).setTextAlignment(QtCore.Qt.AlignCenter)
                 self.tableWidget.item(row, 1).setTextAlignment(QtCore.Qt.AlignCenter)
@@ -67,7 +67,7 @@ class Ui_resultsWindow(object):
         font.setFamily("Segoe Script")
         font.setPointSize(28)
         self.solutionLable.setFont(font)
-        self.solutionLable.setStyleSheet("border-color:rgb(255, 253, 184)")
+        self.solutionLable.setStyleSheet("border-color:rgb(227, 199, 240)")
         self.solutionLable.setObjectName("label")
 
         self.timeLable = QtWidgets.QLabel(self.scrollAreaWidgetContents_2)
@@ -78,14 +78,14 @@ class Ui_resultsWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.timeLable.setFont(font)
-        self.timeLable.setStyleSheet("border-color:rgb(255, 253, 184)")
+        self.timeLable.setStyleSheet("border-color:rgb(227, 199, 240)")
         self.timeLable.setObjectName("label_2")
 
         self.time = QtWidgets.QLabel(self.scrollAreaWidgetContents_2)
         self.time.setGeometry(760, 15, 150, 50)
-        self.time.setStyleSheet("color: rgb(121, 104, 62);\n"
-                                   "font: 11pt \"Century Gothic\";\n"
-                                   "font-weight: bold")
+        self.time.setStyleSheet("border-color: rgb(227, 199, 240);\n"
+                                "font: 11pt \"Century Gothic\";\n"
+                                "font-weight: bold")
         self.time.setText("Time")
 
         self.scrollArea.setWidget(self.scrollAreaWidgetContents_2)
