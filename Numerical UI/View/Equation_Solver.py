@@ -1,16 +1,16 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QDoubleValidator, QRegExpValidator
 from Controller.Commands import Commands
-from View.Initial_Guess import Ui_InitialGuess
 from View.Solution_Window import Ui_resultsWindow
 
 
 class Ui_MainWindow(object):
     coef = [[0 for x in range(100)] for y in range(100)]  # Coefficient matrix
     b = []  # results
+    initialGuessVector = []
     command = Commands()
     solutionWindow = Ui_resultsWindow()
-    initialGuessWindow = Ui_InitialGuess()
+    prev = 3
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -31,13 +31,13 @@ class Ui_MainWindow(object):
         self.frame.setFont(font)
         self.frame.setObjectName("frame")
         self.scrollArea = QtWidgets.QScrollArea(self.frame)
-        self.scrollArea.setGeometry(QtCore.QRect(0, 0, 1901, 991))
-        self.scrollArea.setStyleSheet("background-color:rgb(255, 253, 184)")
+        self.scrollArea.setGeometry(QtCore.QRect(0, 0, 1901, 990))
+        self.scrollArea.setStyleSheet("background-color:rgb(227, 199, 240)")
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 9000, 2900))
-        self.scrollAreaWidgetContents.setMinimumSize(QtCore.QSize(9000, 2900))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 2000, 2900))
+        self.scrollAreaWidgetContents.setMinimumSize(QtCore.QSize(9000, 3400))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
 
         ################################################################################################################
@@ -53,7 +53,8 @@ class Ui_MainWindow(object):
         ################################################################################################################
 
         # Grid Formation
-        self.validator = QDoubleValidator()
+        self.doubleValidator = QDoubleValidator()
+        self.strValidator = QRegExpValidator()
         for i in range(0, 101):
             for j in range(0, 101):
                 if i == 0:
@@ -73,9 +74,9 @@ class Ui_MainWindow(object):
                     continue
                 self.e = QtWidgets.QLineEdit(self.gridLayoutWidget)
                 self.e.setStyleSheet("background-color:rgb(255, 255, 255)\n")
-                self.e.setValidator(self.validator)
+                self.e.setValidator(self.doubleValidator)
                 self.gridLayout.addWidget(self.e, i + 4, j)
-                if i < 3 and j < 3:
+                if i < 4 and j < 4:
                     self.e.show()
                     if j == 0:
                         self.b.append(self.e)
@@ -94,7 +95,7 @@ class Ui_MainWindow(object):
         # Tools Layout
         self.columnView = QtWidgets.QColumnView(self.scrollAreaWidgetContents)
         self.columnView.setGeometry(QtCore.QRect(20, 140, 191, 680))
-        self.columnView.setStyleSheet("background-color:rgb(255, 253, 184);\n"
+        self.columnView.setStyleSheet("background-color:rgb(227, 199, 240);\n"
                                       "border-color: rgb(0, 0, 100);\n"
                                       "border-radius: 2px;")
         self.columnView.setObjectName("columnView")
@@ -104,86 +105,90 @@ class Ui_MainWindow(object):
         # All Labels
         self.nEquationDisplayed = QtWidgets.QLabel(self.scrollAreaWidgetContents)
         self.nEquationDisplayed.setGeometry(QtCore.QRect(220, 120, 620, 40))
-        self.nEquationDisplayed.setStyleSheet("color: rgb(121, 104, 62);\n"
-                                              "font: 25pt \"Segoe script\";\n"
+        self.nEquationDisplayed.setStyleSheet("font: 25pt \"Segoe script\";\n"
                                               "font-weight: bold")
         self.nEquationDisplayed.setObjectName("nEquationDisplayed")
 
         self.methodLable = QtWidgets.QLabel(self.scrollAreaWidgetContents)
         self.methodLable.setGeometry(QtCore.QRect(40, 150, 151, 20))
-        self.methodLable.setStyleSheet("color: rgb(121, 104, 62);\n"
-                                       "font: 11pt \"Century Gothic\";\n"
-                                       "font-weight: bold")
+        self.methodLable.setStyleSheet("font: 11pt \"Century Gothic\";\n"
+                                       "font-weight: bold;\n"
+                                       "background-color:rgb(227, 199, 240)")
         self.methodLable.setObjectName("methodLabel")
 
         self.variablesForm = QtWidgets.QLabel(self.scrollAreaWidgetContents)
         self.variablesForm.setGeometry(QtCore.QRect(30, 290, 151, 20))
-        self.variablesForm.setStyleSheet("color: rgb(121, 104, 62);\n"
-                                         "font: 11pt \"Century Gothic\";\n"
-                                         "font-weight: bold")
+        self.variablesForm.setStyleSheet("font: 11pt \"Century Gothic\";\n"
+                                         "font-weight: bold;\n"
+                                         "background-color:rgb(227, 199, 240)")
         self.variablesForm.setObjectName("methodLabel")
 
         self.nEquationsLable = QtWidgets.QLabel(self.scrollAreaWidgetContents)
         self.nEquationsLable.setGeometry(QtCore.QRect(30, 220, 151, 20))
-        self.nEquationsLable.setStyleSheet("color: rgb("
-                                           ");\n"
-                                           "font: 11pt \"Century Gothic\";\n"
-                                           "font-weight: bold")
+        self.nEquationsLable.setStyleSheet("font: 11pt \"Century Gothic\";\n"
+                                           "font-weight: bold;\n"
+                                           "background-color:rgb(227, 199, 240)")
         self.nEquationsLable.setObjectName("nEquationsLable")
+
         self.LULable = QtWidgets.QLabel(self.scrollAreaWidgetContents)
         self.LULable.setGeometry(QtCore.QRect(30, 370, 111, 16))
-        self.LULable.setStyleSheet("color: rgb(121, 104, 62);\n"
-                                   "font: 11pt \"Century Gothic\";\n"
-                                   "font-weight: bold")
+        self.LULable.setStyleSheet("font: 11pt \"Century Gothic\";\n"
+                                   "font-weight: bold;\n"
+                                   "background-color:rgb(227, 199, 240)")
         self.LULable.setObjectName("LULable")
 
         self.ARELable = QtWidgets.QLabel(self.scrollAreaWidgetContents)
         self.ARELable.setGeometry(QtCore.QRect(30, 440, 171, 16))
-        self.ARELable.setStyleSheet("color: rgb(121, 104, 62);\n"
-                                    "font: 11pt \"Century Gothic\";\n"
-                                    "font-weight: bold")
-
+        self.ARELable.setStyleSheet("font: 11pt \"Century Gothic\";\n"
+                                    "font-weight: bold;\n"
+                                    "background-color:rgb(227, 199, 240)")
         self.ARELable.setObjectName("ARELable")
+
         self.precisionLable = QtWidgets.QLabel(self.scrollAreaWidgetContents)
         self.precisionLable.setGeometry(QtCore.QRect(30, 510, 121, 16))
-        self.precisionLable.setStyleSheet("color: rgb(121, 104, 62);\n"
-                                          "font: 11pt \"Century Gothic\";\n"
-                                          "font-weight: bold")
-
+        self.precisionLable.setStyleSheet("font: 11pt \"Century Gothic\";\n"
+                                          "font-weight: bold;\n"
+                                          "background-color:rgb(227, 199, 240)")
         self.precisionLable.setObjectName("precisionLable")
+
         self.stopConditionLable = QtWidgets.QLabel(self.scrollAreaWidgetContents)
         self.stopConditionLable.setGeometry(QtCore.QRect(30, 570, 161, 20))
-        self.stopConditionLable.setStyleSheet("color: rgb(121, 104, 62);\n"
-                                              "font: 11pt \"Century Gothic\";\n"
-                                              "font-weight: bold")
+        self.stopConditionLable.setStyleSheet("font: 11pt \"Century Gothic\";\n"
+                                              "font-weight: bold;\n"
+                                              "background-color:rgb(227, 199, 240)")
         self.stopConditionLable.setObjectName("stopConditionLable")
 
         self.nIterationLable = QtWidgets.QLabel(self.scrollAreaWidgetContents)
         self.nIterationLable.setGeometry(QtCore.QRect(30, 640, 151, 21))
-        self.nIterationLable.setStyleSheet("color: rgb(121, 104, 62);\n"
-                                           "font: 11pt \"Century Gothic\";\n"
-                                           "font-weight: bold")
+        self.nIterationLable.setStyleSheet("font: 11pt \"Century Gothic\";\n"
+                                           "font-weight: bold;\n"
+                                           "background-color:rgb(227, 199, 240)")
         self.nIterationLable.setObjectName("nIterationLable")
 
         self.nEquationDisplayed_2 = QtWidgets.QLabel(self.scrollAreaWidgetContents)
         self.nEquationDisplayed_2.setGeometry(QtCore.QRect(30, 30, 581, 61))
-        self.nEquationDisplayed_2.setStyleSheet("color: rgb(121, 104, 62);\n"
-                                                "font: 25pt \"Segoe script\";\n"
+        self.nEquationDisplayed_2.setStyleSheet("font: 25pt \"Segoe script\";\n"
                                                 "font-weight: bold")
         self.nEquationDisplayed_2.setObjectName("nEquationDisplayed_2")
 
         self.programTitle = QtWidgets.QLabel(self.scrollAreaWidgetContents)
         self.programTitle.setGeometry(QtCore.QRect(-140, 1140, 50000, 6000))
         self.programTitle.setMinimumSize(QtCore.QSize(10000, 6000))
-        self.programTitle.setStyleSheet("color: rgb(121, 104, 62);\n"
-                                        "font: 25pt \"Century Gothic\";\n"
+        self.programTitle.setStyleSheet("font: 25pt \"Century Gothic\";\n"
                                         "font-weight: bold")
 
         self.line = QtWidgets.QLabel(self.scrollAreaWidgetContents)
         self.line.setGeometry(30, 800, 151, 61)
-        self.line.setStyleSheet("color: rgb(106, 98, 71);\n"
-                                "font: 25pt \"Segoe script\";\n"
+        self.line.setStyleSheet("font: 25pt \"Segoe script\";\n"
                                 "font-weight: bold")
+
+        self.initialGeussLable = QtWidgets.QLabel(self.scrollAreaWidgetContents)
+        self.initialGeussLable.setGeometry(QtCore.QRect(30, 870, 141, 16))
+        self.initialGeussLable.setStyleSheet("font: 14pt \"Century Gothic\";\n"
+                                             "font-weight: bold;\n"
+                                             "background-color:rgb(227, 199, 240)")
+        self.initialGeussLable.setObjectName("initialGuessLabel")
+        self.initialGeussLable.setVisible(False)
 
         ################################################################################################################
 
@@ -209,6 +214,7 @@ class Ui_MainWindow(object):
         self.nEquations.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.nEquations.setMinimum(2)
         self.nEquations.setMaximum(100)
+        self.nEquations.setValue(3)
         self.nEquations.setObjectName("nEquations")
         self.nEquations.textChanged.connect(self.showTitleAndChangeCells)
 
@@ -247,8 +253,8 @@ class Ui_MainWindow(object):
         self.precision.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.precision.setStyleSheet("background-color:rgb(255, 255, 255)")
         self.precision.setMinimum(2)
-        self.precision.setMaximum(20)
-        self.precision.setProperty("value", 2)
+        self.precision.setMaximum(50)
+        self.precision.setProperty("value", 50)
         self.precision.setObjectName("precision")
 
         ################################################################################################################
@@ -260,6 +266,7 @@ class Ui_MainWindow(object):
         self.ARE.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.ARE.setStyleSheet("background-color:rgb(255, 255, 255)")
         self.ARE.setDecimals(6)
+        self.ARE.setMinimum(0.000001)
         self.ARE.setSingleStep(1e-06)
         self.ARE.setProperty("value", 1e-06)
         self.ARE.setObjectName("doubleSpinBox")
@@ -287,7 +294,8 @@ class Ui_MainWindow(object):
         self.nIteration.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.nIteration.setStyleSheet("background-color:rgb(255, 255, 255)")
         self.nIteration.setMinimum(2)
-        self.nIteration.setMaximum(150)
+        self.nIteration.setMaximum(500)
+        self.nIteration.setValue(500)
         self.nIteration.setObjectName("nIteration")
 
         ################################################################################################################
@@ -301,32 +309,12 @@ class Ui_MainWindow(object):
         # scaling label
         self.scalingLabel = QtWidgets.QLabel(self.scrollAreaWidgetContents)
         self.scalingLabel.setGeometry(QtCore.QRect(50, 710, 151, 22))
-        self.scalingLabel.setStyleSheet("color: rgb(121, 104, 62);\n"
-                                        "font: 11pt \"Century Gothic\";\n"
-                                        "font-weight: bold")
+        self.scalingLabel.setStyleSheet("font: 11pt \"Century Gothic\";\n"
+                                        "font-weight: bold;\n"
+                                        "background-color:rgb(227, 199, 240)")
         self.scalingLabel.setObjectName("scaling")
 
         ################################################################################################################
-
-        # Initial Guess Button
-        self.initialGuessButton = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
-        self.initialGuessButton.setGeometry(QtCore.QRect(30, 870, 151, 61))
-        font = QtGui.QFont()
-        font.setFamily("Century Gothic")
-        font.setPointSize(10)
-        font.setBold(True)
-        font.setWeight(75)
-        self.initialGuessButton.setFont(font)
-        self.initialGuessButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.initialGuessButton.setAcceptDrops(True)
-        self.initialGuessButton.setVisible(False)
-        self.initialGuessButton.setText("Enter initial guess")
-        self.initialGuessButton.setStyleSheet("background-color:rgb(200, 176, 127);\n"
-                                              "color:12px rgb(106, 98, 71);\n"
-                                              "font-weight: bold;\n"
-                                              "border-radius: 5px")
-        self.initialGuessButton.setObjectName("initialGuessButton")
-        self.initialGuessButton.clicked.connect(self.open_initial_guess_window)
 
         # Calculate Button
         self.calcutateButton = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
@@ -345,6 +333,43 @@ class Ui_MainWindow(object):
                                            "border-radius: 5px")
         self.calcutateButton.setObjectName("calcutateButton")
         self.calcutateButton.clicked.connect(self.start)
+
+        ################################################################################################################
+
+        # Initial guess grid
+        self.intialGuess = QtWidgets.QWidget(self.scrollAreaWidgetContents)
+        self.intialGuess.setGeometry(QtCore.QRect(30, 900, 120, 100 * 25))
+        self.intialGuess.setObjectName("intialGuessLabels")
+        self.intialGuessLayout = QtWidgets.QGridLayout(self.intialGuess)
+        self.intialGuessLayout.setContentsMargins(10, 0, 10, 0)
+        self.intialGuessLayout.setObjectName("gridLayout")
+        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
+        self.intialGuess.setVisible(False)
+
+        ################################################################################################################
+
+        if self.command.isLetters:
+            self.validate = self.strValidator
+        else:
+            self.validate = self.doubleValidator
+
+        for i in range(0, 100):
+            self.label = QtWidgets.QLabel(self.initialGeussLable)
+            self.label.setText(f"X{i + 1}")
+            self.label.setStyleSheet("color:12px rgb(106, 98, 71);\n"
+                                     "font-weight: italic;")
+            self.intialGuessLayout.addWidget(self.label, i, 0)
+            self.label.show()
+
+            self.e = QtWidgets.QLineEdit(self.intialGuess)
+            self.e.setStyleSheet("background-color:rgb(255, 255, 255)")
+            self.e.setValidator(self.validate)
+            if i >= int(self.nEquations.text()):
+                self.e.setEnabled(False)
+                self.e.setStyleSheet("background-color: rgb(227, 199, 240)")
+            self.e.show()
+            self.initialGuessVector.append(self.e)
+            self.intialGuessLayout.addWidget(self.e, i, 1)
 
         ################################################################################################################
 
@@ -375,6 +400,8 @@ class Ui_MainWindow(object):
         self.nEquationDisplayed_2.raise_()
         self.scaling.raise_()
         self.scalingLabel.raise_()
+        self.intialGuess.raise_()
+        self.initialGeussLable.raise_()
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.verticalLayout.addWidget(self.frame)
         self.nEquationDisplayed.setText(self.command.getTitle())
@@ -388,19 +415,20 @@ class Ui_MainWindow(object):
         if method == "LU Decomposition":
             self.method.setEnabled(True)
             self.stopContition.setEnabled(False)
-            self.initialGuessButton.setVisible(False)
+            self.initialGeussLable.setVisible(False)
+            self.intialGuess.setVisible(False)
         elif method == "Gauss-Seidel" or method == "Jacobi-Iteration":
             self.method.setEnabled(False)
             self.stopContition.setEnabled(True)
-            self.initialGuessWindow.nEquations = int(self.nEquations.text())
-            self.initialGuessWindow.command = self.command
-            self.initialGuessButton.setVisible(True)
+            self.initialGeussLable.setVisible(True)
+            self.intialGuess.setVisible(True)
         else:
             self.method.setEnabled(False)
             self.stopContition.setEnabled(False)
             self.nIteration.setEnabled(False)
             self.ARE.setEnabled(False)
-            self.initialGuessButton.setVisible(False)
+            self.initialGeussLable.setVisible(False)
+            self.intialGuess.setVisible(False)
 
     def checkStop(self):
         stop = self.stopContition.currentText()
@@ -414,53 +442,62 @@ class Ui_MainWindow(object):
             self.nIteration.setEnabled(True)
             self.ARE.setEnabled(True)
 
-    def changeFormat(self):
-        validator = QRegExpValidator()
-        if self.format.currentText() == "Letters":
-            self.command.setLetters(True)
-            for i in range(1, 101):
-                for j in range(1, 101):
-                    self.gridLayout.itemAt(101 * i + j).widget().setValidator(validator)
-        else:
-            self.command.setLetters(False)
-            for i in range(1, 101):
-                for j in range(1, 101):
-                    self.gridLayout.itemAt(101 * i + j).widget().setValidator(self.validator)
-
     def showTitleAndChangeCells(self):
         n = int(self.nEquations.text())
         self.command.setNEquations(self.nEquations.text())
         self.nEquationDisplayed.setText(self.command.getTitle())
 
-        # only one-step increment is allowed!!
+        # decrease number of equations
+        if self.prev > int(self.nEquations.text()):
+            for i in range(1, self.prev + 1):
+                for j in range(int(self.nEquations.text()) + 1, self.prev + 1):
+                    self.gridLayout.itemAt(101 * i + j).widget().setEnabled(False)
+                    self.gridLayout.itemAt(101 * i + j).widget().setStyleSheet("background-color: rgb(227, 199, 240)")
+            for i in range(int(self.nEquations.text()) + 1, self.prev + 1):
+                for j in range(0, int(self.nEquations.text()) + 1):
+                    self.gridLayout.itemAt(101 * i + j).widget().setEnabled(False)
+                    self.gridLayout.itemAt(101 * i + j).widget().setStyleSheet("background-color: rgb(227, 199, 240)")
+
         # increase number of equations
-        if not (self.gridLayout.itemAt(101 + n).widget().isEnabled()):
-            for i in range(0, n):  # Horizontal increment
-                self.gridLayout.itemAt(101 * n + i).widget().setEnabled(True)
-                self.gridLayout.itemAt(101 * n + i).widget().setStyleSheet("background-color:rgb(255, 255, 255)")
-            for j in range(1, n + 1):  # Vertical increment
-                self.gridLayout.itemAt(101 * j + n).widget().setEnabled(True)
-                self.gridLayout.itemAt(101 * j + n).widget().setStyleSheet("background-color:rgb(255, 255, 255)")
-        else:
-            # decrease number of equations
-            for i in range(0, n + 2):  # Horizontal decrement
-                self.gridLayout.itemAt(101 * (n + 1) + i).widget().setEnabled(False)
-                self.gridLayout.itemAt(101 * (n + 1) + i).widget().setStyleSheet("background-color:rgb(255, 253, 184)")
-            for j in range(1, n + 1):  # Vertical decrement
-                self.gridLayout.itemAt(101 * j + (n + 1)).widget().setEnabled(False)
-                self.gridLayout.itemAt(101 * j + (n + 1)).widget().setStyleSheet("background-color:rgb((255, 253, 184)")
+        if self.prev < int(self.nEquations.text()):
+            for i in range(1, int(self.nEquations.text()) + 1):
+                for j in range(self.prev + 1, int(self.nEquations.text()) + 1):
+                    self.gridLayout.itemAt(101 * i + j).widget().setEnabled(True)
+                    self.gridLayout.itemAt(101 * i + j).widget().setStyleSheet("background-color: rgb(255, 255, 255)")
+            for i in range(self.prev + 1, int(self.nEquations.text()) + 1):
+                for j in range(0, self.prev + 1):
+                    self.gridLayout.itemAt(101 * i + j).widget().setEnabled(True)
+                    self.gridLayout.itemAt(101 * i + j).widget().setStyleSheet("background-color: rgb(255, 255, 255)")
+        print(self.initialGuessVector[0].text())
+        self.initialGuessShow()
+
+    def initialGuessShow(self):
+
+        # increment Initial Guess
+        if self.prev > int(self.nEquations.text()):
+            for i in range(int(self.nEquations.text()), self.prev):
+                self.intialGuessLayout.itemAt(2 * i + 1).widget().setEnabled(False)
+                self.intialGuessLayout.itemAt(2 * i + 1).widget().setStyleSheet("background-color: rgb(227, 199, 240)")
+        # Decrement Initial Guess
+        elif self.prev < int(self.nEquations.text()):
+            for i in range(self.prev, int(self.nEquations.text())):
+                self.intialGuessLayout.itemAt(2 * i + 1).widget().setEnabled(True)
+                self.intialGuessLayout.itemAt(2 * i + 1).widget().setStyleSheet("background-color: rgb(255, 255, 255)")
+
+        self.prev = int(self.nEquations.text())
+
 
     def start(self):
-        global runTime
-        self.command.fill(self.coef, self.b)
+        self.command.setMethod(self.method.currentText())
         self.command.setNIterations(self.nIteration.text())
         self.command.setARE(self.ARE.text())
         self.command.setPrecision(self.precision.text())
         self.command.setLUForm(self.LU.currentText())
         self.command.setStopCondition(self.stopContition.currentText())
         self.command.setNEquations(self.nEquations.text())
-        self.command.setMethod(self.method.currentText())
         self.command.setScalling(self.scaling.isChecked())
+        self.command.fill(self.coef, self.b, self.initialGuessVector)
+        
         runTime = 0
         if self.LU.currentText == "Jacobi-Iteration" or self.LU.currentText() == "Gauss-Seidel":
             try:
@@ -483,7 +520,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Equations Solver"))
-        self.nEquationDisplayed.setText(_translate("MainWindow", "Solving 2 x 2 System of Equations"))
+        self.nEquationDisplayed.setText(_translate("MainWindow", "Solving 3 x 3 System of Equations"))
         self.methodLable.setText(_translate("MainWindow", "Choose Method"))
         self.method.setCurrentText(_translate("MainWindow", "Downlittle Form"))
         self.method.setItemText(0, _translate("MainWindow", "Downlittle Form"))
@@ -509,12 +546,9 @@ class Ui_MainWindow(object):
         self.nEquationDisplayed_2.setText(_translate("MainWindow", "Equations Solver"))
         self.variablesForm.setText(_translate("MainWindow", "Equations Formate"))
         self.scalingLabel.setText(_translate("MainWindow", "Scaling"))
+        self.initialGeussLable.setText(_translate("MainWindow", "Initial Guess"))
         self.line.setText(_translate("MainWindow", "___________________________________________________________"))
-
-    def open_initial_guess_window(self):
-        self.window = QtWidgets.QMainWindow()
-        self.initialGuessWindow.setupUi(self.window)
-        self.window.show()
+        self.stopContition.setCurrentText("both")
 
     def open_solution_window(self, runTime):
         self.window = QtWidgets.QMainWindow()

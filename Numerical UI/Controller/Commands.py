@@ -26,6 +26,7 @@ class Commands:
         self.scaling = False
         self.b = []
         self.a = [[]]
+        self.initialGuess = []
         self.isLetters = False
         self.initialGuess = np.array([])
         self.title = f"Solving {self.nEquations} x {self.nEquations} System of Equations"
@@ -93,14 +94,20 @@ class Commands:
         return self.title
 
     # Check validity and form arrays
-    def fill(self, a, b):
+    def fill(self, a, b, initialGuessVector):
         self.a = np.empty((int(self.nEquations), int(self.nEquations)))
         self.b = np.empty(int(self.nEquations))
+        self.initialGuess = np.empty(int(self.nEquations))
         for i in range(0, int(self.nEquations)):
             if b[i].text() == "":
                 self.b[i] = "0"
             else:
                 self.b[i] = b[i].text()
+            if self.LUForm == "Gauss-Seidel" or self.LUForm == "Jacobi-Iteration":
+                if initialGuessVector[i].text() == "":
+                    self.initialGuess[i] = "0"
+                else:
+                    self.initialGuess[i] = initialGuessVector[i].text()
             for j in range(0, int(self.nEquations)):
                 if a[i][j].text() == "":
                     self.a[i][j] = "0"
@@ -108,6 +115,11 @@ class Commands:
                     self.a[i][j] = a[i][j].text()
         self.a = self.a.astype(np.double)
         self.b = self.b.astype(np.double)
+        self.initialGuess = self.initialGuess.astype(np.double)
+        print(self.nEquations)
+        for i in range(0, int(self.nEquations)):
+            print(self.initialGuess[i])
+
 
     # Calls the methods
     def calculate(self):
