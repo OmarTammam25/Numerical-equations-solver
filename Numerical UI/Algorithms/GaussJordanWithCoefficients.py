@@ -1,5 +1,5 @@
-from EquationSolver import EquationSolver
-from GaussJordan import GaussJordan
+from Algorithms.GaussJordan import GaussJordan
+
 
 class GaussJordanWithcoefficients(GaussJordan):
 

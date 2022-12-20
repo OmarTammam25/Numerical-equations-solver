@@ -460,10 +460,16 @@ class Ui_MainWindow(object):
         self.command.setNEquations(self.nEquations.text())
         self.command.setMethod(self.method.currentText())
         self.command.setScalling(self.scaling.isChecked())
-        sol = self.command.calculate()
-        self.solutionWindow.sol = sol
-        self.open_solution_window()
-
+        try:
+            self.command.setInitialGuess(self.initialGuessWindow.getInitialGuess())
+            sol, runTime = self.command.calculate()
+            self.solutionWindow.sol = sol
+            self.open_solution_window(runTime)
+        except:
+            msg = QtWidgets.QMessageBox()
+            msg.setWindowTitle("Error occured")
+            msg.setText("No initial guess set")
+            msg.exec_()
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Equations Solver"))
@@ -500,9 +506,9 @@ class Ui_MainWindow(object):
         self.initialGuessWindow.setupUi(self.window)
         self.window.show()
 
-    def open_solution_window(self):
+    def open_solution_window(self, runTime):
         self.window = QtWidgets.QMainWindow()
-        self.solutionWindow.setupUi(self.window)
+        self.solutionWindow.setupUi(self.window, runTime)
         self.window.show()
 
 

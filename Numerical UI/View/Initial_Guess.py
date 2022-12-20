@@ -100,6 +100,7 @@ class Ui_InitialGuess(object):
         self.initialGeussLable.setText(_translate("InitialGuess", "Iintial Guess"))
 
     def fill(self):
+        print(self.initialGuessVector)
         for i in range(0, self.nEquations):
             if self.initialGuessVector[i].text() == "":
                 self.initialGuessVector[i].setText("0")
@@ -107,6 +108,8 @@ class Ui_InitialGuess(object):
     def setInitialGuess(self):
         self.fill()
         self.command.initialGuess = self.initialGuessVector
+    def getInitialGuess(self):
+        return self.initialGuessVector
 
 if __name__ == "__main__":
     import sys

@@ -1,4 +1,4 @@
-from Gauss import Gauss
+from Algorithms.Gauss import Gauss
 
 
 class GaussWithCoefficients(Gauss):

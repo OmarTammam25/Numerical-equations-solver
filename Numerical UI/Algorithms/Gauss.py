@@ -2,7 +2,7 @@ import time
 
 import numpy as np
 
-from Controller.EquationSolver import EquationSolver
+from Algorithms.EquationSolver import EquationSolver
 
 
 class Gauss(EquationSolver):
@@ -32,7 +32,7 @@ class Gauss(EquationSolver):
         a = self.a.copy()
         b = self.b.copy()
         for k in range(0, self.numOfVariables):  # loop over pivots
-            # self.partialPivot(a, b, k)
+            self.partialPivot(a, b, k)
             pivot = a[k][k]
             if abs(pivot) < abs(self.tol):
                 raise Exception('Singular matrix detected. has no unique solution')
