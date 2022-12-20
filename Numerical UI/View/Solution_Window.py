@@ -6,7 +6,8 @@ class Ui_resultsWindow(object):
     # def __init__(self):
     #     # self.sol = solutionVector
     #     self.sol = np.array([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16])
-    def setupUi(self, resultsWindow, sol):
+    sol = []
+    def setupUi(self, resultsWindow):
         resultsWindow.setObjectName("resultsWindow")
         resultsWindow.resize(1450, 927)
         self.centralwidget = QtWidgets.QWidget(resultsWindow)
@@ -26,15 +27,17 @@ class Ui_resultsWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents_2 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 996, 846))
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 996, 1000))
+        self.scrollAreaWidgetContents_2.setMinimumSize(QtCore.QSize(1000, 2900))
         self.scrollAreaWidgetContents_2.setObjectName("scrollAreaWidgetContents_2")
 
         self.tableWidget = QtWidgets.QTableWidget(self.scrollAreaWidgetContents_2)
-        self.tableWidget.setGeometry(QtCore.QRect(80, 70, 711, 461))
+        self.tableWidget.setGeometry(QtCore.QRect(80, 70, 711, 2800))
         self.tableWidget.setMinimumSize(QtCore.QSize(2, 0))
         self.tableWidget.setStyleSheet("border-radius: 10px")
         self.tableWidget.setObjectName("tableWidget")
-        if(sol[0] == -1):
+
+        if(self.sol[0] == -1):
             self.tableWidget.setColumnCount(1)
             self.tableWidget.setRowCount(1)
             self.tableWidget.setItem(0, 0, QtWidgets.QTableWidgetItem('No solution found. singular matrix detected'))
@@ -43,11 +46,11 @@ class Ui_resultsWindow(object):
             self.tableWidget.item(0, 0).setFlags(QtCore.Qt.ItemIsEnabled)
         else:
             self.tableWidget.setColumnCount(2)
-            self.tableWidget.setRowCount(len(sol))
+            self.tableWidget.setRowCount(len(self.sol))
             header = self.tableWidget.horizontalHeader()
             header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
             row = 0
-            for i in sol:
+            for i in self.sol:
                 self.tableWidget.setItem(row, 0, QtWidgets.QTableWidgetItem('x' + str(row)))
                 self.tableWidget.setItem(row, 1, QtWidgets.QTableWidgetItem(str(i)))
                 self.tableWidget.item(row, 0).setBackground(QtGui.QColor(255,255,255))
@@ -78,17 +81,12 @@ class Ui_resultsWindow(object):
         self.timeLable.setStyleSheet("border-color:rgb(255, 253, 184)")
         self.timeLable.setObjectName("label_2")
 
-        self.groupBox = QtWidgets.QGroupBox(self.scrollAreaWidgetContents_2)
-        self.groupBox.setGeometry(QtCore.QRect(750, 10, 181, 41))
-        self.groupBox.setStyleSheet("border-radius: 5px")
-        self.groupBox.setTitle("")
-        self.groupBox.setObjectName("groupBox")
-
         self.time = QtWidgets.QLabel(self.scrollAreaWidgetContents_2)
-        self.time.setGeometry(800, 20, 150, 38)
-        self.time.setStyleSheet("border-color:rgb(255, 253, 184)\n")
+        self.time.setGeometry(760, 15, 150, 50)
+        self.time.setStyleSheet("color: rgb(121, 104, 62);\n"
+                                   "font: 11pt \"Century Gothic\";\n"
+                                   "font-weight: bold")
         self.time.setText("Time")
-
 
         self.scrollArea.setWidget(self.scrollAreaWidgetContents_2)
         resultsWindow.setCentralWidget(self.centralwidget)

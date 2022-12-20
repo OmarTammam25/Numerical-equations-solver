@@ -84,9 +84,10 @@ class Ui_MainWindow(object):
                     self.e.setStyleSheet("background-color:rgb(255, 253, 184)\n"
                                          "border-color: rgb(255, 253, 184)")
                     self.e.setDisabled(True)
-                    if j == 0:
-                        continue
-                self.coef[i - 1][j - 1] = self.e
+                if j == 0:
+                    self.b.append(self.e)
+                else:
+                    self.coef[i - 1][j - 1] = self.e
 
         ################################################################################################################
 
@@ -124,7 +125,8 @@ class Ui_MainWindow(object):
 
         self.nEquationsLable = QtWidgets.QLabel(self.scrollAreaWidgetContents)
         self.nEquationsLable.setGeometry(QtCore.QRect(30, 220, 151, 20))
-        self.nEquationsLable.setStyleSheet("color: rgb(121, 104, 62);\n"
+        self.nEquationsLable.setStyleSheet("color: rgb("
+                                           ");\n"
                                            "font: 11pt \"Century Gothic\";\n"
                                            "font-weight: bold")
         self.nEquationsLable.setObjectName("nEquationsLable")
@@ -157,7 +159,7 @@ class Ui_MainWindow(object):
         self.stopConditionLable.setObjectName("stopConditionLable")
 
         self.nIterationLable = QtWidgets.QLabel(self.scrollAreaWidgetContents)
-        self.nIterationLable.setGeometry(QtCore.QRect(30, 660, 151, 21))
+        self.nIterationLable.setGeometry(QtCore.QRect(30, 640, 151, 21))
         self.nIterationLable.setStyleSheet("color: rgb(121, 104, 62);\n"
                                            "font: 11pt \"Century Gothic\";\n"
                                            "font-weight: bold")
@@ -180,8 +182,8 @@ class Ui_MainWindow(object):
         self.line = QtWidgets.QLabel(self.scrollAreaWidgetContents)
         self.line.setGeometry(30, 800, 151, 61)
         self.line.setStyleSheet("color: rgb(106, 98, 71);\n"
-                                                "font: 25pt \"Segoe script\";\n"
-                                                "font-weight: bold")
+                                "font: 25pt \"Segoe script\";\n"
+                                "font-weight: bold")
 
         ################################################################################################################
 
@@ -235,7 +237,7 @@ class Ui_MainWindow(object):
         self.format.setObjectName("equationsFormate")
         self.format.addItem("")
         self.format.addItem("")
-        #self.format.currentTextChanged.connect(self.changeFormat)
+        # self.format.currentTextChanged.connect(self.changeFormat)
 
         ################################################################################################################
 
@@ -281,12 +283,28 @@ class Ui_MainWindow(object):
         # number of iterations
         self.nIteration = QtWidgets.QSpinBox(self.scrollAreaWidgetContents)
         self.nIteration.setEnabled(False)
-        self.nIteration.setGeometry(QtCore.QRect(30, 700, 151, 22))
+        self.nIteration.setGeometry(QtCore.QRect(30, 670, 151, 22))
         self.nIteration.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.nIteration.setStyleSheet("background-color:rgb(255, 255, 255)")
         self.nIteration.setMinimum(2)
         self.nIteration.setMaximum(150)
         self.nIteration.setObjectName("nIteration")
+
+        ################################################################################################################
+
+        # scaling
+        self.scaling = QtWidgets.QCheckBox(self.scrollAreaWidgetContents)
+        self.scaling.setGeometry(QtCore.QRect(30, 710, 151, 22))
+        self.scaling.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.scaling.setObjectName("scaling")
+
+        # scaling label
+        self.scalingLabel = QtWidgets.QLabel(self.scrollAreaWidgetContents)
+        self.scalingLabel.setGeometry(QtCore.QRect(50, 710, 151, 22))
+        self.scalingLabel.setStyleSheet("color: rgb(121, 104, 62);\n"
+                                        "font: 11pt \"Century Gothic\";\n"
+                                        "font-weight: bold")
+        self.scalingLabel.setObjectName("scaling")
 
         ################################################################################################################
 
@@ -355,6 +373,8 @@ class Ui_MainWindow(object):
         self.nIteration.raise_()
         self.calcutateButton.raise_()
         self.nEquationDisplayed_2.raise_()
+        self.scaling.raise_()
+        self.scalingLabel.raise_()
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.verticalLayout.addWidget(self.frame)
         self.nEquationDisplayed.setText(self.command.getTitle())
@@ -431,16 +451,18 @@ class Ui_MainWindow(object):
                 self.gridLayout.itemAt(101 * j + (n + 1)).widget().setStyleSheet("background-color:rgb((255, 253, 184)")
 
     def start(self):
-        if self.command.areFilled(self.coef, self.b):
-            self.command.setNIterations(self.nIteration.text())
-            self.command.setARE(self.ARE.text())
-            self.command.setPrecision(self.precision.text())
-            self.command.setLUForm(self.LU.currentText())
-            self.command.setStopCondition(self.stopContition.currentText())
-            self.command.setNEquations(self.nEquations.text())
-            self.command.setMethod(self.method.currentText())
+        self.command.fill(self.coef, self.b)
+        self.command.setNIterations(self.nIteration.text())
+        self.command.setARE(self.ARE.text())
+        self.command.setPrecision(self.precision.text())
+        self.command.setLUForm(self.LU.currentText())
+        self.command.setStopCondition(self.stopContition.currentText())
+        self.command.setNEquations(self.nEquations.text())
+        self.command.setMethod(self.method.currentText())
+        self.command.setScalling(self.scaling.isChecked())
         sol = self.command.calculate()
-        self.open_solution_window(sol)
+        self.solutionWindow.sol = sol
+        self.open_solution_window()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -470,6 +492,7 @@ class Ui_MainWindow(object):
         self.calcutateButton.setText(_translate("MainWindow", "Calculate"))
         self.nEquationDisplayed_2.setText(_translate("MainWindow", "Equations Solver"))
         self.variablesForm.setText(_translate("MainWindow", "Equations Formate"))
+        self.scalingLabel.setText(_translate("MainWindow", "Scaling"))
         self.line.setText(_translate("MainWindow", "___________________________________________________________"))
 
     def open_initial_guess_window(self):
@@ -477,9 +500,9 @@ class Ui_MainWindow(object):
         self.initialGuessWindow.setupUi(self.window)
         self.window.show()
 
-    def open_solution_window(self, sol):
+    def open_solution_window(self):
         self.window = QtWidgets.QMainWindow()
-        self.solutionWindow.setupUi(self.window, sol)
+        self.solutionWindow.setupUi(self.window)
         self.window.show()
 
 

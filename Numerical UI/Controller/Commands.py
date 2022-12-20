@@ -14,6 +14,7 @@ class Commands:
         self.precision = "5"
         self.stopCondition = "Number of Iterations"
         self.nIterations = 2
+        self.scalling = False
         self.b = []
         self.a = [[]]
         self.isLetters = False
@@ -43,7 +44,11 @@ class Commands:
     def setLetters(self, formate):
         self.isLetters = formate
 
-    ####################################################################################################################
+    def setScalling(self, scale):
+        self.scalling = scale
+
+    def getScalling(self):
+        return self.scalling
 
     def getNEquations(self):
         return self.nEquations
@@ -71,27 +76,21 @@ class Commands:
         return self.title
 
     # Check validity and form arrays
-    def areFilled(self, a, b):
+    def fill(self, a, b):
         self.a = np.empty((int(self.nEquations), int(self.nEquations)))
         self.b = np.empty(int(self.nEquations))
         for i in range(0, int(self.nEquations)):
             if b[i].text() == "":
-                return False
-            self.b[i] = b[i].text()
+                self.b[i] = "0"
+            else:
+                self.b[i] = b[i].text()
             for j in range(0, int(self.nEquations)):
                 if a[i][j].text() == "":
-                    return False
-                self.a[i][j] = a[i][j].text()
-            print(self.nEquations)
+                    self.a[i][j] = "0"
+                else:
+                    self.a[i][j] = a[i][j].text()
         self.a = self.a.astype(np.double)
         self.b = self.b.astype(np.double)
-        return True
-
-    def isInitialGuessValid(self, initialGuess):
-        for i in range(0, int(self.nEquations)):
-            if initialGuess[i].text() == "":
-                return False
-        return True
 
     #Calls the methods
     def calculate(self):

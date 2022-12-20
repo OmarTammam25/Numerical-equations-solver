@@ -99,15 +99,14 @@ class Ui_InitialGuess(object):
         InitialGuess.setWindowTitle(_translate("InitialGuess", "Initial_Guess"))
         self.initialGeussLable.setText(_translate("InitialGuess", "Iintial Guess"))
 
-    def checkValid(self):
+    def fill(self):
         for i in range(0, self.nEquations):
             if self.initialGuessVector[i].text() == "":
-                return False
-        return True
+                self.initialGuessVector[i].setText("0")
 
     def setInitialGuess(self):
-        if self.checkValid():
-            self.command.initialGuess = self.initialGuessVector
+        self.fill()
+        self.command.initialGuess = self.initialGuessVector
 
 if __name__ == "__main__":
     import sys
