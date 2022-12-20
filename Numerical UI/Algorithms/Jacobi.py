@@ -4,14 +4,14 @@ from Algorithms.EquationSolver import EquationSolver
 
 
 class Jacobi(EquationSolver):
-    def __init__(self, a, b, maxError, siginficantDigits, x0):
+    def __init__(self, a, b, maxError, siginficantDigits, x0, nIteration):
         super().__init__(a, b, maxError, siginficantDigits)
         self.x0 = x0.copy()
+        self.maxIterations = int(nIteration)
 
     def solve(self):
         x1 = self.x0.copy()
         e = [100.0] * self.numOfVariables
-        max_iterations = 500
 
         condition = True
         count = 0
@@ -30,7 +30,7 @@ class Jacobi(EquationSolver):
 
             self.x0 = x1.copy()
             count = count + 1
-            condition &= count < max_iterations
+            condition &= count < self.maxIterations
             self.print(count, e)
         return x1
 

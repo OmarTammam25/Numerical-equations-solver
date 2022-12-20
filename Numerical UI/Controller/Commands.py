@@ -136,11 +136,11 @@ class Commands:
             else:
                 sol = GaussJordan(self.a, self.b, Decimal(self.ARE), int(self.precision), self.scaling).solve()
         elif self.LUForm == "Gauss-Seidel":
-            sol = GaussSeidel(self.a, self.b, Decimal(self.ARE), int(self.precision), self.initialGuess).solve()
+            sol = GaussSeidel(self.a, self.b, Decimal(self.ARE), int(self.precision), self.initialGuess, self.nIterations).solve()
         elif self.LUForm == "Jacobi-Iteration":
-            sol =  Jacobi(self.a, self.b, Decimal(self.ARE), int(self.precision), self.initialGuess).solve()
+            sol =  Jacobi(self.a, self.b, Decimal(self.ARE), int(self.precision), self.initialGuess, self.nIterations).solve()
         elif self.LUForm == "LU Decomposition":
-            if self.method == "Downlittle Form":
+            if self.method == "Doolittle Form":
                 sol =  LUDoolittle(self.a, self.b, Decimal(self.ARE), int(self.precision)).solve()
             elif self.method == "Crout Form": # TODO CHECK IF IT WORKS
                 sol =  LUCrout(self.a, self.b, Decimal(self.ARE), int(self.precision)).solve()

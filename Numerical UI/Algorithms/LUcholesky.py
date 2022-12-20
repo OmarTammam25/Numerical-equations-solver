@@ -21,6 +21,7 @@ class LUcholesky(EquationSolver):
             self.Substitute()
         endTime = timeit.default_timer()
         time = endTime - startTime
+        print("solution: ")
         return self.x
         print(round(time * 10 ** 3, 5), "ms")
 
@@ -62,7 +63,7 @@ class LUcholesky(EquationSolver):
             self.x[i] = y[i]
             for j in range(n - 1, i, -1):
                 self.x[i] = self.round_sig(self.x[i] - self.round_sig(self.a[i][j] * self.x[j], sig), sig)
-            self.x[i] = self.round_sig(self.x[i] / self.a[i][i])
+            self.x[i] = self.round_sig(self.x[i] / self.a[i][i], sig)
 
     def check_symmetric(self):
         for i in range(self.numOfVariables):

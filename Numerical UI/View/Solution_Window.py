@@ -82,12 +82,12 @@ class Ui_resultsWindow(object):
         self.timeLable.setObjectName("label_2")
 
         self.time = QtWidgets.QLabel(self.scrollAreaWidgetContents_2)
-        self.time.setGeometry(760, 15, 150, 50)
+        self.time.setGeometry(760, 15, 180, 50)
         self.time.setStyleSheet("color: rgb(121, 104, 62);\n"
                                    "font: 11pt \"Century Gothic\";\n"
                                    "font-weight: bold")
         runTime = runTime * 10**3
-        runTime = round(runTime, 6)
+        runTime = round(runTime, 13)
         self.time.setText(str(runTime) + 'ms')
 
         self.scrollArea.setWidget(self.scrollAreaWidgetContents_2)

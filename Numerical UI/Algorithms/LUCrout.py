@@ -14,8 +14,8 @@ class LUCrout(EquationSolver):
 
     def solve(self):
         startTime = timeit.default_timer()
-
         self.Decompose()
+
         if (self.er == -1):
             return
 
@@ -23,47 +23,38 @@ class LUCrout(EquationSolver):
         endTime = timeit.default_timer()
         time = endTime - startTime
         return self.x
-        print(round(time * 10 ** 3, 5), "ms")
 
     def Decompose(self):
-
         n = self.numOfVariables
-
         for i in range(0, n):
             self.o[i] = i
             self.s[i] = abs(self.a[i][0])
-
             for j in range(1, n):
                 if abs(self.a[i][j]) > self.s[i]:
                     self.s[i] = abs(self.a[i][j])
 
         for i in range(0, n):
             self.Pivot(i)
-
             if self.IsSingular(i):
                 self.er = -1
                 return
 
             for j in range(i, n):
-
                 for k in range(0, i):
-                    self.a[self.o[j]][i] = self.round_sig(self.a[self.o[j]][i], self.sig) - self.round_sig(self.a[self.o[j]][k],
-                                        self.sig) * self.round_sig(self.a[self.o[k]][i], self.sig)
+                    self.a[self.o[j]][i] = self.round_sig(self.round_sig(self.a[self.o[j]][i], self.sig) - self.round_sig(self.a[self.o[j]][k],
+                                        self.sig) * self.round_sig(self.a[self.o[k]][i], self.sig), self.sig)
 
             for j in range(i, n):
-
                 if i == j:
                     continue
-
                 for k in range(0, i):
-                    self.a[self.o[i]][j] = self.round_sig(self.a[self.o[i]][j], self.sig) - self.round_sig(self.a[self.o[i]][k],
-                                        self.sig) * self.round_sig(self.a[self.o[k]][j], self.sig)
-
+                    self.a[self.o[i]][j] = self.round_sig(self.round_sig(self.a[self.o[i]][j], self.sig) - self.round_sig(self.a[self.o[i]][k],
+                                        self.sig) * self.round_sig(self.a[self.o[k]][j], self.sig), self.sig)
                 if self.a[self.o[i]][i] == 0:
                     self.er = -1
                     return
-
-                self.a[self.o[i]][j] = self.round_sig(self.a[self.o[i]][j], self.sig) / self.round_sig(self.a[self.o[i]][i], self.sig)
+                self.a[self.o[i]][j] = self.round_sig(self.round_sig(self.a[self.o[i]][j], self.sig) / self.round_sig(self.a[self.o[i]][i], self.sig),
+                                                self.sig)
 
     def IsSingular(self, k):
         if (abs(self.a[self.o[k]][k]) / self.s[self.o[k]]) < self.tol:
@@ -89,10 +80,10 @@ class LUCrout(EquationSolver):
         for i in range(0, n):
             y[self.o[i]] = self.b[self.o[i]]
             for j in range(0, i):
-                y[self.o[i]] = self.round_sig(y[self.o[i]], self.sig) - self.round_sig(self.a[self.o[i]][j],
-                                    self.sig) * self.round_sig(y[self.o[j]], self.sig)
+                y[self.o[i]] = self.round_sig(self.round_sig(y[self.o[i]], self.sig) - self.round_sig(self.a[self.o[i]][j],
+                                    self.sig) * self.round_sig(y[self.o[j]], self.sig), self.sig)
 
-            y[self.o[i]] = self.round_sig(y[self.o[i]], self.sig) / self.round_sig(self.a[self.o[i]][i], self.sig)
+            y[self.o[i]] = self.round_sig(self.round_sig(y[self.o[i]], self.sig) / self.round_sig(self.a[self.o[i]][i], self.sig), self.sig)
         return y
 
     def BackwardSubtitution(self, y):
@@ -102,8 +93,8 @@ class LUCrout(EquationSolver):
             self.x[i] = self.round_sig(y[self.o[i]], self.sig)
 
             for j in range(n - 1, i, -1):
-                self.x[i] = self.round_sig(self.x[i], self.sig) - self.round_sig(self.a[self.o[i]][j],
-                                            self.sig) * self.round_sig(self.x[j], self.sig)
+                self.x[i] = self.round_sig(self.round_sig(self.x[i], self.sig) - self.round_sig(self.a[self.o[i]][j],
+                                            self.sig) * self.round_sig(self.x[j], self.sig), self.sig)
 
     def Substitute(self):
         y = self.ForwardSubstitution()
