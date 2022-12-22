@@ -422,6 +422,8 @@ class Ui_MainWindow(object):
             self.stopContition.setEnabled(True)
             self.initialGeussLable.setVisible(True)
             self.intialGuess.setVisible(True)
+            self.nIteration.setEnabled(True)
+            self.ARE.setEnabled(True)
         else:
             self.method.setEnabled(False)
             self.stopContition.setEnabled(False)
@@ -499,24 +501,12 @@ class Ui_MainWindow(object):
         self.command.fill(self.coef, self.b, self.initialGuessVector)
         
         runTime = 0
-        if self.LU.currentText == "Jacobi-Iteration" or self.LU.currentText() == "Gauss-Seidel":
-            try:
-                self.command.setInitialGuess(self.initialGuessWindow.getInitialGuess())
-                sol, runTime = self.command.calculate()
-                self.solutionWindow.sol = sol
-                self.open_solution_window(runTime)
-            except:
-                msg = QtWidgets.QMessageBox()
-                msg.setWindowTitle("Error occured")
-                msg.setText("No initial guess set")
-                msg.exec_()
-        else:
-            try:
-                sol, runTime = self.command.calculate()
-            except:
-                sol = []
-            self.solutionWindow.sol = sol
-            self.open_solution_window(runTime)
+        try:
+            sol, runTime = self.command.calculate()
+        except:
+            sol = []
+        self.solutionWindow.sol = sol
+        self.open_solution_window(runTime)
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Equations Solver"))

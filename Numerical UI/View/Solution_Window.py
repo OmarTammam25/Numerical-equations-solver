@@ -87,7 +87,7 @@ class Ui_resultsWindow(object):
                                    "font: 11pt \"Century Gothic\";\n"
                                    "font-weight: bold")
         runTime = runTime * 10**3
-        runTime = round(runTime, 13)
+        runTime = round(runTime, 10)
         self.time.setText(str(runTime) + 'ms')
 
         self.scrollArea.setWidget(self.scrollAreaWidgetContents_2)

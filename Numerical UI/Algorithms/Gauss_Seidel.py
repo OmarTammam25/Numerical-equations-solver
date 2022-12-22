@@ -7,7 +7,7 @@ class GaussSeidel(EquationSolver):
     def __init__(self, a, b, maxError, siginficantDigits, x0, nIterations):
         super().__init__(a, b, maxError, siginficantDigits)
         self.x0 = x0.copy()
-        self.maxIterations = nIterations
+        self.maxIterations = int(nIterations)
 
     def solve(self):
         x1 = self.x0.copy()

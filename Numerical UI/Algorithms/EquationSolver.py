@@ -9,7 +9,7 @@ class EquationSolver:
         self.b = b.copy()
         self.numOfEquations = len(b)
         self.numOfVariables = len(a[0])
-        self.s = self.getMaxInEachRow()
+        # self.s = self.getMaxInEachRow()
         self.tol = maxError
         self.sig = significantDigits
 

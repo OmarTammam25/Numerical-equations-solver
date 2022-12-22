@@ -1,6 +1,7 @@
 import time
 from decimal import Decimal
 import numpy as np
+from sympy import *
 
 from Algorithms.Gauss import Gauss
 from Algorithms.GaussJordan import GaussJordan
@@ -95,6 +96,7 @@ class Commands:
 
     # Check validity and form arrays
     def fill(self, a, b, initialGuessVector):
+        print('yes')
         self.a = np.empty((int(self.nEquations), int(self.nEquations)))
         self.b = np.empty(int(self.nEquations))
         self.initialGuess = np.empty(int(self.nEquations))
