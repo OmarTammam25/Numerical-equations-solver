@@ -15,8 +15,8 @@ class NewtonRaphson():
     def __init__(self, equation, initialGuess, maxError = 0.0001, significantFigures = -1, nIterations = 50):
         self.equation = equation
         self.maxError = float(maxError)
-        self.initialGuess = float(initialGuess[0])
-        self.significantFigures = float(significantFigures)
+        self.initialGuess = float(initialGuess)
+        self.significantFigures = int(significantFigures)
         self.nIterations = int(nIterations)
 
     def solve(self):
@@ -36,15 +36,16 @@ class NewtonRaphson():
             x_new = x_old - f(x_old) / f_prime(x_old)
             # for rounding
             x_new = round_sig(x_new, self.significantFigures)
-            currentError = abs((x_new - x_old)/x_new) * 100
-
+            try:
+                currentError = abs((x_new - x_old)/x_new) * 100
+            except: currentError = 100000000
             self.print(currentIteration, x_new, currentError)
             currentIteration = currentIteration + 1
             x_old = x_new
 
         if(f(x_new) > 1e-3):
             raise Exception("couldn't find root accurately enough with " + str(self.nIterations) + " iterations")
-        return x_new, currentError
+        return x_new
 
     def print(self, currentIteration, x_new, currentError):
         print("iteration #" + str(currentIteration) + ": " + "\n" +

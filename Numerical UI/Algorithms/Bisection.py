@@ -28,7 +28,10 @@ class Bisection():
             x_r_new = (x_l + x_u) / 2
             f_x_lower = self.calculate_function(x_l)
             f_x_mid = self.calculate_function(x_r_new)
-            currentError = abs((x_r_new - x_r_old) / x_r_new) * 100
+            try:
+                currentError = abs((x_r_new - x_r_old) / x_r_new) * 100
+            except:
+                currentError = 100000000
             x_r_old = x_r_new
             self.print(current_iterations, x_r_new, currentError)
 

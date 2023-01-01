@@ -40,7 +40,9 @@ class secant():
                 break
 
             condition = abs(f(x2)) > self.maxError
-            currentError = abs((x2-xold)/x2)
+            try:
+                currentError = abs((x2-xold)/x2)
+            except: currentError = 100000000
             xold = x2
             print(step, x2, currentError)
         return x2

@@ -29,7 +29,10 @@ class Fixed_Point_Iteration():
             xold = self.round_sig(self.x, self.sig)
             self.x = self.round_sig(g(xold),self.sig)#TODO
             if self.x !=0:
-                ea = abs((self.x - xold) / self.x) * 100
+                try:
+                    ea = abs((self.x - xold) / self.x) * 100
+                except:
+                    currentError = 100000000
             counter += 1
             print('iteration:', counter, '  x =',self.x,'   ea =', ea,'%')
         endTime = timeit.default_timer()
