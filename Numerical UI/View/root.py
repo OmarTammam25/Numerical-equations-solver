@@ -415,9 +415,9 @@ class RootFinder(object):
 
     def solve(self):
         # if self.command.validateSyntax(self.fx.toPlainText()):
-            if self.gx.isEnabled() and self.command.validateSyntax(self.gx.toPlainText()):
-                self.command.setRootFinderMethod(self.method.currentText())
-                self.command.setGx(self.gx.toPlainText())
+        #     if self.gx.isEnabled() and self.command.validateSyntax(self.gx.toPlainText()):
+        #     self.command.setRootFinderMethod(self.method.currentText())
+            self.command.setGx(self.gx.toPlainText())
             self.command.setRootFinderMethod(self.method.currentText())
             self.command.setFx(self.fx.toPlainText())
             self.command.setXl(self.lineEdit_3.text())

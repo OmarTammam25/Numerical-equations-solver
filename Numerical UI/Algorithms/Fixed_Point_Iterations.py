@@ -26,10 +26,10 @@ class Fixed_Point_Iteration():
         counter = 0
         ea=1
         while ea > self.es and counter < self.max_iter:
-            xold = round_sig(self.x, self.sig)
-            self.x = self.g(xold)#TODO
+            xold = self.round_sig(self.x, self.sig)
+            self.x = g(xold)#TODO
             if self.x !=0:
-                ea = round_sig(abs(round_sig((self.x - xold), self.sig) / self.x), self.sig) * 100
+                ea = abs((self.x - xold) / self.x) * 100
             counter += 1
             print('iteration:', counter, '  x =',self.x,'   ea =', ea,'%')
         endTime = timeit.default_timer()
@@ -37,7 +37,7 @@ class Fixed_Point_Iteration():
         # print("time: ",time)
         return self.x
 
-    def round_sig(x, sig=-1):
+    def round_sig(self, x, sig=-1):
         if (sig == -1):
             return x
         if x == 0:
