@@ -27,7 +27,7 @@ class Fixed_Point_Iteration():
         ea=1
         while ea > self.es and counter < self.max_iter:
             xold = self.round_sig(self.x, self.sig)
-            self.x = g(xold)#TODO
+            self.x = self.round_sig(g(xold),self.sig)#TODO
             if self.x !=0:
                 ea = abs((self.x - xold) / self.x) * 100
             counter += 1
