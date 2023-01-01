@@ -24,6 +24,7 @@ class RootFinder(object):
         self.solutionButton.setStyleSheet("background-color:rgb(255, 246, 247);\n"
                                           "color: rgb(72, 73, 75);")
         self.solutionButton.setObjectName("solutionButton")
+        self.solutionButton.clicked.connect(self.solve)
         self.titleLable = QtWidgets.QLabel(self.centralwidget)
         self.titleLable.setGeometry(QtCore.QRect(400, 0, 981, 131))
         font = QtGui.QFont()
@@ -39,6 +40,7 @@ class RootFinder(object):
                                       "color:rgb(255, 239, 244)\n"
                                       "")
         self.titleLable.setObjectName("titleLable")
+
         self.equationArea = QtWidgets.QTextEdit(self.centralwidget)
         self.equationArea.setGeometry(QtCore.QRect(780, 340, 401, 111))
         font = QtGui.QFont()
@@ -51,6 +53,7 @@ class RootFinder(object):
         self.equationArea.setFrameShape(QtWidgets.QFrame.WinPanel)
         self.equationArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
         self.equationArea.setObjectName("equationArea")
+
         self.method = QtWidgets.QComboBox(self.centralwidget)
         self.method.setGeometry(QtCore.QRect(440, 340, 331, 51))
         font = QtGui.QFont()
@@ -68,7 +71,6 @@ class RootFinder(object):
         self.method.addItem("")
         self.method.addItem("")
         self.method.addItem("")
-        self.method.currentTextChanged.connect(self.changeMethod)
 
         self.methodLable = QtWidgets.QLabel(self.centralwidget)
         self.methodLable.setGeometry(QtCore.QRect(450, 270, 311, 51))
@@ -101,11 +103,11 @@ class RootFinder(object):
         font.setBold(True)
         font.setItalic(True)
         font.setWeight(75)
-
         self.rootFinderButton.setFont(font)
         self.rootFinderButton.setStyleSheet("background-color:rgb(191, 135, 158);\n"
                                             "color: rgb(72, 73, 77);")
         self.rootFinderButton.setObjectName("rootFinderButton")
+
 
         self.equationLable = QtWidgets.QLabel(self.centralwidget)
         self.equationLable.setGeometry(QtCore.QRect(840, 250, 311, 71))
@@ -226,8 +228,13 @@ class RootFinder(object):
         self.equationSolver.setupUi(self.window)
         self.window.show()
 
-    def changeMethod(self):
-        self.command.setRootFinderMethod(self.method.currentText())
+    def solve(self):
+        if self.command.validateSyntax(self.equationArea.toPlainText()):
+            self.command.setRootFinderMethod(self.method.currentText())
+            self.command.setRootEquation(self.equationArea.toPlainText())
+            self.command.findRoot()
+        else:
+            self.solution.setText("Invalid input!")
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
