@@ -33,7 +33,13 @@ class Commands:
         self.initialGuess = np.array([])
         self.title = f"Solving {self.nEquations} x {self.nEquations} System of Equations"
         self.rootFinderMethod = 'Bisection'
-        self.rootEquation = ''
+        self.fx = ''
+        self.gx = ''
+        self.xl = ''
+        self.xu = ''
+        self.initialGuessRoot = ''
+        self.root = ''
+        self.sigFig = '5'
 
     def setNEquations(self, n):
         self.nEquations = n
@@ -68,11 +74,24 @@ class Commands:
         self.initialGuess = self.initialGuess.astype(np.double)
 
     def setRootFinderMethod(self, method):
+        print(method)
         self.rootFinderMethod = method
 
-    def setRootEquation(self, equation):
-        self.rootEquation = equation
+    def setSigFig(self, sigFig):
+        self.sigFig = sigFig
 
+    def setFx(self, fx):
+        self.fx = fx
+    def setGx(self, gx):
+        self.gx = gx
+    def setXl(self, xl):
+        self.xl = xl
+
+    def setXu(self, xu):
+        self.xu = xu
+
+    def setInitialGuessRoot(self, initialGuessRoot):
+        self.initialGuessRoot = initialGuessRoot
 
     def getScalling(self):
         return self.scaling
@@ -80,25 +99,8 @@ class Commands:
     def getNEquations(self):
         return self.nEquations
 
-
-    def getMethod(self):
-        return self.method
-
-    def getARE(self):
-        return self.ARE
-
-    def getLUForm(self):
-        return self.LUForm
-
-    def getPrecision(self):
-        return self.precision
-
-    def getStopCondition(self):
-        return self.stopCondition
-
-    def getNIterations(self):
-        return self.nIterations
-
+    def getRoot(self):
+        return self.root
     def getTitle(self):
         self.title = f"Solving {self.nEquations} x {self.nEquations} System of Equations"
         return self.title
@@ -140,6 +142,14 @@ class Commands:
             return True
 
     def findRoot(self):
+        print(self.sigFig)
+        print(self.xl)
+        print(self.xu)
+        print(self.gx)
+        print(self.fx)
+        print(self.nEquations)
+        print(self.ARE)
+        print(self.method)
         print("find root")
 
     # Calls the methods
