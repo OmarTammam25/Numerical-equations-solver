@@ -14,6 +14,10 @@ from Algorithms.LUCrout import LUCrout
 from Algorithms.LUDoolittle import LUDoolittle
 from Algorithms.LUcholesky import LUcholesky
 
+from Algorithms.secant import secant
+from Algorithms.NewtonRaphson import NewtonRaphson
+from Algorithms.Regula_Falsi import Regula_Falsi
+from Algorithms.Bisection import Bisection
 
 class Commands:
 
@@ -32,6 +36,7 @@ class Commands:
         self.isLetters = False
         self.initialGuess = np.array([])
         self.title = f"Solving {self.nEquations} x {self.nEquations} System of Equations"
+
         self.rootFinderMethod = 'Bisection'
         self.fx = ''
         self.gx = ''
@@ -142,15 +147,22 @@ class Commands:
             return True
 
     def findRoot(self):
-        print(self.sigFig)
-        print(self.xl)
-        print(self.xu)
-        print(self.gx)
-        print(self.fx)
-        print(self.nEquations)
-        print(self.ARE)
-        print(self.method)
-        print("find root")
+        start = time.time()
+        if self.rootFinderMethod == "Bisection":
+            root = Bisection(self.fx,self.xl,self.xu,self.ARE,self.sigFig,self.nIterations).solve()
+        if self.rootFinderMethod == "False-Position":
+            root = Regula_Falsi(self.fx,self.xl,self.xu,self.ARE,self.sigFig,self.nIterations).solve()
+        # if self.rootFinderMethod == "Fixed point":
+        #     root =
+        if self.rootFinderMethod == "Newton-Raphson":
+            root = NewtonRaphson(self.fx,self.initialGuess,self.ARE,self.sigFig,self.nIterations).solve()
+        if self.rootFinderMethod == "Secant Method":
+            root = secant(self.fx,self.xl,self.xu,self.ARE,self.sigFig,self.nIterations).solve()
+
+        end = time.time()
+        runTime = end - start
+        print(runTime)
+        return root
 
     # Calls the methods
     def calculate(self):

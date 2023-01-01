@@ -14,10 +14,10 @@ def round_sig(x, sig=-1):
 class NewtonRaphson():
     def __init__(self, equation, initialGuess, maxError = 0.0001, significantFigures = -1, nIterations = 50):
         self.equation = equation
-        self.maxError = maxError
-        self.initialGuess = initialGuess
-        self.significantFigures = significantFigures
-        self.nIterations = nIterations
+        self.maxError = float(maxError)
+        self.initialGuess = float(initialGuess[0])
+        self.significantFigures = float(significantFigures)
+        self.nIterations = int(nIterations)
 
     def solve(self):
         #intitialize symbols for differntiation

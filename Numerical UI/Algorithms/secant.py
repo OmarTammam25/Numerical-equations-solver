@@ -12,11 +12,11 @@ def round_sig(x, sig=-1):
 class secant():
     def __init__(self, equation, firstInitialGuess, secondInitialGuess, maxError = 0.0001, significantFigures = -1, nIterations = 50):
         self.equation = equation
-        self.maxError = maxError
-        self.firstInitialGuess = firstInitialGuess
-        self.secondInitialGuess = secondInitialGuess
-        self.significantFigures = significantFigures
-        self.nIterations = nIterations
+        self.maxError = float(maxError)
+        self.firstInitialGuess = float(firstInitialGuess)
+        self.secondInitialGuess = float(secondInitialGuess)
+        self.significantFigures = int(significantFigures)
+        self.nIterations = int(nIterations)
 
     def solve(self):
         #intitialize symbols for differntiation
@@ -28,7 +28,7 @@ class secant():
         while condition:
             if f(self.firstInitialGuess) == f(self.secondInitialGuess):
                 print('Divide by zero error!')
-                break
+                return 'Divide by zero error!'
 
             x2 = round_sig(self.firstInitialGuess - round_sig(round_sig(round_sig((self.secondInitialGuess - self.firstInitialGuess),self.significantFigures) * round_sig(f(self.firstInitialGuess),self.significantFigures),self.significantFigures) / round_sig(round_sig(f(self.secondInitialGuess),self.significantFigures) - round_sig(f(self.firstInitialGuess),self.significantFigures),self.significantFigures),self.significantFigures),self.significantFigures)
             print('Iteration-%d, x2 = %f and f(x2) = %f' % (step, x2, f(x2)))
@@ -38,10 +38,11 @@ class secant():
 
             if step > self.nIterations:
                 print('Not Convergent!')
-                break
+                return 'Not Convergent!'
 
             condition = abs(f(x2)) > self.maxError
         print('\n Required root is: %f' % x2)
+        return x2
 
     def print(self, currentIteration, x_new, currentError):
         print("iteration #" + str(currentIteration) + ": " + "\n" +
