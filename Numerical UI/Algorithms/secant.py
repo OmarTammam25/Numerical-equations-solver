@@ -25,10 +25,10 @@ class secant():
         f = lambdify(x, f)
         step = 1
         condition = True
+        xold = self.firstInitialGuess*2
         while condition:
             if f(self.firstInitialGuess) == f(self.secondInitialGuess):
-                print('Divide by zero error!')
-                return 'Divide by zero error!'
+                break
 
             x2 = round_sig(self.firstInitialGuess - round_sig(round_sig(round_sig((self.secondInitialGuess - self.firstInitialGuess),self.significantFigures) * round_sig(f(self.firstInitialGuess),self.significantFigures),self.significantFigures) / round_sig(round_sig(f(self.secondInitialGuess),self.significantFigures) - round_sig(f(self.firstInitialGuess),self.significantFigures),self.significantFigures),self.significantFigures),self.significantFigures)
             print('Iteration-%d, x2 = %f and f(x2) = %f' % (step, x2, f(x2)))
@@ -37,11 +37,12 @@ class secant():
             step = step + 1
 
             if step > self.nIterations:
-                print('Not Convergent!')
-                return 'Not Convergent!'
+                break
 
             condition = abs(f(x2)) > self.maxError
-        print('\n Required root is: %f' % x2)
+            currentError = abs((x2-xold)/x2)
+            xold = x2
+            print(step, x2, currentError)
         return x2
 
     def print(self, currentIteration, x_new, currentError):
