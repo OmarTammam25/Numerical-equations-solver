@@ -2,6 +2,7 @@ import time
 from decimal import Decimal
 import numpy as np
 from sympy import *
+from math import *
 
 from Algorithms.Gauss import Gauss
 from Algorithms.GaussJordan import GaussJordan
@@ -31,6 +32,7 @@ class Commands:
         self.isLetters = False
         self.initialGuess = np.array([])
         self.title = f"Solving {self.nEquations} x {self.nEquations} System of Equations"
+        self.rootFinderMethod = 'Bisection'
 
     def setNEquations(self, n):
         self.nEquations = n
@@ -63,6 +65,9 @@ class Commands:
         for i in range(len(initialGuess)):
             self.initialGuess[i] = initialGuess[i].text()
         self.initialGuess = self.initialGuess.astype(np.double)
+
+    def setRootFinderMethod(self, method):
+        self.rootFinderMethod = method
 
 
     def getScalling(self):
@@ -121,6 +126,14 @@ class Commands:
         print(self.nEquations)
         for i in range(0, int(self.nEquations)):
             print(self.initialGuess[i])
+
+    def validateSyntax(expression):
+        try:
+            eval(expression)
+        except (SyntaxError, NameError, ZeroDivisionError):
+            return False
+        else:
+            return True
 
 
     # Calls the methods

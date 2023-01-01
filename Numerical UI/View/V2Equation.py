@@ -2,16 +2,14 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QDoubleValidator, QRegExpValidator
 from Controller.Commands import Commands
 from View.Solution_Window import Ui_resultsWindow
-from View.root import RootFinder
 
 
-class Ui_MainWindow(object):
+class V2EquationSolver(object):
     coef = [[0 for x in range(100)] for y in range(100)]  # Coefficient matrix
     b = []  # results
     initialGuessVector = []
     command = Commands()
     solutionWindow = Ui_resultsWindow()
-    rootFinder = RootFinder()
     prev = 3
 
     def setupUi(self, MainWindow):
@@ -363,7 +361,6 @@ class Ui_MainWindow(object):
                                             "background-color:rgb(255, 246, 247);\n"
                                             "color: rgb(85, 85, 85)")
         self.rootFinderButton.setText("System of Equations Solver")
-        self.equationsSolverButton.clicked.connect(self.openRootFinder)
 
         ################################################################################################################
 
@@ -579,10 +576,6 @@ class Ui_MainWindow(object):
         self.solutionWindow.setupUi(self.window, runTime)
         self.window.show()
 
-    def openRootFinder(self):
-        self.window = QtWidgets.QMainWindow()
-        self.rootFinder.setupUi(self.window)
-        self.window.show()
 
 
 if __name__ == "__main__":
@@ -590,7 +583,7 @@ if __name__ == "__main__":
 
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
+    ui = V2EquationSolver()
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
