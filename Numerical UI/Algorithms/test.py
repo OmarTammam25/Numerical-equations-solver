@@ -1,9 +1,11 @@
 from secant import  secant
 if __name__ == '__main__':
     # Input Section
+    equ = input('enter the equ: ')
     x0 = input('Enter First Guess: ')
     x1 = input('Enter Second Guess: ')
     e = input('Tolerable Error: ')
+    sig = int(input('sig: '))
     N = input('Maximum Step: ')
 
     # Converting x0 and e to float
@@ -13,12 +15,5 @@ if __name__ == '__main__':
 
     # Converting N to integer
     N = int(N)
-
-    # Note: You can combine above three section like this
-    # x0 = float(input('Enter First Guess: '))
-    # x1 = float(input('Enter Second Guess: '))
-    # e = float(input('Tolerable Error: '))
-    # N = int(input('Maximum Step: '))
-
-    # Starting Secant Method
-    secant(x0, x1, e, N)
+    s = secant(equ,x0,x1,e,sig,N)
+    s.solve()
