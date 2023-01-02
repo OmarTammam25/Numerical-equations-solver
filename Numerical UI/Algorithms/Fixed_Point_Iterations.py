@@ -2,6 +2,8 @@ import math
 import timeit
 from sympy import *
 from Algorithms.EquationSolver import EquationSolver
+import matplotlib.pyplot as pl
+import numpy as np
 
 
 class Fixed_Point_Iteration():
@@ -38,6 +40,7 @@ class Fixed_Point_Iteration():
         endTime = timeit.default_timer()
         time = endTime - startTime
         # print("time: ",time)
+        self.plot()
         return self.x
 
     def round_sig(self, x, sig=-1):
@@ -46,3 +49,10 @@ class Fixed_Point_Iteration():
         if x == 0:
             return 0
         return float('%.*g' % (sig, x))
+    def plot(self):
+        x = Symbol('x')
+        self.gx = self.gx.replace("^", "**")
+        formula = sympify(self.gx)
+        plot(x,formula, (x, self.x-10, self.x+10))
+        # plot(x, (x, self.x - 10, self.x + 10))
+
