@@ -23,6 +23,7 @@ class Fixed_Point_Iteration():
         f = lambdify(x, f)
         g = lambdify(x, g)
 
+        self.plot()
 
         startTime = timeit.default_timer()
         counter = 0
@@ -40,7 +41,6 @@ class Fixed_Point_Iteration():
         endTime = timeit.default_timer()
         time = endTime - startTime
         # print("time: ",time)
-        self.plot()
         return self.x
 
     def round_sig(self, x, sig=-1):

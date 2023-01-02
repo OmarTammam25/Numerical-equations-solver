@@ -15,6 +15,7 @@ class Bisection():
         self.nIterations = int(nIterations)
 
     def solve(self):
+        self.plot()
         if self.calculate_function(self.lower) * self.calculate_function(self.upper) > 0:
             raise Exception("No unique root in this interval")
 
@@ -39,7 +40,6 @@ class Bisection():
                 x_u = x_r_new
             else:
                 x_l = x_r_new
-        self.plot()
         return x_r_new
 
     def calculate_function(self, x_i):
