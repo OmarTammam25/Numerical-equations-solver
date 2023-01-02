@@ -25,6 +25,7 @@ class NewtonRaphson():
         f = self.equation.replace("^", "**")
         #TODO plot this
         f_prime = diff(f, x)
+        plot(f_prime)
         self.f_prime = f_prime
         f = lambdify(x, f)
         f_prime = lambdify(x, f_prime)
