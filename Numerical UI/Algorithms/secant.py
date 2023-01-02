@@ -31,7 +31,7 @@ class secant():
                 break
 
             x2 = round_sig(self.firstInitialGuess - round_sig(round_sig(round_sig((self.secondInitialGuess - self.firstInitialGuess),self.significantFigures) * round_sig(f(self.firstInitialGuess),self.significantFigures),self.significantFigures) / round_sig(round_sig(f(self.secondInitialGuess),self.significantFigures) - round_sig(f(self.firstInitialGuess),self.significantFigures),self.significantFigures),self.significantFigures),self.significantFigures)
-            print('Iteration-%d, x2 = %f and f(x2) = %f' % (step, x2, f(x2)))
+            # print('Iteration-%d, x2 = %f and f(x2) = %f' % (step, x2, f(x2)))
             self.firstInitialGuess = self.secondInitialGuess
             self.secondInitialGuess = x2
             step = step + 1
@@ -39,12 +39,14 @@ class secant():
             if step > self.nIterations:
                 break
 
-            condition = abs(f(x2)) > self.maxError
             try:
                 currentError = abs((x2-xold)/x2)
-            except: currentError = 100000000
+            except:
+                currentError = 100000000
+
+            condition = currentError > self.maxError
             xold = x2
-            print(step, x2, currentError)
+            self.print(step, x2, currentError)
         return x2
 
     def print(self, currentIteration, x_new, currentError):
