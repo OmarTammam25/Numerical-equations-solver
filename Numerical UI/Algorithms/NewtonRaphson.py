@@ -25,6 +25,8 @@ class NewtonRaphson():
         f = self.equation.replace("^", "**")
         #TODO plot this
         f_prime = diff(f, x)
+        plot(f_prime)
+        self.f_prime = f_prime
         f = lambdify(x, f)
         f_prime = lambdify(x, f_prime)
 
@@ -45,8 +47,15 @@ class NewtonRaphson():
 
         if(f(x_new) > 1e-3):
             raise Exception("couldn't find root accurately enough with " + str(self.nIterations) + " iterations")
+        self.x_new = x_new
+        self.plot()
         return x_new
 
     def print(self, currentIteration, x_new, currentError):
         print("iteration #" + str(currentIteration) + ": " + "\n" +
               "current root: "+ str(x_new) + " current error: ", str(currentError))
+
+    def plot(self):
+        x = Symbol('x')
+        formula = sympify(self.f_prime)
+        plot(formula, (x, self.x_new-10,self.x_new+10 ))
