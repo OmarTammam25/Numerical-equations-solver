@@ -59,7 +59,7 @@ class Bisection():
         plot(formula, (x, self.lower, self.upper))
 
 
-    def round_sig(x, sig=-1):
+    def round_sig(self, x, sig=-1):
         if sig == -1:
             return x
         if x == 0:

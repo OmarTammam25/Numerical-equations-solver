@@ -29,9 +29,12 @@ class Regula_Falsi():
             current_iterations += 1
             f_x_lower = self.calculate_function(x_l)
             f_x_upper = self.calculate_function(x_u)
-
-            x_r_new = (x_l * f_x_upper - x_u * f_x_lower) / (f_x_upper - f_x_lower)
-            f_x_mid = self.calculate_function(x_r_new)
+            if(f_x_upper == f_x_lower):
+                return x_r_new
+            x_r_new = self.round_sig(self.round_sig(self.round_sig(x_l * f_x_upper,self.significantFigures)
+                    - self.round_sig(x_u * f_x_lower,self.significantFigures))
+            / self.round_sig((f_x_upper - f_x_lower),self.significantFigures),self.significantFigures)
+            f_x_mid = self.round_sig(self.calculate_function(x_r_new),self.significantFigures)
             try:
                 currentError = abs((x_r_new - x_r_old) / x_r_new) * 100
             except:
@@ -56,7 +59,7 @@ class Regula_Falsi():
         print("iteration #" + str(currentIteration) + ": " + "\n" +
               "current root: " + str(x_new) + " current error: ", str(currentError), "%")
 
-    def round_sig(x, sig=-1):
+    def round_sig(self,x, sig=-1):
         if sig == -1:
             return x
         if x == 0:
