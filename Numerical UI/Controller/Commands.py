@@ -45,6 +45,7 @@ class Commands:
         self.initialGuessRoot = ''
         self.root = ''
         self.sigFig = '5'
+        self.time = 0
 
     def setNEquations(self, n):
         self.nEquations = n
@@ -106,6 +107,9 @@ class Commands:
 
     def getRoot(self):
         return self.root
+
+    def getTime(self):
+        return self.time
     def getTitle(self):
         self.title = f"Solving {self.nEquations} x {self.nEquations} System of Equations"
         return self.title
@@ -162,6 +166,7 @@ class Commands:
         end = time.time()
         runTime = end - start
         print("time: ", runTime)
+        self.time = runTime
         return root
 
     # Calls the methods
