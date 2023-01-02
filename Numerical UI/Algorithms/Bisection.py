@@ -25,9 +25,9 @@ class Bisection():
         currentError = 1
         while current_iterations < self.nIterations and currentError > self.maxError:
             current_iterations += 1
-            x_r_new = (x_l + x_u) / 2
-            f_x_lower = self.calculate_function(x_l)
-            f_x_mid = self.calculate_function(x_r_new)
+            x_r_new = self.round_sig(self.round_sig((x_l + x_u),self.significantFigures) / 2,self.significantFigures)
+            f_x_lower = self.round_sig(self.calculate_function(x_l),self.significantFigures)
+            f_x_mid = self.round_sig(self.calculate_function(x_r_new),self.significantFigures)
             try:
                 currentError = abs((x_r_new - x_r_old) / x_r_new) * 100
             except:
