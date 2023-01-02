@@ -176,6 +176,18 @@ class RootFinder(object):
         self.xLable.setFont(font)
         self.xLable.setStyleSheet("color: rgb(72, 73, 73);")
         self.xLable.setObjectName("xLable")
+
+        self.timeLable = QtWidgets.QLabel(self.centralwidget)
+        self.timeLable.setGeometry(QtCore.QRect(800, 600, 100, 40))
+        font = QtGui.QFont()
+        font.setFamily("MS Sans Serif")
+        font.setPointSize(22)
+        font.setBold(True)
+        font.setItalic(True)
+        font.setWeight(75)
+        self.timeLable.setFont(font)
+        self.timeLable.setStyleSheet("color: rgb(72, 73, 73);")
+        self.timeLable.setObjectName("xLable")
         self.solution = QtWidgets.QLabel(self.centralwidget)
         self.solution.setGeometry(QtCore.QRect(860, 560, 491, 41))
         font = QtGui.QFont()
@@ -188,6 +200,19 @@ class RootFinder(object):
         self.solution.setStyleSheet("color: rgb(85, 85, 85);")
         self.solution.setText("")
         self.solution.setObjectName("solution")
+
+        self.time = QtWidgets.QLabel(self.centralwidget)
+        self.time.setGeometry(QtCore.QRect(910, 600, 370, 41))
+        font = QtGui.QFont()
+        font.setFamily("MS Sans Serif")
+        font.setPointSize(22)
+        font.setBold(True)
+        font.setItalic(True)
+        font.setWeight(75)
+        self.time.setFont(font)
+        self.time.setStyleSheet("color: rgb(85, 85, 85);")
+        self.time.setText("")
+        self.time.setObjectName("solution")
         self.stepsButton = QtWidgets.QPushButton(self.centralwidget)
         self.stepsButton.setGeometry(QtCore.QRect(800, 700, 521, 101))
         font = QtGui.QFont()
@@ -241,8 +266,8 @@ class RootFinder(object):
                                               "\n"
                                               "")
         self.numberOfIterations.setMinimum(2)
-        self.numberOfIterations.setMaximum(150)
-        self.numberOfIterations.setProperty("value", 5)
+        self.numberOfIterations.setMaximum(100)
+        self.numberOfIterations.setProperty("value", 50)
         self.numberOfIterations.setObjectName("numberOfIterations")
 
         self.sigFig = QtWidgets.QSpinBox(self.centralwidget)
@@ -256,7 +281,7 @@ class RootFinder(object):
                                               "\n"
                                               "")
         self.sigFig.setMinimum(2)
-        self.sigFig.setMaximum(150)
+        self.sigFig.setMaximum(25)
         self.sigFig.setProperty("value", 5)
         self.sigFig.setObjectName("sigFig")
 
@@ -399,6 +424,8 @@ class RootFinder(object):
         self.gxLable.raise_()
         self.sigFig.raise_()
         self.sigFigLable.raise_()
+        self.timeLable.raise_()
+        self.time.raise_()
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -427,6 +454,7 @@ class RootFinder(object):
             self.command.setNIterations(self.numberOfIterations.text())
             self.command.setARE(self.error.text())
             try:
+                self.time.setText(str(self.command.getTime()))
                 self.solution.setText(str(self.command.findRoot()))
             except:
                 self.solution.setText("can't find a solution")
@@ -510,6 +538,7 @@ class RootFinder(object):
         self.fxLable.setText(_translate("MainWindow", "F(x)"))
         self.gxLable.setText(_translate("MainWindow", "G(x)"))
         self.sigFigLable.setText(_translate("MainWindow", "Significant Figures"))
+        self.timeLable.setText(_translate("MainWindow", "Time = "))
 
 
 if __name__ == "__main__":
