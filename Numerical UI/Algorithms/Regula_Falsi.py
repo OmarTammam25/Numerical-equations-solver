@@ -30,7 +30,7 @@ class Regula_Falsi():
             f_x_lower = self.calculate_function(x_l)
             f_x_upper = self.calculate_function(x_u)
 
-            x_r_new = (x_l * f_x_upper - x_l * f_x_lower) / (f_x_upper - f_x_lower)
+            x_r_new = (x_l * f_x_upper - x_u * f_x_lower) / (f_x_upper - f_x_lower)
             f_x_mid = self.calculate_function(x_r_new)
             try:
                 currentError = abs((x_r_new - x_r_old) / x_r_new) * 100
