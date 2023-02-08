@@ -23,6 +23,7 @@ class secant():
         x = symbols('x')
         f = self.equation.replace("^", "**")
         f = lambdify(x, f)
+        self.plot()
         step = 1
         condition = True
         xold = self.firstInitialGuess*2
@@ -53,5 +54,8 @@ class secant():
         print("iteration #" + str(currentIteration) + ": " + "\n" +
               "current root: "+ str(x_new) + " current error: ", str(currentError))
 
-
+    def plot(self):
+        x = Symbol('x')
+        formula = sympify(self.equation)
+        plot(formula, (x, self.firstInitialGuess - 10, self.secondInitialGuess + 10))
 

@@ -23,7 +23,6 @@ class NewtonRaphson():
         #intitialize symbols for differntiation
         x = symbols('x')
         f = self.equation.replace("^", "**")
-        #TODO plot this
         f_prime = diff(f, x)
         plot(f_prime)
         self.f_prime = f_prime

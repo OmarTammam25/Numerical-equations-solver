@@ -460,6 +460,7 @@ class RootFinder(object):
                 self.solution.setText("can't find a solution")
 
 
+
     def changeView(self):
         if self.method.currentText() == "Bisection" or self.method.currentText() == "False-Position" or self.method.currentText() == "Secant Method":
             self.equationLable_3.setVisible(True)
