@@ -28,7 +28,7 @@ The project comes with the following features:
 
 ## System of Equations Solver
 ### Main Window
-[![Main Page](https://www.linkpicture.com/q/SolutionEquations.png)](https://www.linkpicture.com/view.php?img=LPic63f34ff798a6b373603479)
+[![Main Window](https://www.linkpicture.com/q/EquationSolver.png)](https://www.linkpicture.com/view.php?img=LPic63f3528c3f8ec379668824)
 ### Solution Window
 [![Solution Window](https://www.linkpicture.com/q/Screenshot-2023-02-20-124545.png)](https://www.linkpicture.com/view.php?img=LPic63f3503f698d51923944698)
 
