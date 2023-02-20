@@ -276,8 +276,7 @@ class RootFinder(object):
         self.gx.setGeometry(QtCore.QRect(830, 300, 350, 80))
         self.gx.setFont(font)
         self.gx.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.IBeamCursor))
-        self.gx.setStyleSheet("background-color:rgb(255, 246, 247);\n"
-                              "")
+        self.gx.setStyleSheet("background-color:rgb(255, 246, 247);\n")
         self.gx.setFrameShape(QtWidgets.QFrame.WinPanel)
         self.gx.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
         self.gx.setObjectName("equationArea")
