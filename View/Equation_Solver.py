@@ -55,6 +55,9 @@ class Ui_MainWindow(object):
         ################################################################################################################
 
         # Grid Formation
+        font = QtGui.QFont()
+        font.setFamily("Nirmala UI Semilight")
+        font.setPointSize(8)
         self.doubleValidator = QDoubleValidator()
         self.strValidator = QRegExpValidator()
         for i in range(0, 101):
@@ -62,32 +65,40 @@ class Ui_MainWindow(object):
                 if i == 0:
                     self.e = QtWidgets.QLabel(self.gridLayoutWidget)
                     if j == 0:
-                        self.e.setStyleSheet("color:rgb(121, 104, 62)\n"
-                                             "font: 20pt italic \"Segue script\";\n"
-                                             "font-weight: bold")
+                        self.e.setStyleSheet("font: 10pt \"Century Gothic\";\n"
+                                             "font-weight: bold;\n"
+                                             "background-color:rgb(255, 238, 241);\n"
+                                             "color: rgb(85, 85, 85)")
                         self.e.setText("B Vector")
                         self.gridLayout.addWidget(self.e, i + 4, j)
                         continue
-                    self.e.setStyleSheet("color:rgb(121, 104, 62)\n"
-                                         "font: 20pt bold italic \"Segue script\";\n"
-                                         "font-weight: bold")
                     self.e.setText(f"X{j}")
+                    self.e.setStyleSheet("font: 10pt \"Century Gothic\";\n"
+                                         "font-weight: bold;\n"
+                                         "background-color:rgb(255, 238, 241);\n"
+                                         "color: rgb(85, 85, 85)")
                     self.gridLayout.addWidget(self.e, i + 4, j)
                     continue
                 self.e = QtWidgets.QLineEdit(self.gridLayoutWidget)
-                self.e.setStyleSheet("background-color:rgb(255, 255, 255)\n")
+                self.e.setStyleSheet("background-color:rgb(255, 246, 247);\n"
+                                     "color: rgb(72, 73, 73);\n"
+                                     "")
                 self.e.setValidator(self.doubleValidator)
+                self.e.setFont(font)
                 self.gridLayout.addWidget(self.e, i + 4, j)
                 if i < 4 and j < 4:
                     self.e.show()
                     if j == 0:
+                        self.e.setFont(font)
                         self.b.append(self.e)
                         continue
                 else:
-                    self.e.setStyleSheet("background-color:rgb(255, 253, 184)\n"
-                                         "border-color: rgb(255, 253, 184)")
+                    self.e.setStyleSheet("background-color:rgb(255, 238, 241)\n"
+                                         "border-color: rgb(255, 238, 241)")
+                    self.e.setFont(font)
                     self.e.setDisabled(True)
                 if j == 0:
+                    self.e.setFont(font)
                     self.b.append(self.e)
                 else:
                     self.coef[i - 1][j - 1] = self.e
@@ -100,11 +111,7 @@ class Ui_MainWindow(object):
         self.nEquationDisplayed.setStyleSheet("font: 25pt \"Segoe script\";\n"
                                               "font-weight: bold;\n"
                                               "color: rgb(85, 85, 85);\n"
-                                              "border: 3px solid rgb(72, 73, 73);\n"
-                                              "border-top-left-radius: 7px;\n"
-                                              "border-top-right-radius: 7px;\n"
-                                              "border-bottom-left-radius: 7px;\n"
-                                              "border-bottom-right-radius: 7px;")
+                                              )
         self.nEquationDisplayed.setObjectName("nEquationDisplayed")
 
         self.methodLable = QtWidgets.QLabel(self.scrollAreaWidgetContents)
@@ -176,7 +183,7 @@ class Ui_MainWindow(object):
         self.nEquationDisplayed_2.setStyleSheet("font: 25pt \"Segoe script\";\n"
                                                 "font-weight: bold;\n"
                                                 "background-color: rgb(72, 73, 73);\n"
-                                                "color: rgb(230, 206, 218)")
+                                                "color: rgb(255, 238, 241)")
         self.nEquationDisplayed_2.setObjectName("nEquationDisplayed_2")
 
         self.programTitle = QtWidgets.QLabel(self.scrollAreaWidgetContents)
@@ -198,6 +205,9 @@ class Ui_MainWindow(object):
         self.initialGeussLable.setObjectName("initialGuessLabel")
         self.initialGeussLable.setVisible(False)
 
+        font = QtGui.QFont()
+        font.setFamily("Century Gothic")
+        font.setPointSize(10)
         ################################################################################################################
 
         # LU Drop-Down List
@@ -208,6 +218,7 @@ class Ui_MainWindow(object):
         self.method.setContextMenuPolicy(QtCore.Qt.ActionsContextMenu)
         self.method.setStyleSheet("background-color:rgb(255, 246, 247)")
         self.method.setObjectName("method")
+        self.method.setFont(font)
         self.method.addItem("")
         self.method.addItem("")
         self.method.addItem("")
@@ -224,6 +235,7 @@ class Ui_MainWindow(object):
         self.nEquations.setMaximum(100)
         self.nEquations.setValue(3)
         self.nEquations.setObjectName("nEquations")
+        self.nEquations.setFont(font)
         self.nEquations.textChanged.connect(self.showTitleAndChangeCells)
 
         ################################################################################################################
@@ -234,6 +246,7 @@ class Ui_MainWindow(object):
         self.LU.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.LU.setStyleSheet("background-color:rgb(255, 246, 247)")
         self.LU.setObjectName("LU")
+        self.LU.setFont(font)
         self.LU.addItem("")
         self.LU.addItem("")
         self.LU.addItem("")
@@ -249,6 +262,7 @@ class Ui_MainWindow(object):
         self.format.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.format.setStyleSheet("background-color:rgb(255, 246, 247)")
         self.format.setObjectName("equationsFormate")
+        self.format.setFont(font)
         self.format.addItem("")
         self.format.addItem("")
         # self.format.currentTextChanged.connect(self.changeFormat)
@@ -262,6 +276,7 @@ class Ui_MainWindow(object):
         self.precision.setStyleSheet("background-color:rgb(255, 246, 247)")
         self.precision.setMinimum(2)
         self.precision.setMaximum(50)
+        self.precision.setFont(font)
         self.precision.setProperty("value", 50)
         self.precision.setObjectName("precision")
 
@@ -278,6 +293,7 @@ class Ui_MainWindow(object):
         self.ARE.setSingleStep(1e-06)
         self.ARE.setProperty("value", 1e-06)
         self.ARE.setObjectName("doubleSpinBox")
+        self.ARE.setFont(font)
 
         ################################################################################################################
 
@@ -291,6 +307,7 @@ class Ui_MainWindow(object):
         self.stopContition.addItem("")
         self.stopContition.addItem("")
         self.stopContition.addItem("")
+        self.stopContition.setFont(font)
         self.stopContition.currentTextChanged.connect(self.checkStop)
 
         ################################################################################################################
@@ -304,6 +321,7 @@ class Ui_MainWindow(object):
         self.nIteration.setMinimum(2)
         self.nIteration.setMaximum(500)
         self.nIteration.setValue(500)
+        self.nIteration.setFont(font)
         self.nIteration.setObjectName("nIteration")
 
         ################################################################################################################
@@ -350,7 +368,7 @@ class Ui_MainWindow(object):
         self.equationsSolverButton.setText("Root Finder")
         self.equationsSolverButton.setStyleSheet("font: 12pt \"MS Sans Serif\";\n"
                                                  "font-weight: bold;\n"
-                                                 "background-color:rgb(191, 135, 158);\n"
+                                                 "background-color:rgb(255, 246, 247);\n"
                                                  "color: rgb(72, 73, 77)")
 
         # Root finder button
@@ -360,7 +378,7 @@ class Ui_MainWindow(object):
         self.rootFinderButton.setAcceptDrops(True)
         self.rootFinderButton.setStyleSheet("font: 12pt \"MS Sans Serif\";\n"
                                             "font-weight: bold;\n"
-                                            "background-color:rgb(255, 246, 247);\n"
+                                            "background-color:rgb(191, 135, 158);\n"
                                             "color: rgb(85, 85, 85)")
         self.rootFinderButton.setText("System of Equations Solver")
         self.equationsSolverButton.clicked.connect(self.openRootFinder)
@@ -538,8 +556,6 @@ class Ui_MainWindow(object):
             sol = []
         self.solutionWindow.sol = sol
         self.open_solution_window(runTime)
-
-
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate

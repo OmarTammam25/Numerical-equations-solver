@@ -1,10 +1,8 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from View.V2Equation import V2EquationSolver
 from Controller.Commands import Commands
 
 
 class RootFinder(object):
-    equationSolver = V2EquationSolver()
     command = Commands()
 
     def setupUi(self, MainWindow):
@@ -39,7 +37,6 @@ class RootFinder(object):
         self.systemOfEquationsButton.setStyleSheet("background-color:rgb(255, 246, 247);\n"
                                                    "color: rgb(72, 73, 73);")
         self.systemOfEquationsButton.setObjectName("systemOfEquationsButton")
-        self.systemOfEquationsButton.clicked.connect(self.equationSolverWindow)
 
         # Root Finder Button
         self.rootFinderButton = QtWidgets.QPushButton(self.centralwidget)
@@ -276,8 +273,7 @@ class RootFinder(object):
         self.gx.setGeometry(QtCore.QRect(830, 300, 350, 80))
         self.gx.setFont(font)
         self.gx.viewport().setProperty("cursor", QtGui.QCursor(QtCore.Qt.IBeamCursor))
-        self.gx.setStyleSheet("background-color:rgb(255, 246, 247);\n"
-                              "")
+        self.gx.setStyleSheet("background-color:rgb(255, 246, 247);\n")
         self.gx.setFrameShape(QtWidgets.QFrame.WinPanel)
         self.gx.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
         self.gx.setObjectName("equationArea")
@@ -410,10 +406,6 @@ class RootFinder(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    def equationSolverWindow(self):
-        self.window = QtWidgets.QMainWindow()
-        self.equationSolver.setupUi(self.window)
-        self.window.show()
 
     def solve(self):
         self.command.setGx(self.gx.toPlainText())
@@ -430,8 +422,6 @@ class RootFinder(object):
             self.solution.setText(str(self.command.findRoot()))
         except:
             self.solution.setText("can't find a solution")
-
-
 
     def changeView(self):
         if self.method.currentText() == "Bisection" or self.method.currentText() == "False-Position" or self.method.currentText() == "Secant Method":
