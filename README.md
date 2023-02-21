@@ -28,9 +28,9 @@ The project comes with the following features:
 
 ## System of Equations Solver
 ### Main Window
-[![Main Window](https://www.linkpicture.com/q/EquationSolver.png)](https://www.linkpicture.com/view.php?img=LPic63f3528c3f8ec379668824)
+[![Main Window](https://www.linkpicture.com/q/Screenshot-2023-02-22-012329.png)](https://www.linkpicture.com/view.php?img=LPic63f552cbadd9d1414028322)
 ### Solution Window
-[![Solution Window](https://www.linkpicture.com/q/Screenshot-2023-02-20-124545.png)](https://www.linkpicture.com/view.php?img=LPic63f3503f698d51923944698)
+[![Solution Window](https://www.linkpicture.com/q/Screenshot-2023-02-22-012402.png)](https://www.linkpicture.com/view.php?img=LPic63f552b4ec12f473136888)
 
 ## Root Finder
 ### Main Window
